@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.Service", "KeySndr.Service\KeySndr.Service.csproj", "{1CB6AFBF-A4C1-48DF-836B-F469A3A91BC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.Win", "KeySndr.Win\KeySndr.Win.csproj", "{9AC57163-9733-4194-B70F-4A9BEF333D62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.Base", "KeySndr.Base\KeySndr.Base.csproj", "{9413DB07-5510-46A4-82B0-38485AF52792}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.Console", "KeySndr.Console\KeySndr.Console.csproj", "{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CB6AFBF-A4C1-48DF-836B-F469A3A91BC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CB6AFBF-A4C1-48DF-836B-F469A3A91BC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CB6AFBF-A4C1-48DF-836B-F469A3A91BC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CB6AFBF-A4C1-48DF-836B-F469A3A91BC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AC57163-9733-4194-B70F-4A9BEF333D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AC57163-9733-4194-B70F-4A9BEF333D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AC57163-9733-4194-B70F-4A9BEF333D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AC57163-9733-4194-B70F-4A9BEF333D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9413DB07-5510-46A4-82B0-38485AF52792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9413DB07-5510-46A4-82B0-38485AF52792}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9413DB07-5510-46A4-82B0-38485AF52792}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9413DB07-5510-46A4-82B0-38485AF52792}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
