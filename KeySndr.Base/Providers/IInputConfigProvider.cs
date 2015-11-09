@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using MacroToolServer.CommonPortable;
+using KeySndr.Common;
 
 namespace KeySndr.Base.Providers
 {

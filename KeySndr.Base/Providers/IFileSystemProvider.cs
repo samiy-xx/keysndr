@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using KeySndr.Base.Domain;
-using MacroToolServer.CommonPortable;
+using KeySndr.Common;
 
 namespace KeySndr.Base.Providers
 {

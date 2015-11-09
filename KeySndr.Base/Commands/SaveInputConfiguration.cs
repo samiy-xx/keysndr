@@ -1,6 +1,6 @@
 ﻿using System;
 using KeySndr.Base.Providers;
-using MacroToolServer.CommonPortable;
+using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {

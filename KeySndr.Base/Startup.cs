@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using KeySndr.Base.Providers;
+
 using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
@@ -46,6 +48,7 @@ namespace KeySndr.Base
 
         private void ConfigureManager(IAppBuilder appBuilder)
         {
+            //var fileSystem = new EmbeddedResourceFileSystem(typeof (KeySndrPortal).Assembly, "KeySndr.Portal.Web");
             var fileSystem = new PhysicalFileSystem(".");
 
             appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using KeySndr.Base.Providers;
-using MacroToolServer.CommonPortable;
+using KeySndr.Common;
 using MacroToolServer.Input;
 
 namespace KeySndr.Base

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using KeySndr.Base.Domain;
-using MacroToolServer.CommonPortable;
+using KeySndr.Common;
 using Newtonsoft.Json;
 
 namespace KeySndr.Base.Providers

@@ -11,6 +11,32 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.Base", "KeySndr.Bas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.Console", "KeySndr.Console\KeySndr.Console.csproj", "{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.Common", "KeySndr.Common\KeySndr.Common.csproj", "{0EAA5376-3D71-426F-953B-1A06388CEEA3}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ManagementPortal", "ManagementPortal\", "{0C4C5690-08D2-4BB1-BAF1-CAB5C6EA3E8D}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_51010"
+		Debug.AspNetCompiler.PhysicalPath = "ManagementPortal\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51010\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_51010"
+		Release.AspNetCompiler.PhysicalPath = "ManagementPortal\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51010\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51010"
+		SlnRelativePath = "ManagementPortal\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.InputManager", "KeySndr.InputManager\KeySndr.InputManager.csproj", "{1E84D4ED-7459-4D7F-AC4B-D2B4E484F2E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +59,18 @@ Global
 		{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA928604-9F7C-4572-9CA2-AF7D0209CE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EAA5376-3D71-426F-953B-1A06388CEEA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EAA5376-3D71-426F-953B-1A06388CEEA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EAA5376-3D71-426F-953B-1A06388CEEA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EAA5376-3D71-426F-953B-1A06388CEEA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C4C5690-08D2-4BB1-BAF1-CAB5C6EA3E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4C5690-08D2-4BB1-BAF1-CAB5C6EA3E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4C5690-08D2-4BB1-BAF1-CAB5C6EA3E8D}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4C5690-08D2-4BB1-BAF1-CAB5C6EA3E8D}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{1E84D4ED-7459-4D7F-AC4B-D2B4E484F2E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E84D4ED-7459-4D7F-AC4B-D2B4E484F2E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E84D4ED-7459-4D7F-AC4B-D2B4E484F2E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E84D4ED-7459-4D7F-AC4B-D2B4E484F2E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
