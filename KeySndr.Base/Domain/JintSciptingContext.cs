@@ -197,7 +197,7 @@ namespace KeySndr.Base.Domain
                 a.Sequences.Add(new SequenceItem
                 {
                     KeepDown = ms,
-                    Entry = new SequenceKeyValuePair("key", GetKeyValueFromCharacter(c))
+                    Entry = new SequenceKeyValuePair(c.ToString(), GetKeyValueFromCharacter(c))
                 });
             }
             return a;

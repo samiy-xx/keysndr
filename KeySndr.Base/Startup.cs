@@ -48,8 +48,9 @@ namespace KeySndr.Base
 
         private void ConfigureManager(IAppBuilder appBuilder)
         {
-            //var fileSystem = new EmbeddedResourceFileSystem(typeof (KeySndrPortal).Assembly, "KeySndr.Portal.Web");
-            var fileSystem = new PhysicalFileSystem(".");
+            //var fileSystem = new PhysicalFileSystem("./Web");
+            var fileSystem = new EmbeddedResourceFileSystem(typeof(Sender).Assembly, "KeySndr.Base");
+            appBuilder.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = new[] { "index.html" } });
 
             appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
@@ -61,8 +62,10 @@ namespace KeySndr.Base
             {
                 RequestPath = new PathString(""),
                 FileSystem = fileSystem,
-                ServeUnknownFileTypes = true
+                ServeUnknownFileTypes = true,
             });
+
+            
         }
     }
 }

@@ -4,40 +4,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
-using MacroToolServer.Input;
+using KeySndr.InputManager;
 
 namespace KeySndr.Base
 {
-    public class Sender
+    public class SenderInternal
     {
-        private static readonly ILoggingProvider Log = ObjectFactory.GetProvider<ILoggingProvider>();
+        private readonly InputAction action;
 
-        public async static Task Send(InputAction action)
+        public SenderInternal(InputAction a)
         {
-            var config = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
-            await Send(config.ProcessNumber, action, config.UseForegroundWindow);
+            action = a;
         }
 
-        public static Task Send(IntPtr currentHandle, InputAction action, bool useFg)
+        public async Task SendKeyBoardSequences()
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
-                Log.Debug("Running action " + action.Name);
-                if (!useFg)
-                {
-                    Log.Debug("Setting focus to chosen window");
-                    WindowsApi.SetForegroundWindow(currentHandle);
-                    WindowsApi.SetFocus(currentHandle);
-                }
-                else
-                {
-                    Log.Debug("Setting focus to foreground window");
-                    var ptr = WindowsApi.GetForegroundWindow();
-                    if (ptr != IntPtr.Zero)
-                        WindowsApi.SetFocus(ptr);
-                }
-
-                Log.Debug("Running keyboard sequences for action " + action.Name);
                 foreach (var sequenceItem in action.Sequences)
                 {
                     var converter = new IntKeysConverter();
@@ -55,8 +38,13 @@ namespace KeySndr.Base
                     Keyboard.KeyPress(converter.ConvertFromInt(sequenceItem.Entry.Value), sequenceItem.KeepDown);
                     Thread.Sleep(sequenceItem.KeepDown + 10);
                 }
+            });
+        }
 
-                Log.Debug("Running Mouse sequences for action " + action.Name);
+        public async Task SendMouseSequences()
+        {
+            await Task.Run(() =>
+            {
                 foreach (var mouseSequenceItem in action.MouseSequences)
                 {
                     Mouse.Move(mouseSequenceItem.X, mouseSequenceItem.Y);
@@ -65,31 +53,77 @@ namespace KeySndr.Base
                     Mouse.ButtonUp((Mouse.MouseKeys)mouseSequenceItem.Button);
                     Thread.Sleep(50);
                 }
+            });
+        }
 
-                Log.Debug("Running scripts for action " + action.Name);
+        public async Task SendScripts()
+        {
+            await Task.Run(() =>
+            {
                 foreach (var scriptSequence in action.ScriptSequences)
                 {
-                    Log.Debug("Attempting to find scripting context for " + scriptSequence.ScriptName);
                     var ctx = ObjectFactory.GetProvider<IScriptProvider>().FindContextForName(scriptSequence.ScriptName);
-
                     if (!ctx.IsValid || !ctx.HasBeenExecuted)
-                    {
-                        Log.Debug("Scripting context for " + scriptSequence.ScriptName + " was not valid, Run tests.");
                         continue;
-                    }
-
+                   
                     try
                     {
-                        Log.Debug("Running script " + scriptSequence.ScriptName);
                         ctx.Run();
                     }
                     catch (Exception e)
                     {
-                        Log.Error("Error in running script " + scriptSequence.ScriptName, e);
+                        
                     }
                 }
-                return true;
             });
+        }
+    }
+
+    public class Sender
+    {
+        private static readonly ILoggingProvider Log = ObjectFactory.GetProvider<ILoggingProvider>();
+
+        public async static Task Send(InputAction action)
+        {
+            var config = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
+            if (config.ProcessNumber == IntPtr.Zero)
+            {
+                var process = WinUtils.GetProcessByName(config.LastProcessName);
+                if (process != null)
+                    config.ProcessNumber = process.MainWindowHandle;
+            }
+            if (config.ProcessNumber == IntPtr.Zero)
+                return;
+
+            await new Sender().Send(config.ProcessNumber, action, config.UseForegroundWindow);
+        }
+
+
+        public async Task Send(IntPtr currentHandle, InputAction action, bool useFg)
+        {
+            var sndr = new SenderInternal(action);
+           
+            Log.Debug("Running action " + action.Name);
+            if (!useFg)
+            {
+                Log.Debug("Setting focus to chosen window");
+                WindowsApi.SetForegroundWindow(currentHandle);
+                WindowsApi.SetFocus(currentHandle);
+            }
+            else
+            {
+                Log.Debug("Setting focus to foreground window");
+                var ptr = WindowsApi.GetForegroundWindow();
+                if (ptr != IntPtr.Zero)
+                    WindowsApi.SetFocus(ptr);
+            }
+            
+            if (action.HasKeySequences)
+                await sndr.SendKeyBoardSequences();
+            if (action.HasMouseSequences)
+                await sndr.SendMouseSequences();
+            if (action.HasScriptSequences)
+                await sndr.SendScripts();
         }
     }
 }

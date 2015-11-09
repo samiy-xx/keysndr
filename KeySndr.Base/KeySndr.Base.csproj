@@ -34,9 +34,6 @@
       <HintPath>..\packages\Jint.2.7.1\lib\portable-net40+sl50+win+WindowsPhoneApp81+wp80\Jint.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MacroToolServer.Input">
-      <HintPath>..\..\MacroToolServer\MacroToolServer.Input\bin\Debug\MacroToolServer.Input.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -103,6 +100,7 @@
     <Compile Include="Controllers\ActionController.cs" />
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Domain\ApiResult.cs" />
     <Compile Include="Domain\AppConfig.cs" />
     <Compile Include="Domain\InputScript.cs" />
@@ -132,6 +130,7 @@
     <Compile Include="Sender.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WindowsApi.cs" />
+    <Compile Include="WinUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -142,11 +141,29 @@
       <Project>{0eaa5376-3d71-426f-953b-1a06388ceea3}</Project>
       <Name>KeySndr.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KeySndr.InputManager\KeySndr.InputManager.csproj">
+      <Project>{1e84d4ed-7459-4d7f-ac4b-d2b4e484f2e5}</Project>
+      <Name>KeySndr.InputManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Portal\media\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Portal\css\app.css">
+      <Link>Portal\css\app.css</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Portal\index.html">
+      <Link>Portal\index.html</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Portal\scripts\app.js">
+      <Link>Portal\scripts\app.js</Link>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
