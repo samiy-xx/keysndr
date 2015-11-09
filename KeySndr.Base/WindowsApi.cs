@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 *
 * Find out license for this file.
 * Copied from somewhere in the internet.
-* Original might be this VB project http://www.codeproject.com/Articles/117657/InputManager-library-Track-user-input-and-simulate?fid=1591687&fr=76
 *
 */
 
