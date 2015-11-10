@@ -101,7 +101,6 @@
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
-    <Compile Include="Domain\ApiResult.cs" />
     <Compile Include="Domain\AppConfig.cs" />
     <Compile Include="Domain\InputScript.cs" />
     <Compile Include="Domain\ISciptContext.cs" />
@@ -156,15 +155,18 @@
     <Folder Include="Portal\media\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Portal\css\app.css">
+    <Content Include="..\Portal\css\app.css">
       <Link>Portal\css\app.css</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Portal\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\index.html">
       <Link>Portal\index.html</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Portal\scripts\app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\app.js">
       <Link>Portal\scripts\app.js</Link>
-    </EmbeddedResource>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

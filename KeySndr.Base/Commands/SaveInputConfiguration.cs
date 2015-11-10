@@ -1,20 +1,22 @@
 ﻿using System;
+using System.IO;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class SaveInputConfiguration : ICommand<String>
+    public class SaveInputConfiguration : ICommand<ApiResult<Object>>
     {
         private readonly IFileSystemProvider fileSystemProvider;
+        private readonly IAppConfigProvider appConfigProvider;
         private readonly InputConfiguration configuration;
 
-        public string Result { get; private set; }
-        public bool Success { get; private set; }
+        public ApiResult<Object> Result { get; private set; }
 
-        public SaveInputConfiguration(IFileSystemProvider fs, InputConfiguration c)
+        public SaveInputConfiguration(IFileSystemProvider fs, IAppConfigProvider a, InputConfiguration c)
         {
             fileSystemProvider = fs;
+            appConfigProvider = a;
             configuration = c;
         }
 
@@ -22,14 +24,23 @@ namespace KeySndr.Base.Commands
         {
             try
             {
-                fileSystemProvider.SaveInputConfiguration(configuration);
-                Result = "Ok";
-                Success = true;
+                fileSystemProvider.SaveObjectToDisk(configuration, Path.Combine(appConfigProvider.AppConfig.ConfigFolder, configuration.FileName));
+                Result = new ApiResult<object>
+                {
+                    Content = "empty",
+                    Success = true,
+                    Message = "Ok"
+                };
             }
             catch (Exception e)
             {
-                Success = false;
-                Result = e.Message;
+                Result = new ApiResult<object>
+                {
+                    Content = "empty",
+                    Success = false,
+                    Message = "Failed to save input configuration "+ configuration.Name,
+                    ErrorMessage = e.Message
+                };
             }
         }
 

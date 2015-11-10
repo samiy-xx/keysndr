@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace KeySndr.Common.Providers
@@ -6,10 +7,10 @@ namespace KeySndr.Common.Providers
     public interface IWebConnectionProvider : IProvider
     {
         void SetBaseAddress(string ip, int port);
-        Task<IEnumerable<string>> RequestConfigurations();
-        Task<IEnumerable<string>> RequestScripts();
-        Task<InputConfiguration> RequestConfiguration(string name);
-        Task<bool> ExecuteAction(InputAction action);
-        Task<bool> SaveConfiguration(InputConfiguration configuration);
+        Task<ApiResult<IEnumerable<string>>> RequestConfigurations();
+        Task<ApiResult<IEnumerable<string>>> RequestScripts();
+        Task<ApiResult<InputConfiguration>> RequestConfiguration(string name);
+        Task<ApiResult<Object>> ExecuteAction(InputAction action);
+        Task<ApiResult<Object>> SaveConfiguration(InputConfiguration configuration);
     }
 }

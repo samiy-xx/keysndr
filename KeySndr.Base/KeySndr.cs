@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using KeySndr.Base.BeaconLib;
 using KeySndr.Base.Domain;
 using KeySndr.Base.Providers;
+using KeySndr.Common;
 using Microsoft.Owin.Hosting;
 
 namespace KeySndr.Base
@@ -21,6 +23,7 @@ namespace KeySndr.Base
 
         public void Run()
         {
+            VerifyFileSystem();
             LoadAppConfig();
             StartWebServer();
 
@@ -36,12 +39,25 @@ namespace KeySndr.Base
             ObjectFactory.AddProvider(new InputConfigProvider());
         }
 
+        private void VerifyFileSystem()
+        {
+            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
+            fs.VerifyFolderStructure();
+        }
+
         private void LoadAppConfig()
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading App Config");
             var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
             var acp = ObjectFactory.GetProvider<IAppConfigProvider>();
-            acp.AppConfig = fs.LoadAppConfiguration();
+            var config = fs.LoadAppConfiguration();
+            if (config != null)
+                acp.AppConfig = config;
+            else
+            {
+                acp.AppConfig = new AppConfig();
+                fs.SaveAppConfiguration();
+            }
             AppConfig = acp.AppConfig;
         }
 
@@ -57,7 +73,7 @@ namespace KeySndr.Base
         {
             SetupBeacon(AppConfig.LastPort);
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Starting web server");
-            var url = $"http://{AppConfig.LastIp}:{AppConfig.LastPort}";
+            var url = $"http://+:{AppConfig.LastPort}";
             webServer = WebApp.Start<Startup>(url: url);
         }
 
@@ -70,20 +86,23 @@ namespace KeySndr.Base
         public async Task LoadInputConfigurations()
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading input configurations");
-            var fileSystemProvider = ObjectFactory.GetProvider<IFileSystemProvider>();
             var inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
-
             inputConfigProvider.Clear();
 
             await Task.Run(() =>
             {
-                var count = 0;
-                foreach (var f in fileSystemProvider.GetAllConfigurationFiles())
+                foreach (var f in GetAllConfigurationFiles())
                 {
-                    count++;
-                    var c = fileSystemProvider.LoadInputConfigurationFromDisk(f);
-                    c.FileName = f;
-                    inputConfigProvider.Add(c);
+                    try
+                    {
+                        var c = LoadInputConfiguration(f);
+                        c.FileName = f;
+                        inputConfigProvider.Add(c);
+                    }
+                    catch (Exception e)
+                    {
+                        ObjectFactory.GetProvider<ILoggingProvider>().Error("Error loading configuration " + f + " " + e.Message, e);
+                    }
                 }
             });
         }
@@ -97,20 +116,16 @@ namespace KeySndr.Base
             var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
             await Task.Run(async () =>
             {
-                var count = 0;
-                foreach (var f in fs.GetAllScriptFiles())
+                foreach (var f in GetAllScriptFiles())
                 {
-
-                    count++;
-                    var script = fs.LoadObjectFromDiskAsJson<InputScript>(Path.Combine(AppConfig.ScriptsFolder, f));
+                    var script = LoadInputScript(f);
                     script.FileName = f;
                     
-
                     foreach (var sourceFile in script.SourceFiles)
                     {
                         try
                         {
-                            sourceFile.Contents = fs.LoadFileAsString(sourceFile.FileName);
+                            sourceFile.Contents = fs.LoadStringFromDisk(sourceFile.FileName);
                         }
                         catch (Exception e)
                         {
@@ -122,6 +137,42 @@ namespace KeySndr.Base
                 }
                 
             });
+        }
+
+        private IEnumerable<string> GetAllScriptFiles()
+        {
+            if (string.IsNullOrEmpty(AppConfig.ScriptsFolder))
+                return new string[0];
+
+            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
+            return fs.GetDirectoryFileNames(AppConfig.ScriptsFolder, "script", true);
+        }
+
+        private IEnumerable<string> GetAllConfigurationFiles()
+        {
+            if (string.IsNullOrEmpty(AppConfig.ConfigFolder))
+                return new string[0];
+
+            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
+            return fs.GetDirectoryFileNames(AppConfig.ConfigFolder, "json", true);
+        }
+
+        private InputScript LoadInputScript(string fileName)
+        {
+            if (string.IsNullOrEmpty(AppConfig.ScriptsFolder))
+                return null;
+
+            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
+            return fs.LoadObjectFromDisk<InputScript>(Path.Combine(AppConfig.ScriptsFolder, fileName));
+        }
+
+        private InputConfiguration LoadInputConfiguration(string fileName)
+        {
+            if (string.IsNullOrEmpty(AppConfig.ConfigFolder))
+                return null;
+
+            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
+            return fs.LoadObjectFromDisk<InputConfiguration>(Path.Combine(AppConfig.ConfigFolder, fileName));
         }
     }
 }

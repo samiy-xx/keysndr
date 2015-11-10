@@ -4,11 +4,9 @@ using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class ExecuteInputAction : ICommand<String>
+    public class ExecuteInputAction : ICommand<ApiResult<Object>>
     {
-        public string Result { get; private set; }
-        public bool Success { get; private set; }
-
+        public ApiResult<Object> Result { get; private set; }
         private readonly InputAction action;
 
         public ExecuteInputAction(InputAction a)
@@ -21,13 +19,22 @@ namespace KeySndr.Base.Commands
             try
             {
                 Sender.Send(action).Wait(1000);
-                Result = "Sent";
-                Success = true;
+                Result = new ApiResult<object>
+                {
+                    Content = "empty",
+                    Success = true,
+                    Message = "Ok"
+                };
             }
             catch (Exception e)
             {
-                Success = false;
-                Result = e.Message;
+                Result = new ApiResult<object>
+                {
+                    Content = "empty",
+                    Success = false,
+                    Message = "Failed to execute action "+ action.Name,
+                    ErrorMessage = e.Message
+                };
             }
 
         }

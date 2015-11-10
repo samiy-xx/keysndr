@@ -21,7 +21,7 @@ namespace KeySndr.Base
     {
         public void Configuration(IAppBuilder appBuilder)
         {
-            appBuilder.Map(new PathString("/manage"), ConfigureManager);
+            
 
             var appConfig = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
             var config = new HttpConfiguration();
@@ -32,7 +32,7 @@ namespace KeySndr.Base
                 );
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var fileSystem = new PhysicalFileSystem(appConfig.WebRoot);
-
+            //appBuilder.Map(new PathString("/manage"), ConfigureManager);
             appBuilder.UseWebApi(config);
             appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
@@ -50,8 +50,8 @@ namespace KeySndr.Base
 
         private void ConfigureManager(IAppBuilder appBuilder)
         {
-            //var fileSystem = new PhysicalFileSystem("./Web");
-            var fileSystem = new CustomEmbeddedFileSystem(typeof(Sender).Assembly, "KeySndr.Base");
+            var fileSystem = new PhysicalFileSystem("./Portal");
+            //var fileSystem = new CustomEmbeddedFileSystem(typeof(Sender).Assembly, "KeySndr.Base");
             appBuilder.UseDefaultFiles(new DefaultFilesOptions {DefaultFileNames = new[] {"index.html"}});
 
             appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions

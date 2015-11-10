@@ -26,6 +26,7 @@ namespace KeySndr.Base.Controllers
             scriptProvider = s;
         }
 
+        [HttpGet]
         public IEnumerable<string> GetAllScripts()
         {
             var cmd = new GetAllScripts(scriptProvider);
@@ -33,16 +34,17 @@ namespace KeySndr.Base.Controllers
             return cmd.Result;
         }
 
+        [HttpGet]
         public async Task<bool> ExecuteScript(string scriptName)
         {
             var ctx = scriptProvider.FindContextForName(scriptName);
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 ctx.Execute();
                 ctx.Run();
                 return true;
             });
-            return false;
+            
         }
     }
 }

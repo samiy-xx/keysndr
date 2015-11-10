@@ -1,31 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using KeySndr.Base.Domain;
+using System.Linq;
 using KeySndr.Base.Providers;
+using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class GetAllInputConfigurations : ICommand<IEnumerable<string>>
+    public class GetAllInputConfigurations : ICommand<ApiResult<IEnumerable<string>>>
     {
-        private readonly IFileSystemProvider fileSystemProvider;
-        public IEnumerable<string> Result { get; private set; }
-        public bool Success { get; private set; }
+        private readonly IInputConfigProvider inputConfigProvider;
+        public ApiResult<IEnumerable<string>> Result { get; private set; }
 
-        public GetAllInputConfigurations(IFileSystemProvider p)
+        public GetAllInputConfigurations(IInputConfigProvider p)
         {
-            fileSystemProvider = p;
+            inputConfigProvider = p;
         }
 
         public void Execute()
         {
             try
             {
-                Result = fileSystemProvider.GetAllConfigurationFiles();
-                Success = true;
+                Result = new ApiResult<IEnumerable<string>>
+                {
+                    Content = inputConfigProvider.Configs.Select(i => i.Name),
+                    Success = true
+                };
             }
             catch (Exception e)
             {
-                Success = false;
+                Result = new ApiResult<IEnumerable<string>>
+                {
+                    Success = false,
+                    Message = "Failed to get input configurations",
+                    ErrorMessage = e.Message
+                };
             }
         }
     }

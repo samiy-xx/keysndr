@@ -34,153 +34,95 @@ namespace KeySndr.Base.Providers
                 Directory.CreateDirectory(AppDataFolder);
         }
 
-        public IEnumerable<string> GetAllConfigurationFiles()
-        {
-            IEnumerable<string> files;
-            try
-            {
-
-                files = Directory.GetFiles(AppConfig.ConfigFolder, "*.json")
-                    .Where(s => s.EndsWith(ConfigurationFileExtension)).Select(Path.GetFileNameWithoutExtension);
-            }
-            catch (IOException)
-            {
-                files = new List<string>();
-            }
-            return files;
-        }
-
-        public IEnumerable<string> GetAllScriptFiles()
-        {
-            IEnumerable<string> files;
-            try
-            {
-
-                files = Directory.GetFiles(AppConfig.ScriptsFolder, "*.script")
-                    .Select(Path.GetFileName);
-            }
-            catch (IOException)
-            {
-                files = new List<string>();
-            }
-            return files;
-        }
-
-        public void RemoveFile(string path)
-        {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-        public AppConfig LoadAppConfiguration()
-        {
-
-
-            try
-            {
-                var reader =
-                    new StreamReader(Path.Combine(AppDataFolder, AppConfigName));
-                var res = reader.ReadToEnd();
-                reader.Dispose();
-                return JsonConvert.DeserializeObject<AppConfig>(res);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-
-        public void SaveAppConfiguration(AppConfig c)
-        {
-            File.WriteAllText(
-                Path.Combine(AppDataFolder, AppConfigName),
-                JsonConvert.SerializeObject(c, Formatting.Indented),
-                Encoding.UTF8);
-        }
-
-        public async Task SaveInputConfiguration(InputConfiguration c)
-        {
-            var name = c.Name.Trim().Replace(" ", string.Empty);
-            var path = Path.Combine(AppConfig.ConfigFolder, name + ConfigurationFileExtension);
-            await SaveObjectToDiskAsJson(c, path);
-        }
-
-        /*public async Task SaveScript(InputScript s)
-        {
-            var path = Path.Combine(AppConfig.ConfigFolder, s.FileName);
-            await SaveObjectToDiskAsJson(s, path);
-        }*/
-
-        public InputConfiguration LoadInputConfigurationFromDisk(string n)
-        {
-            var name = n.Trim().Replace(" ", string.Empty);
-            var path = Path.Combine(AppConfig.ConfigFolder, name + ConfigurationFileExtension);
-            return LoadObjectFromDiskAsJson<InputConfiguration>(path);
-        }
-
-        public async Task SaveObjectToDiskAsJson<T>(T o, string path)
-        {
-            var output = JsonConvert.SerializeObject(o, Formatting.Indented);
-            await Task.Run(() =>
-            {
-                try
-                {
-                    File.WriteAllText(path, output, Encoding.UTF8);
-                }
-                catch (Exception e)
-                {
-
-                }
-            });
-        }
-
-        public void SaveObjectToDisk<T>(T o, string path)
-        {
-            var writer = new XmlSerializer(typeof(T));
-            using (var file = File.Create(path))
-            {
-                writer.Serialize(file, o);
-            }
-        }
-
         public T LoadObjectFromDisk<T>(string path)
         {
-            var serializer = new XmlSerializer(typeof(T));
-            using (var reader = new StreamReader(path))
-            {
-                return (T)serializer.Deserialize(reader);
-            }
+            if (!File.Exists(path))
+                return default(T);
 
-        }
-
-        public string LoadFileAsString(string path)
-        {
-            using (var reader = new StreamReader(path))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public string LoadObjectFromDiskAsString(string path)
-        {
-            using (var reader = new StreamReader(Path.Combine(AppConfig.ScriptsFolder, path)))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public T LoadObjectFromDiskAsJson<T>(string path)
-        {
             using (var reader = new StreamReader(path))
             {
                 return JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
             }
+        }
+
+        public string LoadStringFromDisk(string path)
+        {
+            if (!File.Exists(path))
+                return null;
+            using (var reader = new StreamReader(path))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        public void SaveObjectToDisk(object o, string path)
+        {
+            File.WriteAllText(path, JsonConvert.SerializeObject(o, Formatting.Indented), Encoding.UTF8);
+        }
+
+        public IEnumerable<string> GetDirectoryFileNames(string path, bool fileNameWithoutPath = false)
+        {
+            if (!Directory.Exists(path)) 
+                return new string[0];
+
+            var files = Directory.GetFiles(path);
+            if (fileNameWithoutPath)
+                return files.Select(Path.GetFileName);
+            return files;
+        }
+
+        public IEnumerable<string> GetDirectoryFileNames(string path, string extension, bool fileNameWithoutPath = false)
+        {
+            return GetDirectoryFileNames(path, fileNameWithoutPath)
+                .Where(f => f.EndsWith(extension));
+        }
+
+        public IEnumerable<string> GetAllConfigurationFiles(string path)
+        {
+            return GetDirectoryFileNames(path, "json").Select(Path.GetFileNameWithoutExtension);
+        } 
+
+        public IEnumerable<FileInfo> GetDirectoryFiles(string path)
+        {
+            return !Directory.Exists(path) 
+                ? new FileInfo[0] 
+                : Directory.GetFiles(path).Select(f => new FileInfo(f));
+        }
+
+        public void RemoveFile(string path)
+        {
+            if (!File.Exists(path))
+                return;
+            
+            File.Delete(path);
+        }
+
+        public void SaveAppConfiguration()
+        {
+            File.WriteAllText(
+                Path.Combine(AppDataFolder, AppConfigName),
+                JsonConvert.SerializeObject(ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig, Formatting.Indented),
+                Encoding.UTF8);
+        }
+
+        public AppConfig LoadAppConfiguration()
+        {
+            var path = Path.Combine(AppDataFolder, AppConfigName);
+            if (!File.Exists(path))
+                return null;
+
+            using (var reader = new StreamReader(Path.Combine(AppDataFolder, AppConfigName)))
+            {
+                return JsonConvert.DeserializeObject<AppConfig>(reader.ReadToEnd());
+            }
+        }
+
+        public InputConfiguration LoadInputConfiguration(string path)
+        {
+            if (!File.Exists(path))
+                return null;
+
+            return LoadObjectFromDisk<InputConfiguration>(path);
         }
     }
 }

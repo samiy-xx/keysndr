@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using KeySndr.Base.Commands;
 using KeySndr.Base.Providers;
@@ -9,45 +10,52 @@ namespace KeySndr.Base.Controllers
     public class ActionController : ApiController
     {
         private readonly IFileSystemProvider fileSystemProvider;
+        private readonly IAppConfigProvider appConfigProvider;
+        private readonly IInputConfigProvider inputConfigProvider;
 
         public ActionController()
         {
             fileSystemProvider = ObjectFactory.GetProvider<IFileSystemProvider>();
+            appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
+            inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
         }
 
-        public ActionController(IFileSystemProvider p)
+        public ActionController(IFileSystemProvider p, IAppConfigProvider a)
         {
             fileSystemProvider = p;
+            appConfigProvider = a;
         }
 
         [HttpGet]
-        public IEnumerable<string> GetAllConfigurations()
+        public ApiResult<IEnumerable<string>> GetAllConfigurations()
         {
-            var cmd = new GetAllInputConfigurations(fileSystemProvider);
+            var cmd = new GetAllInputConfigurations(inputConfigProvider);
             cmd.Execute();
             return cmd.Result;
         }
 
         [HttpGet]
-        public InputConfiguration GetConfiguration(string name)
+        public ApiResult<InputConfiguration> GetConfiguration(string name)
         {
-            var cmd = new GetInputConfiguration(fileSystemProvider, name);
+            var cmd = new GetInputConfiguration(inputConfigProvider, name);
             cmd.Execute();
             return cmd.Result;
         }
 
         [HttpPost]
-        public void Execute(InputAction action)
+        public ApiResult<Object> Execute(InputAction action)
         {
             var cmd = new ExecuteInputAction(action);
             cmd.Execute();
+            return cmd.Result;
         }
 
         [HttpPost]
-        public void Save(InputConfiguration configuration)
+        public ApiResult<Object> Save(InputConfiguration configuration)
         {
-            var cmd = new SaveInputConfiguration(fileSystemProvider, configuration);
+            var cmd = new SaveInputConfiguration(fileSystemProvider, appConfigProvider, configuration);
             cmd.Execute();
+            return cmd.Result;
         }
     }
 }

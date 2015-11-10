@@ -37,6 +37,8 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiResult.cs" />
+    <Compile Include="AppPreferences.cs" />
     <Compile Include="BinarySerializer.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="InputAction.cs" />

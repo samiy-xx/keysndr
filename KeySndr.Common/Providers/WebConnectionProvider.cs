@@ -30,41 +30,41 @@ namespace KeySndr.Common.Providers
             httpClient.BaseAddress = new Uri($"http://{ip}:{port}/");
         }
 
-        public async Task<IEnumerable<string>> RequestConfigurations()
+        public async Task<ApiResult<IEnumerable<string>>> RequestConfigurations()
         {
             var result = await httpClient.GetAsync(AllConfigurations);
             var content = await result.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<IEnumerable<string>>(content);
+            return JsonSerializer.Deserialize<ApiResult<IEnumerable<string>>>(content);
         }
 
-        public async Task<IEnumerable<string>> RequestScripts()
+        public async Task<ApiResult<IEnumerable<string>>> RequestScripts()
         {
             var result = await httpClient.GetAsync(AllScripts);
             var content = await result.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<IEnumerable<string>>(content);
+            return JsonSerializer.Deserialize<ApiResult<IEnumerable<string>>>(content);
         }
 
-        public async Task<InputConfiguration> RequestConfiguration(string name)
+        public async Task<ApiResult<InputConfiguration>> RequestConfiguration(string name)
         {
             var result = await httpClient.GetAsync(Configuration + "?name=" + name);
             var content = await result.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<InputConfiguration>(content);
+            return JsonSerializer.Deserialize<ApiResult<InputConfiguration>>(content);
         }
 
-        public async Task<bool> SaveConfiguration(InputConfiguration configuration)
+        public async Task<ApiResult<Object>>  SaveConfiguration(InputConfiguration configuration)
         {
             var result = await httpClient.PostAsync(Save,
                         new StringContent(JsonSerializer.Serialize(configuration), Encoding.UTF8, "application/json"));
-
-            return result.StatusCode == HttpStatusCode.OK;
+            var content = await result.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<ApiResult<Object>>(content);
         }
 
-        public async Task<bool> ExecuteAction(InputAction action)
+        public async Task<ApiResult<Object>> ExecuteAction(InputAction action)
         {
             var result = await httpClient.PostAsync(Execute,
                         new StringContent(JsonSerializer.Serialize(action), Encoding.UTF8, "application/json"));
-
-            return result.StatusCode == HttpStatusCode.OK;
+            var content = await result.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<ApiResult<Object>>(content);
         }
     }
 }

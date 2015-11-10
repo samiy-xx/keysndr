@@ -4,30 +4,40 @@ using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class GetInputConfiguration : ICommand<InputConfiguration>
+    public class GetInputConfiguration : ICommand<ApiResult<InputConfiguration>>
     {
-        private readonly IFileSystemProvider fileSystemProvider;
-        private readonly string scriptName;
+        private readonly IInputConfigProvider inputConfigProvider;
+        private readonly IAppConfigProvider appConfigProvider;
+        private readonly string configName;
 
-        public InputConfiguration Result { get; private set; }
-        public bool Success { get; private set; }
+        public ApiResult<InputConfiguration> Result { get; private set; }
 
-        public GetInputConfiguration(IFileSystemProvider p, string name)
+        public GetInputConfiguration(IInputConfigProvider p, string name)
         {
-            fileSystemProvider = p;
-            scriptName = name;
+            inputConfigProvider = p;
+            configName = name;
         }
 
         public void Execute()
         {
             try
             {
-                Result = fileSystemProvider.LoadInputConfigurationFromDisk(scriptName);
-                Success = true;
+                Result = new ApiResult<InputConfiguration>
+                {
+                    Content = inputConfigProvider.FindConfigForName(configName),
+                    Success = true,
+                    Message = "Ok"
+                };
+                
             }
             catch (Exception e)
             {
-                Success = false;
+                Result = new ApiResult<InputConfiguration>
+                {
+                    Success = false,
+                    Message = "Failed to get input configuration " + configName,
+                    ErrorMessage = e.Message
+                };
             }
         }
     }

@@ -5,6 +5,5 @@
     {
         T Result { get; }
         void Execute();
-        bool Success { get; }
     }
 }
