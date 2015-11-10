@@ -8,6 +8,8 @@ namespace KeySndr.Common
     {
         [DataMember(Name = "name")]
         public string Name { get; set; }
+
+        [DataMember(Name = "fileName")]
         public string FileName { get; set; }
 
         [DataMember(Name = "view")]
