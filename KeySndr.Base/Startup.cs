@@ -21,8 +21,7 @@ namespace KeySndr.Base
     {
         public void Configuration(IAppBuilder appBuilder)
         {
-            
-
+            appBuilder.Map(new PathString("/manage"), ConfigureManager);
             var appConfig = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
             var config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
@@ -32,11 +31,12 @@ namespace KeySndr.Base
                 );
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var fileSystem = new PhysicalFileSystem(appConfig.WebRoot);
-            //appBuilder.Map(new PathString("/manage"), ConfigureManager);
+          
             appBuilder.UseWebApi(config);
+            appBuilder.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = new[] { "index.html" } });
             appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
-                RequestPath = new PathString("/browse"),
+                RequestPath = new PathString(""),
                 FileSystem = fileSystem
             });
 
