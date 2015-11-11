@@ -68,8 +68,16 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -92,13 +100,15 @@
     <Compile Include="Commands\ExecuteInputAction.cs" />
     <Compile Include="Commands\GetAllInputConfigurations.cs" />
     <Compile Include="Commands\GetAllScripts.cs" />
-    <Compile Include="Commands\GetAppConfig.cs" />
+    <Compile Include="Commands\GetAppSettings.cs" />
     <Compile Include="Commands\GetInputConfiguration.cs" />
+    <Compile Include="Commands\GetLegacyConfigurations.cs" />
+    <Compile Include="Commands\GetViewConfigurations.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\SaveInputConfiguration.cs" />
     <Compile Include="Commands\StoreAppConfig.cs" />
     <Compile Include="Controllers\ActionController.cs" />
-    <Compile Include="Controllers\ConfigController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Domain\AppConfig.cs" />
@@ -132,6 +142,30 @@
     <Compile Include="WinUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Portal\fonts\glyphicons-halflings-regular.eot">
+      <Link>Portal\fonts\glyphicons-halflings-regular.eot</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\fonts\glyphicons-halflings-regular.ttf">
+      <Link>Portal\fonts\glyphicons-halflings-regular.ttf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\fonts\glyphicons-halflings-regular.woff">
+      <Link>Portal\fonts\glyphicons-halflings-regular.woff</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\fonts\glyphicons-halflings-regular.woff2">
+      <Link>Portal\fonts\glyphicons-halflings-regular.woff2</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\angular.min.js.map">
+      <Link>Portal\scripts\angular.min.js.map</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\jquery-2.1.4.min.map">
+      <Link>Portal\scripts\jquery-2.1.4.min.map</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -152,19 +186,111 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Portal\media\" />
+    <Folder Include="Portal\scripts\app\directives\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Portal\css\app.css">
       <Link>Portal\css\app.css</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Portal\index.html">
-      <Link>Portal\index.html</Link>
+    <Content Include="..\Portal\css\bootstrap.css">
+      <Link>Portal\css\bootstrap.css</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Portal\scripts\app.js">
+    <None Include="..\Portal\settings.html">
+      <Link>Portal\settings.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\index.html">
+      <Link>Portal\index.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\edit-grid.html">
+      <Link>Portal\edit-grid.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\edit-view.html">
+      <Link>Portal\edit-view.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\fonts\glyphicons-halflings-regular.svg">
+      <Link>Portal\fonts\glyphicons-halflings-regular.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Portal\media\favicon.ico">
+      <Link>Portal\media\favicon.ico</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\Portal\play-grid.html">
+      <Link>Portal\play-grid.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Portal\scripts\angular-mocks.js">
+      <Link>Portal\scripts\angular-mocks.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\angular-ui\ui-bootstrap-tpls.js">
+      <Link>Portal\scripts\angular-ui\ui-bootstrap-tpls.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\angular-ui\ui-bootstrap-tpls.min.js">
+      <Link>Portal\scripts\angular-ui\ui-bootstrap-tpls.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\angular-ui\ui-bootstrap.js">
+      <Link>Portal\scripts\angular-ui\ui-bootstrap.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\angular-ui\ui-bootstrap.min.js">
+      <Link>Portal\scripts\angular-ui\ui-bootstrap.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\angular.js">
+      <Link>Portal\scripts\angular.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\angular.min.js">
+      <Link>Portal\scripts\angular.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\Portal\scripts\app.js">
       <Link>Portal\scripts\app.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\controllers\settings_controller.js">
+      <Link>Portal\scripts\app\controllers\settings_controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\services\api_service.js">
+      <Link>Portal\scripts\app\services\api_service.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\controllers\frontpage_controller.js">
+      <Link>Portal\scripts\app\controllers\frontpage_controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\controllers\edit-grid-controller.js">
+      <Link>Portal\scripts\app\controllers\edit-grid-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\controllers\edit-view-controller.js">
+      <Link>Portal\scripts\app\controllers\edit-view-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\controllers\play-grid-controller.js">
+      <Link>Portal\scripts\app\controllers\play-grid-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Portal\scripts\jquery-2.1.4.intellisense.js">
+      <Link>Portal\scripts\jquery-2.1.4.intellisense.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\jquery-2.1.4.js">
+      <Link>Portal\scripts\jquery-2.1.4.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\jquery-2.1.4.min.js">
+      <Link>Portal\scripts\jquery-2.1.4.min.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

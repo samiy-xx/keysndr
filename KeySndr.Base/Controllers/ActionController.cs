@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using KeySndr.Base.Commands;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
@@ -26,6 +27,7 @@ namespace KeySndr.Base.Controllers
             appConfigProvider = a;
         }
 
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
         public ApiResult<IEnumerable<string>> GetAllConfigurations()
         {
@@ -34,6 +36,25 @@ namespace KeySndr.Base.Controllers
             return cmd.Result;
         }
 
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpGet]
+        public ApiResult<IEnumerable<string>> GetLegacyConfigurations()
+        {
+            var cmd = new GetLegacyInputConfigurations(inputConfigProvider);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpGet]
+        public ApiResult<IEnumerable<string>> GetViewConfigurations()
+        {
+            var cmd = new GetViewInputConfigurations(inputConfigProvider);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
         public ApiResult<InputConfiguration> GetConfiguration(string name)
         {
@@ -42,6 +63,7 @@ namespace KeySndr.Base.Controllers
             return cmd.Result;
         }
 
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
         public ApiResult<Object> Execute(InputAction action)
         {
@@ -50,6 +72,7 @@ namespace KeySndr.Base.Controllers
             return cmd.Result;
         }
 
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
         public ApiResult<Object> Save(InputConfiguration configuration)
         {

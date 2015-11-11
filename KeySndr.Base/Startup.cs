@@ -24,15 +24,18 @@ namespace KeySndr.Base
             appBuilder.Map(new PathString("/manage"), ConfigureManager);
             var appConfig = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
             var config = new HttpConfiguration();
+            
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new {id = RouteParameter.Optional}
                 );
+            config.EnableCors();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             var fileSystem = new PhysicalFileSystem(appConfig.WebRoot);
           
             appBuilder.UseWebApi(config);
+            
             appBuilder.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = new[] { "index.html" } });
             appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
