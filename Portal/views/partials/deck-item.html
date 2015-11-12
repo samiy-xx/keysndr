@@ -1,0 +1,6 @@
+﻿<div class="action-item" data-ng-click="mother.setSelected(card.$index)" style=" color {{ card.textColor }} ;background {{ card.color }} " data-ng-show="card.isEnabled">
+    <p>{{ card.name }}</p>
+</div>
+<div class="action-item action-item-disabled" data-ng-click="mother.setSelected(card.$index)" data-ng-show="!card.isEnabled">
+
+</div>

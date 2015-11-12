@@ -7,12 +7,13 @@
     <title>KeySndr - Management</title>
     <link rel="SHORTCUT ICON" href="media/favicon.ico" />
     <link href="css/bootstrap.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/edit-grid.css" rel="stylesheet" />
 
     <script src="scripts/jquery-2.1.4.js"></script>
     <script src="scripts/angular.js"></script>
     <script src="scripts/angular-ui/ui-bootstrap.js"></script>
     <script src="scripts/app.js"></script>
+    
     <script src="scripts/app/controllers/edit-grid-controller.js"></script>
     <script src="scripts/app/services/api_service.js"></script>
 </head>
@@ -43,10 +44,66 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        <div data-ng-controller="editGridController">
-            
+<div class="container body-content">
+    <div data-ng-controller="editGridController" style="height: 100%; width: 100%;">
+        <div class="row" ng-show="hasError">
+            <div class="col-md-12">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">Error</div>
+                    <div class="panel-body">
+                        {{ scope.errorMessage }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="height: 100%">
+            <div class="col-md-6" style="height: 100%">
+                <table class="grid-table">
+                    <tr data-ng-repeat="row in configuration" class="grid-row">
+                        <td class="grid-cell"
+                            data-ng-repeat="col in row"
+                            data-ng-class="{clickable : true}"
+                            data-ng-style="{'background-color': col.color, 'color': col.textColor}"
+                            data-ng-click="setForEdit(col)">
+                            {{ col.name }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6" style="height: 100%">
+                
+
+                <div class="well">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon_1">Config name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" class="form-control" placeholder="Config Name" ng-model="inputConfiguration.name" aria-describedby="basic-addon_1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon_2">File Name&nbsp;&nbsp;</span>
+                        <input type="text" class="form-control" placeholder="File Name" ng-model="inputConfiguration.fileName" aria-describedby="basic-addon_2">
+                    </div>
+                </div>
+                <div class="well" data-ng-show="currentAction !== null">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon_3">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" class="form-control" placeholder="Action Name" ng-model="currentAction.name" aria-describedby="basic-addon_3">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon_4">Color&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="color" class="form-control" name="actionColor" data-ng-model="currentAction.color" aria-describedby="basic-addon_4" />
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon_5">Text Color</span>
+                        <input type="color" class="form-control" name="textColor" data-ng-model="currentAction.textColor" aria-describedby="basic-addon_5" />
+                    </div>
+                    <div>
+                        <span class="input-group-addon" id="basic-addon_6">Enabled</span>
+                        <input type="checkbox" class="form-control" name="actionEnabled" data-ng-model="currentAction.isEnabled" aria-describedby="basic-addon_6" />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </body>
 </html>

@@ -36,9 +36,20 @@
             });
         }
 
-        scope.removeGrid = function(index) {
-            scope.availableLegacyConfigurations.splice(index, 1);
-            
+        scope.removeGrid = function (index) {
+            service.removeConfiguration(scope.availableLegacyConfigurations[index]).then(function(response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.hasError = true;
+                    scope.errorMessage = result.errorMessage;
+                    return;
+                }
+                scope.availableLegacyConfigurations.splice(index, 1);
+            });
+        }
+
+        scope.createGrid = function() {
+            window.location.href = "edit-grid.html";
         }
 
         scope.editGrid = function (index) {
@@ -49,6 +60,10 @@
         scope.openGrid = function (index) {
             var name = scope.availableLegacyConfigurations[index];
             window.location.href = "play-grid.html?name=" + name;
+        }
+
+        scope.createView = function() {
+            window.location.href = "edit-view.html";
         }
 
         scope.removeView = function (index) {
@@ -70,8 +85,8 @@
                 var url = result.content.view;
                 window.location.href = "/" + url + "/index.html";
             });
-            
         }
+
         scope.getLegacyConfigurations();
         scope.getViewConfigurations();
     }

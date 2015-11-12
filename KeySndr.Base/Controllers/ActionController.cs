@@ -64,6 +64,24 @@ namespace KeySndr.Base.Controllers
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpGet]
+        public ApiResult<InputConfiguration> GetNewConfiguration(int actionCount)
+        {
+            var cmd = new GenerateInputConfiguration(actionCount);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpDelete]
+        public ApiResult<Object> RemoveConfiguration(string name)
+        {
+            var cmd = new RemoveInputConfiguration(inputConfigProvider, fileSystemProvider, appConfigProvider, name);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
         public ApiResult<Object> Execute(InputAction action)
         {

@@ -1,0 +1,34 @@
+﻿
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+.body-content {
+    width: 100%;
+    height: 100%;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+tr {
+    
+}
+td {
+    width: 19%;
+    height: 15%;
+    background: #666;
+    padding: 10px;
+    text-align:center; 
+    vertical-align:middle;
+}
+
+.clickable {
+    cursor: pointer;
+}
+

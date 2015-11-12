@@ -20,6 +20,11 @@ namespace KeySndr.Base.Providers
                 configs.Add(config);
         }
 
+        public void Remove(InputConfiguration config)
+        {
+            if (configs.Contains(config))
+                configs.Remove(config);
+        }
         /*public async Task Store(InputConfiguration config)
         {
             var existing = FindConfigForName(config.Name);

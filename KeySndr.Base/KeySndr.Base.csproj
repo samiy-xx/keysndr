@@ -98,6 +98,7 @@
     <Compile Include="BeaconLib\IpEndPointComparer.cs" />
     <Compile Include="BeaconLib\Probe.cs" />
     <Compile Include="Commands\ExecuteInputAction.cs" />
+    <Compile Include="Commands\GenerateInputConfiguration.cs" />
     <Compile Include="Commands\GetAllInputConfigurations.cs" />
     <Compile Include="Commands\GetAllScripts.cs" />
     <Compile Include="Commands\GetAppSettings.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Commands\GetLegacyConfigurations.cs" />
     <Compile Include="Commands\GetViewConfigurations.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\RemoveInputConfiguration.cs" />
     <Compile Include="Commands\SaveInputConfiguration.cs" />
     <Compile Include="Commands\StoreAppConfig.cs" />
     <Compile Include="Controllers\ActionController.cs" />
@@ -217,12 +219,32 @@
       <Link>Portal\fonts\glyphicons-halflings-regular.svg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="..\Portal\css\play.css">
+      <Link>Portal\css\play.css</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\css\edit-grid.css">
+      <Link>Portal\css\edit-grid.css</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\css\edit-view.css">
+      <Link>Portal\css\edit-view.css</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="..\Portal\media\favicon.ico">
       <Link>Portal\media\favicon.ico</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="..\Portal\play-grid.html">
       <Link>Portal\play-grid.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\angular-deckgrid\angular-deckgrid.js">
+      <Link>Portal\scripts\angular-deckgrid\angular-deckgrid.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\angular-deckgrid\specs\deckgrid.spec.js">
+      <Link>Portal\scripts\angular-deckgrid\specs\deckgrid.spec.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="..\Portal\scripts\angular-mocks.js">
