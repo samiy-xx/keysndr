@@ -98,21 +98,26 @@
     <Compile Include="BeaconLib\IpEndPointComparer.cs" />
     <Compile Include="BeaconLib\Probe.cs" />
     <Compile Include="Commands\ExecuteInputAction.cs" />
+    <Compile Include="Commands\GenerateInputAction.cs" />
     <Compile Include="Commands\GenerateInputConfiguration.cs" />
     <Compile Include="Commands\GetAllInputConfigurations.cs" />
+    <Compile Include="Commands\GetAllScriptObjects.cs" />
     <Compile Include="Commands\GetAllScripts.cs" />
     <Compile Include="Commands\GetAppSettings.cs" />
     <Compile Include="Commands\GetInputConfiguration.cs" />
     <Compile Include="Commands\GetLegacyConfigurations.cs" />
+    <Compile Include="Commands\GetProcessNames.cs" />
     <Compile Include="Commands\GetViewConfigurations.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\RemoveInputConfiguration.cs" />
     <Compile Include="Commands\SaveInputConfiguration.cs" />
+    <Compile Include="Commands\SaveInputScript.cs" />
     <Compile Include="Commands\StoreAppConfig.cs" />
     <Compile Include="Controllers\ActionController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Domain\AppConfig.cs" />
     <Compile Include="Domain\InputScript.cs" />
     <Compile Include="Domain\ISciptContext.cs" />
@@ -137,7 +142,9 @@
     <Compile Include="Providers\ILoggingProvider.cs" />
     <Compile Include="Providers\InputConfigProvider.cs" />
     <Compile Include="Providers\IScriptProvider.cs" />
+    <Compile Include="Providers\ISystemProvider.cs" />
     <Compile Include="Providers\ScriptProvider.cs" />
+    <Compile Include="Providers\SystemProvider.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WindowsApi.cs" />
@@ -187,10 +194,16 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Portal\scripts\app\directives\" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\Portal\views\partials\navigation.html">
+      <Link>Portal\views\partials\navigation.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\about.html">
+      <Link>Portal\about.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="..\Portal\css\app.css">
       <Link>Portal\css\app.css</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -247,6 +260,14 @@
       <Link>Portal\scripts\angular-deckgrid\specs\deckgrid.spec.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Portal\scripts.html">
+      <Link>Portal\scripts.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Portal\media\favicon.ico.png">
+      <Link>Portal\media\favicon.ico.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\angular-mocks.js">
       <Link>Portal\scripts\angular-mocks.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -303,6 +324,38 @@
       <Link>Portal\scripts\app\controllers\play-grid-controller.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Portal\scripts\app\keys.js">
+      <Link>Portal\scripts\app\keys.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\controllers\main-controller.js">
+      <Link>Portal\scripts\app\controllers\main-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\controllers\scripts-controller.js">
+      <Link>Portal\scripts\app\controllers\scripts-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\controllers\view-controller.js">
+      <Link>Portal\scripts\app\controllers\view-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\scripts\app\directives\bind-configuration.js">
+      <Link>Portal\scripts\app\directives\bind-configuration.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Portal\scripts\bootstrap.js">
+      <Link>Portal\scripts\bootstrap.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\FileSaver.js">
+      <Link>Portal\scripts\FileSaver.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\FileSaver.min.js">
+      <Link>Portal\scripts\FileSaver.min.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\jquery-2.1.4.intellisense.js">
       <Link>Portal\scripts\jquery-2.1.4.intellisense.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

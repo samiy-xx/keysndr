@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class GetAllScripts : ICommand<ApiResult<IEnumerable<string>>>
+    public class GetProcessNames : ICommand<ApiResult<IEnumerable<string>>>
     {
-        private readonly IScriptProvider scriptProvider;
+        private readonly ISystemProvider systemProvider;
         public ApiResult<IEnumerable<string>> Result { get; private set; }
-        
 
-        public GetAllScripts(IScriptProvider s)
+        public GetProcessNames(ISystemProvider p)
         {
-            scriptProvider = s;
+            systemProvider = p;
         }
 
         public void Execute()
@@ -23,7 +21,7 @@ namespace KeySndr.Base.Commands
             {
                 Result = new ApiResult<IEnumerable<string>>
                 {
-                    Content = scriptProvider.Scripts.Select(s => s.Name),
+                    Content = systemProvider.ProcessNames(),
                     Success = true,
                     Message = "Ok"
                 };
@@ -34,11 +32,10 @@ namespace KeySndr.Base.Commands
                 {
                     Content = new string[0],
                     Success = false,
-                    Message = "Error getting scripts",
+                    Message = "Failed to get process names",
                     ErrorMessage = e.Message
                 };
             }
         }
-
     }
 }

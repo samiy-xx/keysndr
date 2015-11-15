@@ -6,10 +6,6 @@
         scope.availableViewConfigurations = null;
         scope.availableLegacyConfigurations = null;
 
-        scope.errorMessage = null;
-        scope.message = null;
-        scope.hasError = false;
-
         scope.getLegacyConfigurations = function() {
             service.getLegacyConfigurations().then(function(response) {
                 var result = response.data;
@@ -62,6 +58,39 @@
             window.location.href = "play-grid.html?name=" + name;
         }
 
+        scope.exportGrid = function(index) {
+            service.getConfiguration(scope.availableLegacyConfigurations[index]).then(function(response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.hasError = true;
+                    scope.message = "Failed to export input configuration";
+                    scope.errorMessage = result.errorMessage;
+                    return;
+                }
+                var confFileName = result.content.fileName;
+                saveAs(
+                    new Blob([angular.toJson(result.content, true)], { type: 'text/json' }),
+                    confFileName
+                );
+            });
+        }
+
+        scope.exportView = function (index) {
+            service.getConfiguration(scope.availableViewConfigurations[index]).then(function (response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.hasError = true;
+                    scope.message = "Failed to export input configuration";
+                    scope.errorMessage = result.errorMessage;
+                    return;
+                }
+                var confFileName = result.content.fileName;
+                saveAs(
+                    new Blob([angular.toJson(result.content, true)], { type: 'text/json' }),
+                    confFileName
+                );
+            });
+        }
         scope.createView = function() {
             window.location.href = "edit-view.html";
         }

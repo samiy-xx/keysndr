@@ -5,16 +5,19 @@
 
     function PlayGridController(scope, service, location) {
         scope.configuration = null;
-        scope.hasErrors = false;
-        scope.message = null;
-        scope.errorMessage = null;
 
         scope.execute = function (action) {
             if (action.sequences.length === 0
                 && action.mouseSequences.length === 0
                 && action.scriptSequences.length === 0)
                 return;
-            service.executeAction(action).then(function(response) {
+            var executionContainer = {
+                useForegroundWindow: true,
+                useDesktop: false,
+                processName: "",
+                inputAction: action
+            };
+            service.executeAction(executionContainer).then(function (response) {
                 var result = response.data;
                 if (!result.success) {
                     scope.hasErrors = true;

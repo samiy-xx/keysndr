@@ -11,116 +11,93 @@
 
     <script src="scripts/jquery-2.1.4.js"></script>
     <script src="scripts/angular.js"></script>
+    <script src="scripts/bootstrap.js"></script>
     <script src="scripts/angular-ui/ui-bootstrap.js"></script>
     <script src="scripts/app.js"></script>
+    <script src="scripts/app/controllers/main-controller.js"></script>
     <script src="scripts/app/controllers/settings_controller.js"></script>
     <script src="scripts/app/services/api_service.js"></script>
 </head>
-<body ng-app="keysndr">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="index.html" class="navbar-brand" target="_self">Home</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.html" target="_self">Home</a></li>
-                    <li><a href="settings.html" target="_self">Settings</a></li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="index.html" target="_self">Home</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                Some more here
+<body ng-app="keysndr" data-ng-controller="mainController">
+    <header ng-include src="'views/partials/navigation.html'"></header>
+<div class="container body-content">
+    <div data-ng-controller="settingsController">
+        <div class="row" ng-show="hasError">
+            <div class="col-md-10">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">{{ message }}</div>
+                    <div class="panel-body">
+                        {{ errorMessage }}
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        <div data-ng-controller="settingsController">
-            <div class="row" ng-show="hasError">
-                <div class="col-md-10">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">{{ scope.message }}</div>
-                        <div class="panel-body">
-                            {{ scope.errorMessage }}
-                        </div>
+        <div class="row" ng-show="!hasError && message.length > 0">
+            <div class="col-md-10">
+                <div class="panel panel-success">
+                    <div class="panel-heading">{{ message }}</div>
+                    <div class="panel-body">
+                        Settings saved with success
                     </div>
                 </div>
             </div>
-            <div class="row" ng-show="!hasError && message !== null">
-                <div class="col-md-10">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">{{ scope.message }}</div>
-                        <div class="panel-body">
-                            Settings saved with success
-                        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="input_settings_ip" class="control-label">Server IP</label>
+                        <input id="input_settings_ip" type="text" class="form-control" data-ng-model="appSettings.lastIp"/>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label for="input_settings_ip" class="control-label">Server IP</label>
-                            <input id="input_settings_ip" type="text" class="form-control" data-ng-model="appSettings.lastIp"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_port" class="control-label">Server Port</label>
-                            <input id="input_settings_port" type="text" class="form-control" data-ng-model="appSettings.lastPort"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_id" class="control-label">Broadcast Identifier</label>
-                            <input id="input_settings_id" type="text" class="form-control" data-ng-model="appSettings.broadcastIdentifier"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_version" class="control-label">Version Check Url</label>
-                            <input id="input_settings_version" type="text" class="form-control" data-ng-model="appSettings.updateVersionCheckUrl" />
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_config_folder" class="control-label">Configurations folder</label>
-                            <input id="input_settings_config_folder" type="text" class="form-control" data-ng-model="appSettings.configFolder"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_scripts_folder" class="control-label">Scripts folder</label>
-                            <input id="input_settings_scripts_folder" type="text" class="form-control" data-ng-model="appSettings.scriptsFolder"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_web_folder" class="control-label">Web folder</label>
-                            <input id="input_settings_web_folder" type="text" class="form-control" data-ng-model="appSettings.webFolder"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_process" class="control-label">Process Name</label>
-                            <input id="input_settings_process" type="text" class="form-control" data-ng-model="appSettings.lastProcessName"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_fore" class="control-label">Use Foreground Window</label>
-                            <input id="input_settings_fore" type="checkbox" class="form-control" data-ng-model="appSettings.useForegroundWindow"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_updates" class="control-label">Check updates on start</label>
-                            <input id="input_settings_updates" type="checkbox" class="form-control" data-ng-model="appSettings.checkUpdateOnStart"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="input_settings_updates" class="control-label">Enable Keyboard and Mouse (Experimental)</label>
-                            <input id="input_settings_updates" type="checkbox" class="form-control" data-ng-model="appSettings.enableKeyboardAndMouse"/>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2">
-                                <input type="submit" value="Save" class="btn btn-default" data-ng-click="saveSettings()"/>
-                            </div>
+                    <div class="form-group">
+                        <label for="input_settings_port" class="control-label">Server Port</label>
+                        <input id="input_settings_port" type="text" class="form-control" data-ng-model="appSettings.lastPort"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_id" class="control-label">Broadcast Identifier</label>
+                        <input id="input_settings_id" type="text" class="form-control" data-ng-model="appSettings.broadcastIdentifier"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_version" class="control-label">Version Check Url</label>
+                        <input id="input_settings_version" type="text" class="form-control" data-ng-model="appSettings.updateVersionCheckUrl"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_config_folder" class="control-label">Configurations folder</label>
+                        <input id="input_settings_config_folder" type="text" class="form-control" data-ng-model="appSettings.configFolder"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_scripts_folder" class="control-label">Scripts folder</label>
+                        <input id="input_settings_scripts_folder" type="text" class="form-control" data-ng-model="appSettings.scriptsFolder"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_web_folder" class="control-label">Web folder</label>
+                        <input id="input_settings_web_folder" type="text" class="form-control" data-ng-model="appSettings.webFolder"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_process" class="control-label">Process Name</label>
+                        <input id="input_settings_process" type="text" class="form-control" data-ng-model="appSettings.lastProcessName"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_fore" class="control-label">Use Foreground Window</label>
+                        <input id="input_settings_fore" type="checkbox" class="form-control" data-ng-model="appSettings.useForegroundWindow"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_updates" class="control-label">Check updates on start</label>
+                        <input id="input_settings_updates" type="checkbox" class="form-control" data-ng-model="appSettings.checkUpdateOnStart"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_updates" class="control-label">Enable Keyboard and Mouse (Experimental)</label>
+                        <input id="input_settings_updates" type="checkbox" class="form-control" data-ng-model="appSettings.enableKeyboardAndMouse"/>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2">
+                            <input type="submit" value="Save" class="btn btn-default" data-ng-click="saveSettings()"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

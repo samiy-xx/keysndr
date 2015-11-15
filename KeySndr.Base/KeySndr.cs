@@ -37,6 +37,7 @@ namespace KeySndr.Base
             ObjectFactory.AddProvider(new AppConfigProvider());
             ObjectFactory.AddProvider(new ScriptProvider());
             ObjectFactory.AddProvider(new InputConfigProvider());
+            ObjectFactory.AddProvider(new SystemProvider());
         }
 
         private void VerifyFileSystem()

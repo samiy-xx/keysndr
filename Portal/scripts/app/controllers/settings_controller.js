@@ -5,10 +5,6 @@
     function SettingsController(scope, service) {
         scope.appSettings = null;
 
-        scope.errorMessage = null;
-        scope.message = null;
-        scope.hasError = false;
-
         scope.getAppSettings = function() {
             service.getSettings().then(function(response) {
                 var result = response.data;

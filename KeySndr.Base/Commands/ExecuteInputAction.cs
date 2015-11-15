@@ -7,18 +7,18 @@ namespace KeySndr.Base.Commands
     public class ExecuteInputAction : ICommand<ApiResult<Object>>
     {
         public ApiResult<Object> Result { get; private set; }
-        private readonly InputAction action;
+        private readonly InputActionExecutionContainer actionContainer;
 
-        public ExecuteInputAction(InputAction a)
+        public ExecuteInputAction(InputActionExecutionContainer c)
         {
-            action = a;
+            actionContainer = c;
         }
 
         public void Execute()
         {
             try
             {
-                Sender.Send(action).Wait(1000);
+                Sender.Send(actionContainer).Wait(1000);
                 Result = new ApiResult<object>
                 {
                     Content = "empty",
@@ -32,7 +32,7 @@ namespace KeySndr.Base.Commands
                 {
                     Content = "empty",
                     Success = false,
-                    Message = "Failed to execute action "+ action.Name,
+                    Message = "Failed to execute action "+ actionContainer.InputAction.Name,
                     ErrorMessage = e.Message
                 };
             }

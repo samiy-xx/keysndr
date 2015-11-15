@@ -16,37 +16,49 @@ namespace KeySndr.Base.Providers
 
         public void Add(InputConfiguration config)
         {
-            if (!configs.Contains(config))
-                configs.Add(config);
+            lock (configs)
+            {
+                if (!configs.Contains(config))
+                    configs.Add(config);
+            }
         }
 
+        public void AddOrUpdate(InputConfiguration config)
+        {
+            lock (configs)
+            {
+                var index = configs.IndexOf(config);
+                if (index > -1)
+                {
+                    configs[index] = config;
+                    return;
+                }
+                configs.Add(config);
+            }
+        }
         public void Remove(InputConfiguration config)
         {
-            if (configs.Contains(config))
-                configs.Remove(config);
-        }
-        /*public async Task Store(InputConfiguration config)
-        {
-            var existing = FindConfigForName(config.Name);
-            if (existing != null)
+            lock (configs)
             {
-                var index = configs.IndexOf(existing);
-                if (index > -1)
-                    configs[index] = config;
-            }
-
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
-            await fs.SaveInputConfiguration(config);
-        }*/
+                if (configs.Contains(config))
+                    configs.Remove(config);
+            } 
+        }
 
         public InputConfiguration FindConfigForName(string name)
         {
-            return configs.FirstOrDefault(c => c.Name == name);
+            lock (configs)
+            {
+                return configs.FirstOrDefault(c => c.Name == name);
+            }
         }
 
         public void Clear()
         {
-            configs.Clear();
+            lock (configs)
+            {
+                configs.Clear();
+            }
         }
     }
 }

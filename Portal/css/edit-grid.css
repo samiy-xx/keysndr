@@ -14,7 +14,7 @@
 table {
     width: 100%;
     height: 100%;
-    background: #fff;
+    background:#303030;
     border-spacing: 10px;
     border-collapse: separate;
 }
@@ -32,4 +32,17 @@ td {
 
 .clickable {
     cursor: pointer;
+}
+
+.input-group-addon {
+    min-width:200px;
+    text-align:left;
+}
+.well > div {
+    margin: 5px;
+    padding: 5px;
+}
+.action-values > div {
+    margin: 5px;
+    padding: 5px;
 }

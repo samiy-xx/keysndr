@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 using KeySndr.InputManager;
@@ -27,16 +29,25 @@ namespace KeySndr.Base
                     if (sequenceItem.Entry.Key == null)
                         continue;
 
-                    if (sequenceItem.Modifiers.Any())
+                    if (sequenceItem.WindowsModifiers.Any())
                     {
-                        foreach (var sequenceKeyValuePair in sequenceItem.Modifiers)
-                        {
-                            Keyboard.KeyPress(converter.ConvertFromInt(sequenceKeyValuePair.Value),
-                                sequenceItem.KeepDown);
-                        }
+                        var keys = new List<Keys>();
+                        keys.AddRange(sequenceItem.WindowsModifiers.Select(m => (Keys) m.Value));
+                        keys.Add((Keys) sequenceItem.Entry.Value);
+                        Keyboard.ShortcutKeys(keys.ToArray(), sequenceItem.KeepDown);
                     }
-                    Keyboard.KeyPress(converter.ConvertFromInt(sequenceItem.Entry.Value), sequenceItem.KeepDown);
-                    Thread.Sleep(sequenceItem.KeepDown + 10);
+                    else
+                    {
+                        if (sequenceItem.Modifiers.Any())
+                        {
+                            foreach (var sequenceKeyValuePair in sequenceItem.Modifiers)
+                            {
+                                Keyboard.KeyPress(converter.ConvertFromInt(sequenceKeyValuePair.Value),
+                                    sequenceItem.KeepDown);
+                            }
+                        }
+                        Keyboard.KeyPress(converter.ConvertFromInt(sequenceItem.Entry.Value), sequenceItem.KeepDown);
+                    }
                 }
             });
         }
@@ -86,7 +97,29 @@ namespace KeySndr.Base
         public async static Task Send(InputAction action)
         {
             var config = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
-            if (config.ProcessNumber == IntPtr.Zero)
+            var processSet = false;
+
+            if (config.UseForegroundWindow)
+            {
+                var ptr = WindowsApi.GetForegroundWindow();
+                if (ptr != IntPtr.Zero)
+                {
+                    WindowsApi.SetFocus(ptr);
+                    processSet = true;
+                }
+            }
+
+            if (!processSet && !string.IsNullOrEmpty(config.LastProcessName))
+            {
+                var process = WinUtils.GetProcessByName(config.LastProcessName);
+                if (process != null)
+                {
+                    WindowsApi.SetForegroundWindow(process.MainWindowHandle);
+                    WindowsApi.SetFocus(process.MainWindowHandle);
+                    processSet = true;
+                }
+            }
+            /*if (config.ProcessNumber == IntPtr.Zero)
             {
                 var process = WinUtils.GetProcessByName(config.LastProcessName);
                 if (process != null)
@@ -94,17 +127,62 @@ namespace KeySndr.Base
             }
             if (config.ProcessNumber == IntPtr.Zero)
                 return;
-
-            await new Sender().Send(config.ProcessNumber, action, config.UseForegroundWindow);
+            */
+                        if (processSet)
+                await new Sender().SendAction(action);
         }
 
+        public async static Task Send(InputActionExecutionContainer container)
+        {
+            var processSet = false;
 
-        public async Task Send(IntPtr currentHandle, InputAction action, bool useFg)
+            if (container.UseForegroundWindow)
+            {
+                var ptr = WindowsApi.GetForegroundWindow();
+                if (ptr != IntPtr.Zero)
+                {
+                    WindowsApi.SetFocus(ptr);
+                    processSet = true;
+                }
+            }
+
+            if (!processSet && container.UseDesktop)
+            {
+                var ptr = WindowsApi.GetDesktopWindow();
+                if (ptr != IntPtr.Zero)
+                {
+                    WindowsApi.SetFocus(ptr);
+                    WindowsApi.SetForegroundWindow(ptr);
+                    processSet = true;
+                }
+            }
+            if (!processSet && !string.IsNullOrEmpty(container.ProcessName))
+            {
+                var process = WinUtils.GetProcessByName(container.ProcessName);
+                if (process != null)
+                {
+                    WindowsApi.SetForegroundWindow(process.MainWindowHandle);
+                    WindowsApi.SetFocus(process.MainWindowHandle);
+                    processSet = true;
+                }
+                
+            }
+
+            if (!processSet)
+            {
+                await Send(container.InputAction);
+                return;
+            }
+
+            await new Sender().SendAction(container.InputAction);
+        }
+
+        public async Task SendAction(InputAction action)
         {
             var sndr = new SenderInternal(action);
            
             Log.Debug("Running action " + action.Name);
-            if (!useFg)
+            /*if (!useFg)
             {
                 Log.Debug("Setting focus to chosen window");
                 WindowsApi.SetForegroundWindow(currentHandle);
@@ -116,7 +194,7 @@ namespace KeySndr.Base
                 var ptr = WindowsApi.GetForegroundWindow();
                 if (ptr != IntPtr.Zero)
                     WindowsApi.SetFocus(ptr);
-            }
+            }*/
             
             if (action.HasKeySequences)
                 await sndr.SendKeyBoardSequences();

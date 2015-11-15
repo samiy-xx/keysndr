@@ -42,6 +42,7 @@
     <Compile Include="BinarySerializer.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="InputAction.cs" />
+    <Compile Include="InputActionExecutionContainer.cs" />
     <Compile Include="InputConfiguration.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="MouseSequenceItem.cs" />

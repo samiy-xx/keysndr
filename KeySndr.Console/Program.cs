@@ -12,6 +12,7 @@ namespace KeySndr.Console
             ObjectFactory.AddProvider(new LoggingProvider());
             keysndr.Run();
 
+            
             System.Console.ReadLine();
         }
     }

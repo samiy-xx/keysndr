@@ -15,10 +15,14 @@ namespace KeySndr.Common
         [DataMember(Name = "modifiers")]
         public List<SequenceKeyValuePair> Modifiers { get; set; }
 
+        [DataMember(Name = "winmodifiers")]
+        public List<SequenceKeyValuePair> WindowsModifiers { get; set; }
+
         public SequenceItem()
             : base()
         {
             Modifiers = new List<SequenceKeyValuePair>();
+            WindowsModifiers = new List<SequenceKeyValuePair>();
         }
 
         public SequenceItem(int keepDown, int code, string key)
@@ -41,6 +45,16 @@ namespace KeySndr.Common
             KeepDown = keepDown;
             Entry = entry;
             Modifiers = modifiers;
+            WindowsModifiers = new List<SequenceKeyValuePair>();
+        }
+
+        public SequenceItem(int keepDown, SequenceKeyValuePair entry, List<SequenceKeyValuePair> modifiers, List<SequenceKeyValuePair> winModifiers)
+            : base()
+        {
+            KeepDown = keepDown;
+            Entry = entry;
+            Modifiers = modifiers;
+            WindowsModifiers = winModifiers;
         }
 
         public SequenceItem SetKeepDown(int i)

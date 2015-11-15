@@ -17,16 +17,28 @@
             return $http.get(rootUrl + "action/getnewconfiguration?actionCount=" + actionCount);
         },
 
+        getNewInputAction: function() {
+            return $http.get(rootUrl + "action/getnewinputaction");
+        },
+
         getConfiguration: function (name) {
             return $http.get(rootUrl + "action/getconfiguration?name="+ name);
         },
 
-        executeAction: function(action) {
-            return $http.post(rootUrl + "action/execute", action);
+        executeAction: function(container) {
+            return $http.post(rootUrl + "action/execute", container);
         },
 
         removeConfiguration: function(name) {
             return $http.delete(rootUrl + "action/removeconfiguration?name=" + name);
+        },
+
+        saveConfiguration: function(conf) {
+            return $http.post(rootUrl + "action/save", conf);
+        },
+
+        savescript: function (script) {
+            return $http.post(rootUrl + "scripts/save", script);
         },
 
         getSettings: function() {
@@ -35,6 +47,18 @@
 
         saveSettings: function(settings) {
             return $http.post(rootUrl + "settings/storeappsettings", settings);
+        },
+
+        getAllScripts: function() {
+            return $http.get(rootUrl + "scripts/getallscripts");
+        },
+        
+        getAllScriptObjects: function() {
+            return $http.get(rootUrl + "scripts/getallscriptobjects");
+        },
+
+        getProcessNames: function() {
+            return $http.get(rootUrl + "system/getprocessnames");
         }
     }
 }]);

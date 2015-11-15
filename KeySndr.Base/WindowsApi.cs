@@ -118,6 +118,9 @@ namespace KeySndr.Base
             out int lpNumberOfBytesRead
             );
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr GetDesktopWindow();
+
         public static void SwitchWindow(IntPtr windowHandle)
         {
             if (GetForegroundWindow() == windowHandle)

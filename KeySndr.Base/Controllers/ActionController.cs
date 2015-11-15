@@ -73,6 +73,15 @@ namespace KeySndr.Base.Controllers
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpGet]
+        public ApiResult<InputAction> GetNewInputAction()
+        {
+            var cmd = new GenerateInputAction();
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpDelete]
         public ApiResult<Object> RemoveConfiguration(string name)
         {
@@ -83,9 +92,9 @@ namespace KeySndr.Base.Controllers
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
-        public ApiResult<Object> Execute(InputAction action)
+        public ApiResult<Object> Execute(InputActionExecutionContainer actionContainer)
         {
-            var cmd = new ExecuteInputAction(action);
+            var cmd = new ExecuteInputAction(actionContainer);
             cmd.Execute();
             return cmd.Result;
         }
@@ -94,7 +103,7 @@ namespace KeySndr.Base.Controllers
         [HttpPost]
         public ApiResult<Object> Save(InputConfiguration configuration)
         {
-            var cmd = new SaveInputConfiguration(fileSystemProvider, appConfigProvider, configuration);
+            var cmd = new SaveInputConfiguration(fileSystemProvider, appConfigProvider, inputConfigProvider, configuration);
             cmd.Execute();
             return cmd.Result;
         }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KeySndr.Base
 {
@@ -11,7 +9,7 @@ namespace KeySndr.Base
     {
         public static IntPtr GetWindowHandle(string name)
         {
-            var e = System.Diagnostics.Process.GetProcessesByName(name);
+            var e = Process.GetProcessesByName(name);
             if (e.Any())
                 return e.First().MainWindowHandle;
             return (IntPtr)0;
@@ -19,13 +17,21 @@ namespace KeySndr.Base
 
         public static IntPtr FindWindow(string windowName)
         {
-            foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
+            foreach (var p in Process.GetProcesses())
             {
-                if (p.MainWindowHandle != IntPtr.Zero && p.MainWindowTitle.ToLower() == windowName.ToLower())
+                if (p.MainWindowHandle != IntPtr.Zero && string.Equals(p.MainWindowTitle, windowName, StringComparison.CurrentCultureIgnoreCase))
                     return p.MainWindowHandle;
             }
             return IntPtr.Zero;
         }
+
+        public static IEnumerable<string> GetProcessNames()
+        {
+            return
+                Process.GetProcesses()
+                    .Where(p => !string.IsNullOrEmpty(p.MainWindowTitle))
+                    .Select(p => p.MainWindowTitle);
+        } 
 
         public static IEnumerable<Process> GetProcessesWithWindow()
         {

@@ -1,36 +1,36 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using KeySndr.Base.Domain;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class SaveInputConfiguration : ICommand<ApiResult<Object>>
+    public class SaveInputScript : ICommand<ApiResult<Object>>
     {
-        private readonly IFileSystemProvider fileSystemProvider;
         private readonly IAppConfigProvider appConfigProvider;
-        private readonly IInputConfigProvider inputConfigProvider;
-
-        private readonly InputConfiguration configuration;
+        private readonly IFileSystemProvider fileSystemProvider;
+        private readonly IScriptProvider scriptProvider;
+        private readonly InputScript script;
 
         public ApiResult<Object> Result { get; private set; }
 
-        public SaveInputConfiguration(IFileSystemProvider fs, IAppConfigProvider a, IInputConfigProvider i, InputConfiguration c)
+        public SaveInputScript(IFileSystemProvider fs, IAppConfigProvider a, IScriptProvider s, InputScript c)
         {
             fileSystemProvider = fs;
             appConfigProvider = a;
-            inputConfigProvider = i;
-            configuration = c;
+            scriptProvider = s;
+            script = c;
         }
 
         public void Execute()
         {
             try
             {
-
-                inputConfigProvider.AddOrUpdate(configuration);
-                fileSystemProvider.SaveObjectToDisk(configuration, Path.Combine(appConfigProvider.AppConfig.ConfigFolder, configuration.FileName));
+                if (!scriptProvider.Scripts.Contains(script))
+                    scriptProvider.AddScript(script, true);
+                fileSystemProvider.SaveObjectToDisk(script, Path.Combine(appConfigProvider.AppConfig.ScriptsFolder, script.FileName));
                 Result = new ApiResult<object>
                 {
                     Content = "empty",
@@ -44,7 +44,7 @@ namespace KeySndr.Base.Commands
                 {
                     Content = "empty",
                     Success = false,
-                    Message = "Failed to save input configuration "+ configuration.Name,
+                    Message = "Failed to save script " + script.Name,
                     ErrorMessage = e.Message
                 };
             }

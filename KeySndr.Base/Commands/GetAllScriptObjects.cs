@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using KeySndr.Base.Domain;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class GetAllScripts : ICommand<ApiResult<IEnumerable<string>>>
+    public class GetAllScriptObjects : ICommand<ApiResult<IEnumerable<InputScript>>>
     {
         private readonly IScriptProvider scriptProvider;
-        public ApiResult<IEnumerable<string>> Result { get; private set; }
-        
+        public ApiResult<IEnumerable<InputScript>> Result { get; private set; }
 
-        public GetAllScripts(IScriptProvider s)
+
+        public GetAllScriptObjects(IScriptProvider s)
         {
             scriptProvider = s;
         }
@@ -21,18 +21,18 @@ namespace KeySndr.Base.Commands
         {
             try
             {
-                Result = new ApiResult<IEnumerable<string>>
+                Result = new ApiResult<IEnumerable<InputScript>>
                 {
-                    Content = scriptProvider.Scripts.Select(s => s.Name),
+                    Content = scriptProvider.Scripts,
                     Success = true,
                     Message = "Ok"
                 };
             }
             catch (Exception e)
             {
-                Result = new ApiResult<IEnumerable<string>>
+                Result = new ApiResult<IEnumerable<InputScript>>
                 {
-                    Content = new string[0],
+                    Content = new InputScript[0],
                     Success = false,
                     Message = "Error getting scripts",
                     ErrorMessage = e.Message
