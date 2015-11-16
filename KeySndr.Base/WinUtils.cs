@@ -30,7 +30,7 @@ namespace KeySndr.Base
             return
                 Process.GetProcesses()
                     .Where(p => !string.IsNullOrEmpty(p.MainWindowTitle))
-                    .Select(p => p.MainWindowTitle);
+                    .Select(p => p.ProcessName);
         } 
 
         public static IEnumerable<Process> GetProcessesWithWindow()

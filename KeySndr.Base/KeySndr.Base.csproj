@@ -196,6 +196,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="..\Portal\views\partials\error-message-row.html">
+      <Link>Portal\views\partials\error-message-row.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\views\partials\success-message-row.html">
+      <Link>Portal\views\partials\success-message-row.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="..\Portal\views\partials\navigation.html">
       <Link>Portal\views\partials\navigation.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

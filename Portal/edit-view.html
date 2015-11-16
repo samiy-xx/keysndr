@@ -7,7 +7,7 @@
     <title>KeySndr - Management</title>
     <link rel="SHORTCUT ICON" href="media/favicon.ico" />
     <link href="css/bootstrap.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/edit-view.css" rel="stylesheet" />
 
     <script src="scripts/jquery-2.1.4.js"></script>
     <script src="scripts/angular.js"></script>
@@ -34,24 +34,50 @@
                             <input type="text" class="form-control" placeholder="Config Name" ng-model="inputConfiguration.name" aria-describedby="basic-addon_1">
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon_12">File Name&nbsp;&nbsp;</span>
-                            <input type="text" class="form-control" placeholder="File Name" ng-model="inputConfiguration.fileName" aria-describedby="basic-addon_2">
-                        </div>
-                        <div class="input-group">
                             <span class="input-group-addon" id="basic-addon_13">Path to view&nbsp;&nbsp;</span>
                             <input type="text" class="form-control" placeholder="Path to view" ng-model="inputConfiguration.view" aria-describedby="basic-addon_2">
                         </div>
+                        <!-- Begin selecting action target -->
                         <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon_14">Process name&nbsp;&nbsp;</span>
-                            <input type="text" class="form-control" placeholder="Path to view" ng-model="inputConfiguration.processName" aria-describedby="basic-addon_2">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon_15">Use Desktop</span>
-                            <input type="checkbox" class="form-control" name="actionEnabled" data-ng-model="inputConfiguration.useDesktop" aria-describedby="basic-addon_6"/>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon_16">Use Foreground window</span>
-                            <input type="checkbox" class="form-control" name="actionEnabled" data-ng-model="inputConfiguration.useForegroundWindow" aria-describedby="basic-addon_6" />
+                            <div class="input-group-btn">
+                                <button
+                                    title="Use desktop as the action target"
+                                    type="button"
+                                    class="btn btn-default"
+                                    data-ng-model="processSelector.useDesktopWindow"
+                                    data-ng-class="{active : processSelector.useDesktopWindow}"
+                                    data-ng-click="setProcessTarget(true, false, false)">
+                                    <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+                                </button>
+                                <button
+                                    type="button"
+                                    title="Use current foreground window as the target"
+                                    class="btn btn-default"
+                                    data-ng-class="{active : processSelector.useForegroundWindow}"
+                                    data-ng-click="setProcessTarget(false, true, false)">
+                                    <span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>
+                                </button>
+                                <button type="button"
+                                        title="Use process name"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true" 
+                                        aria-expanded="false"
+                                        class="btn btn-default dropdown-toggle"
+                                        data-ng-class="{active : processSelector.useProcessName}"
+                                        data-ng-click="setProcessTarget(false, false, true); getProcessNames()">
+                                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li data-ng-repeat="p in processNames track by $index"><a href="#" data-ng-click="setProcessName(p)">{{ p }}</a></li>
+                                </ul>
+                            </div>
+                            <input
+                                type="text"
+                                class="form-control"
+                                data-ng-disabled="!processSelector.useProcessName"
+                                placeholder="Process name"
+                                ng-model="inputConfiguration.processName" 
+                                aria-describedby="basic-addon_2">
                         </div>
                     </div>
                 </div>
@@ -68,7 +94,7 @@
                                 <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export</button>
                             </div>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Exit</button>
+                                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Exit</button>
                             </div>
                         </div>
                     </div>
@@ -80,8 +106,20 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="btn-group pull-right">
-                                    <a href="#" class="btn btn-danger btn-xs" data-ng-click="deleteAction($index)">Delete</a>
-                                    <a href="#" class="btn btn-danger btn-xs" data-ng-click="setforEdit($index)">Edit Sequences</a>
+                                    <a
+                                        href="#"
+                                        title="Remove"
+                                        class="btn btn-danger btn-xs"
+                                        data-ng-click="deleteAction($index)">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </a>
+                                    <a
+                                        href="#"
+                                        title="Edit"
+                                        class="btn btn-primary btn-xs"
+                                        data-ng-click="setforEdit($index)">
+                                        <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
+                                    </a>
                                 </div>
                                 <h4 class="panel-title">Action {{ action.name }}</h4>
                             </div>
@@ -98,7 +136,7 @@
                     <div class="panel panel-default" data-ng-show="currentAction !== null">
                         <div class="panel-heading">
                             <div class="btn-group pull-right">
-                                <a href="#" class="btn btn-danger btn-xs" data-ng-click="deleteCurrentAction()">Delete</a>
+                                <a href="#" class="btn btn-danger btn-xs" data-ng-click="deleteCurrentAction()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                             </div>
                             <h4 class="panel-title">Input Action</h4>
                         </div>
@@ -142,7 +180,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="btn-group pull-right">
-                                    <a href="#" class="btn btn-danger btn-xs" data-ng-click="deleteScript($index)">Delete</a>
+                                    <a href="#" class="btn btn-danger btn-xs" data-ng-click="deleteScript($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                 </div>
                                 <h4 class="panel-title">Script #{{ $index }}</h4>
                             </div>
@@ -157,9 +195,29 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="btn-group pull-right">
-                                    <a href="#" class="btn btn-danger btn-xs" data-ng-click="moveSequence($index, -1)">Move up</a>
-                                    <a href="#" class="btn btn-danger btn-xs" data-ng-click="moveSequence($index, 1)">Move Down</a>
-                                    <a href="#" class="btn btn-danger btn-xs" data-ng-click="deleteSequence($index)">Delete</a>
+                                    <a
+                                        href="#"
+                                        title="Move up"
+                                        class="btn btn-primary btn-xs"
+                                        data-ng-disabled="!canMoveSequence($index, -1)"
+                                        data-ng-click="moveSequence($index, -1)">
+                                        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                                    </a>
+                                    <a
+                                        href="#"
+                                        title="Move down"
+                                        class="btn btn-primary btn-xs"
+                                        data-ng-disabled="!canMoveSequence($index, 1)"
+                                        data-ng-click="moveSequence($index, 1)">
+                                        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                                    </a>
+                                    <a
+                                        href="#"
+                                        title="Remove"
+                                        class="btn btn-danger btn-xs"
+                                        data-ng-click="deleteSequence($index)">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </a>
                                 </div>
                                 <h4 class="panel-title">Input Sequence #{{ $index }}</h4>
                             </div>

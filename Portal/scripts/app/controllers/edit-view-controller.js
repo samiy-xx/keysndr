@@ -10,6 +10,37 @@
         scope.keyModifiers = AppModifiers;
         scope.winModifiers = WinModifiers;
         scope.availableScripts = [];
+        scope.processSelector = {
+            'useDesktopWindow': false,
+            'useForegroundWindow': false,
+            'useProcessName': false
+        }
+        scope.processNames = ["loading..."];
+
+        scope.getProcessNames = function() {
+            service.getProcessNames().then(function(response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.setErrorMessage("Failed to load processes", scope.errorMessage, 5000);
+                    return;
+                }
+
+                scope.processNames = result.content;
+            });
+        }
+        scope.setProcessName = function(p) {
+            if (!scope.processSelector.useProcessName)
+                return;
+            scope.inputConfiguration.processName = p;
+        }
+
+        scope.setProcessTarget = function (d, f, p) {
+            scope.processSelector.useDesktopWindow = d;
+            scope.processSelector.useForegroundWindow = f;
+            scope.processSelector.useProcessName = p;
+            if (!p)
+                scope.inputConfiguration.processName = "";  
+        }
 
         scope.setforEdit = function(index) {
             scope.currentAction = scope.inputConfiguration.actions[index];
@@ -29,12 +60,14 @@
                     return;
                 }
                 scope.inputConfiguration.actions.push(result.content);
+                scope.currentAction = scope.inputConfiguration.actions.length - 1;
             });
         }
 
         scope.deleteAction = function(index) {
             scope.inputConfiguration.actions.removeAt(index);
         }
+
         scope.saveConfiguration = function () {
             service.saveConfiguration(scope.inputConfiguration).then(function (response) {
                 var result = response.data;
@@ -71,14 +104,21 @@
 
         scope.moveSequence = function (index, dir) {
             var nextIndex = index + dir;
-            if (nextIndex < 0)
-                return;
-            if (nextIndex > scope.currentAction.sequences.length - 1)
+            if (!scope.canMoveSequence)
                 return;
 
             var o = scope.currentAction.sequences[index];
             scope.currentAction.sequences.removeAt(index);
             scope.currentAction.sequences.insertAt(nextIndex, o);
+        }
+
+        scope.canMoveSequence = function(index, dir) {
+            var nextIndex = index + dir;
+            if (nextIndex < 0)
+                return false;
+            if (nextIndex > scope.currentAction.sequences.length - 1)
+                return false;
+            return true;
         }
 
         scope.addScript = function (name) {
@@ -168,7 +208,11 @@
                         return;
                     }
                     scope.inputConfiguration = result.content;
-                    
+                    scope.setProcessTarget(
+                        scope.inputConfiguration.useDesktopWindow,
+                        scope.inputConfiguration.useForegroundWindow,
+                        scope.inputConfiguration.processName.length > 0
+                    );
                 });
             } else {
                 service.getNewConfiguration(1).then(function (response) {
@@ -178,6 +222,11 @@
                         return;
                     }
                     scope.inputConfiguration = result.content;
+                    scope.setProcessTarget(
+                        scope.inputConfiguration.useDesktopWindow,
+                        scope.inputConfiguration.useForegroundWindow,
+                        scope.inputConfiguration.processName.length > 0
+                    );
                 });
             }
 
