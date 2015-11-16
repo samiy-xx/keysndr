@@ -38,7 +38,5 @@ namespace KeySndr.Base.Commands
             }
 
         }
-
-
     }
 }
