@@ -33,6 +33,25 @@ namespace KeySndr.Base.Providers
                 Create(script);
         }
 
+        public void AddOrUpdate(InputScript script, bool createContext = false)
+        {
+            lock (scripts)
+            {
+                var index = scripts.IndexOf(script);
+                if (index > 0)
+                {
+                    scripts[index] = script;
+                }
+                else
+                {
+                    scripts.Add(script);
+                    if (createContext)
+                        Create(script);
+                }
+
+            }
+        }
+
         public void RemoveScript(InputScript script)
         {
             lock (scripts)

@@ -60,6 +60,15 @@ namespace KeySndr.Base.Controllers
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpPost]
+        public ApiResult<Object> Validate(InputScript configuration)
+        {
+            var cmd = new ValidateInputScript(scriptProvider, configuration);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
         public async Task<bool> ExecuteScript(string scriptName)
         {

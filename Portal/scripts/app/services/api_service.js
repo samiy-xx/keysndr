@@ -37,8 +37,12 @@
             return $http.post(rootUrl + "action/save", conf);
         },
 
-        savescript: function (script) {
+        saveScript: function (script) {
             return $http.post(rootUrl + "scripts/save", script);
+        },
+
+        validateScript: function(script) {
+            return $http.post(rootUrl + "scripts/validate", script);
         },
 
         getSettings: function() {

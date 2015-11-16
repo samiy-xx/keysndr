@@ -18,7 +18,8 @@
         scope.displayErrorMessage = function (messageHeader, messageBody, milliseconds) {
             scope.header = messageHeader;
             scope.errorMessage = messageBody;
-            $timeout(function () { $scope.reset(); }, milliseconds);
+            scope.hasError = true;
+            $timeout(function () { scope.reset(); }, milliseconds);
         }
 
         scope.reset = function() {

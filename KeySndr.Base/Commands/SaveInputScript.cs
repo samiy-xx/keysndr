@@ -29,7 +29,7 @@ namespace KeySndr.Base.Commands
             try
             {
                 if (!scriptProvider.Scripts.Contains(script))
-                    scriptProvider.AddScript(script, true);
+                    scriptProvider.AddOrUpdate(script, true);
                 fileSystemProvider.SaveObjectToDisk(script, Path.Combine(appConfigProvider.AppConfig.ScriptsFolder, script.FileName));
                 Result = new ApiResult<object>
                 {

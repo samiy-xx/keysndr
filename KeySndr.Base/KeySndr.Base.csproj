@@ -113,6 +113,7 @@
     <Compile Include="Commands\SaveInputConfiguration.cs" />
     <Compile Include="Commands\SaveInputScript.cs" />
     <Compile Include="Commands\StoreAppConfig.cs" />
+    <Compile Include="Commands\ValidateInputScript.cs" />
     <Compile Include="Controllers\ActionController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
@@ -196,6 +197,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="..\Portal\css\scripts.css">
+      <Link>Portal\css\scripts.css</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\app\controllers\edit-controller.js">
+      <Link>Portal\scripts\app\controllers\edit-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\views\partials\error-message-row.html">
       <Link>Portal\views\partials\error-message-row.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
