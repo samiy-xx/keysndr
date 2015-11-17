@@ -177,7 +177,7 @@
                 scope.currentAction.scriptSequences.push(name);
         }
 
-        scope.init = function () {
+        scope.init = function (count) {
             var s = $location.search();
             if (s !== null && s !== undefined && s.hasOwnProperty("name")) {
                 service.getConfiguration(s.name).then(function (response) {
@@ -194,7 +194,7 @@
                     );
                 });
             } else {
-                service.getNewConfiguration(1).then(function (response) {
+                service.getNewConfiguration(count).then(function (response) {
                     var result = response.data;
                     if (!result.success) {
                         scope.displayErrorMessage("Failed to get actions. Is the server running?", result.errorMessage, 5000);
@@ -217,9 +217,7 @@
                 }
                 scope.availableScripts = result.content;
             });
-        }
-
-        scope.init();
+        } 
     }
 
 })();

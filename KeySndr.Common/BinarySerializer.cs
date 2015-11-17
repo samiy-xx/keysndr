@@ -8,7 +8,7 @@ namespace KeySndr.Common
 {
     public static class BinarySerializer
     {
-        public static byte[] Serialize<T>(T obj)
+        public static MemoryStream SerializeToStream<T>(T obj)
         {
             var serializer = new DataContractSerializer(typeof(T));
             var stream = new MemoryStream();
@@ -17,7 +17,13 @@ namespace KeySndr.Common
             {
                 serializer.WriteObject(writer, obj);
             }
-            return stream.ToArray();
+            //stream.Seek(0, SeekOrigin.Begin);
+            return stream;
+        }
+
+        public static byte[] Serialize<T>(T obj)
+        {
+            return SerializeToStream(obj).ToArray();
         }
 
         public static T Deserialize<T>(byte[] data, IEnumerable<Type> types = null)

@@ -28,47 +28,8 @@
                 return;
             scope.configuration = listToMatrix(scope.inputConfiguration.actions, 5);
         });
-        /*function init() {
-            var s = location.search();
-            if (s !== null && s !== undefined && s.hasOwnProperty("name")) {
-                service.getConfiguration(s.name).then(function(response) {
-                    var result = response.data;
-                    if (!result.success) {
-                        scope.hasError = true;
-                        scope.errorMessage = "Failed to get actions. Is the server running?";
-                        return;
-                    }
-                    var actions = result.content.actions;
-                    scope.inputConfiguration = result.content;
-                    scope.configuration = listToMatrix(actions, 5);
-                });
-            } else {
-                service.getNewConfiguration(30).then(function (response) {
-                    var result = response.data;
-                    if (!result.success) {
-                        scope.hasError = true;
-                        scope.errorMessage = "Failed to get actions. Is the server running?";
-                        return;
-                    }
-                    var actions = result.content.actions;
-                    scope.inputConfiguration = result.content;
-                    scope.configuration = listToMatrix(actions, 5);
-                });
-            }
-
-            service.getAllScripts().then(function(response) {
-                var result = response.data;
-                if (!result.success) {
-                    scope.hasError = true;
-                    scope.errorMessage = "Failed to get scripts. " + result.errorMessage;
-                    return;
-                }
-                scope.availableScripts = result.content;
-            });
-        }
-
-
-        init();*/
+        
+        scope.init(30);
     }
 
 })();
