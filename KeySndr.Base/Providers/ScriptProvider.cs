@@ -98,5 +98,18 @@ namespace KeySndr.Base.Providers
                 scripts.Clear();
             }
         }
+
+        public void Dispose()
+        {
+            lock (scripts)
+            {
+                scripts.Clear();
+            }
+
+            lock (contexts)
+            {
+                contexts.Clear();
+            }
+        }
     }
 }

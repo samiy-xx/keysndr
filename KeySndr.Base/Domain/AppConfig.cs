@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace KeySndr.Base.Domain
@@ -28,15 +24,9 @@ namespace KeySndr.Base.Domain
         [JsonProperty("updateVersionCheckUrl")]
         public string UpdateVersionCheckUrl { get; set; }
 
-        [JsonProperty("configFolder")]
-        public string ConfigFolder { get; set; }
-
-        [JsonProperty("scriptsFolder")]
-        public string ScriptsFolder { get; set; }
-
-        [JsonProperty("webFolder")]
-        public string WebRoot { get; set; }
-
+        [JsonProperty("dataFolder")]
+        public string DataFolder { get; set; }
+        
         [JsonProperty("checkUpdateOnStart")]
         public bool CheckUpdateOnStart { get; set; }
 
@@ -46,23 +36,32 @@ namespace KeySndr.Base.Domain
         [JsonProperty("enableKeyboardAndMouse")]
         public bool EnableKeyboardAndMouse { get; set; }
 
-        public IntPtr ProcessNumber { get; set; }
+        [JsonProperty("firstTimeRunning")]
+        public bool FirstTimeRunning { get; set; }
 
+        [JsonProperty("useObjectStorage")]
+        public bool UseObjectStorage { get; set; }
+
+        public IntPtr ProcessNumber { get; set; }
+        public string ConfigFolder => $@"{DataFolder}\{KeySndrApp.ConfigurationsFolderName}";
+        public string ScriptsFolder => $@"{DataFolder}\{KeySndrApp.ScriptsFolderName}";
+        public string WebRoot => $@"{DataFolder}\{KeySndrApp.WebFolderName}";
+        
         public AppConfig()
         {
             LastProcessName = string.Empty;
             ProcessNumber = IntPtr.Zero;
             LastPath = "c:\\";
             UseForegroundWindow = false;
-            LastPort = 8888;
-            LastIp = string.Empty;
+            LastPort = 45889;
+            LastIp = "+";
             CheckUpdateOnStart = false;
             BroadcastIdentifier = "broadcast_id_" + Guid.NewGuid().ToString("n");
             UpdateVersionCheckUrl = "http://www.keysndr.win/Content/v/keysndr/version.json";
-            ConfigFolder = string.Empty;
-            ScriptsFolder = string.Empty;
-            WebRoot = string.Empty;
+            DataFolder = string.Empty;
             EnableKeyboardAndMouse = false;
+            FirstTimeRunning = true;
+            UseObjectStorage = false;
         }
 
         public AppConfig CopyFrom(AppConfig c)
@@ -73,11 +72,11 @@ namespace KeySndr.Base.Domain
             LastIp = c.LastIp;
             UseForegroundWindow = c.UseForegroundWindow;
             UpdateVersionCheckUrl = c.UpdateVersionCheckUrl;
-            ConfigFolder = c.ConfigFolder;
             ProcessNumber = c.ProcessNumber;
-            ScriptsFolder = c.ScriptsFolder;
-            WebRoot = c.WebRoot;
+            DataFolder = c.DataFolder;
             EnableKeyboardAndMouse = c.EnableKeyboardAndMouse;
+            FirstTimeRunning = c.FirstTimeRunning;
+            UseObjectStorage = c.UseObjectStorage;
             return this;
         }
     }

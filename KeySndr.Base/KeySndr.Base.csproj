@@ -113,6 +113,7 @@
     <Compile Include="Commands\GetProcessNames.cs" />
     <Compile Include="Commands\GetViewConfigurations.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ReloadSystem.cs" />
     <Compile Include="Commands\RemoveInputConfiguration.cs" />
     <Compile Include="Commands\SaveInputConfiguration.cs" />
     <Compile Include="Commands\SaveInputScript.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Commands\ZipPackageForExport.cs" />
     <Compile Include="Controllers\ActionController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\FileResult.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
@@ -130,9 +132,9 @@
     <Compile Include="Domain\ISciptContext.cs" />
     <Compile Include="Domain\JintSciptingContext.cs" />
     <Compile Include="Domain\SourceFile.cs" />
+    <Compile Include="Exceptions\DataFolderDoesNotExistException.cs" />
     <Compile Include="Exceptions\ScriptException.cs" />
     <Compile Include="IntKeysConverter.cs" />
-    <Compile Include="IProvider.cs" />
     <Compile Include="KeySndr.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -211,10 +213,30 @@
       <Link>Portal\scripts\app\controllers\edit-controller.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="..\Portal\setup.html">
+      <Link>Portal\setup.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Portal\scripts\app\controllers\setup-controller.js">
+      <Link>Portal\scripts\app\controllers\setup-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\views\partials\error-message-row.html">
       <Link>Portal\views\partials\error-message-row.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="..\Portal\views\partials\setup-stage-1.html">
+      <Link>Portal\views\partials\setup-stage-1.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\views\partials\setup-stage-2.html">
+      <Link>Portal\views\partials\setup-stage-2.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Portal\views\partials\setup-stage-3.html">
+      <Link>Portal\views\partials\setup-stage-3.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="..\Portal\views\partials\success-message-row.html">
       <Link>Portal\views\partials\success-message-row.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

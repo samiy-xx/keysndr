@@ -66,5 +66,10 @@ namespace KeySndr.Common.Providers
             var content = await result.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<ApiResult<Object>>(content);
         }
+
+        public void Dispose()
+        {
+            httpClient.Dispose();
+        }
     }
 }

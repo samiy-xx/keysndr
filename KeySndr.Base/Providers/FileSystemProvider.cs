@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using KeySndr.Base.Domain;
+using KeySndr.Base.Exceptions;
 using KeySndr.Common;
 using Newtonsoft.Json;
 
@@ -28,10 +27,34 @@ namespace KeySndr.Base.Providers
             
         }
 
-        public void VerifyFolderStructure()
+        public void Verify()
+        {
+            VerifyFolderStructure();
+            VerifyDataFolderStructure();
+        }
+
+        private void VerifyFolderStructure()
         {
             if (!Directory.Exists(AppDataFolder))
                 Directory.CreateDirectory(AppDataFolder);
+        }
+
+        private void VerifyDataFolderStructure()
+        {
+            if (string.IsNullOrEmpty(AppConfig.DataFolder) || !Directory.Exists(AppConfig.DataFolder))
+                throw new DataFolderDoesNotExistException();
+
+            if (!Directory.Exists(AppConfig.DataFolder))
+                Directory.CreateDirectory(AppConfig.DataFolder);
+
+            if (!Directory.Exists(AppConfig.ConfigFolder))
+                Directory.CreateDirectory(AppConfig.ConfigFolder);
+
+            if (!Directory.Exists(AppConfig.ScriptsFolder))
+                Directory.CreateDirectory(AppConfig.ScriptsFolder);
+
+            if (!Directory.Exists(AppConfig.WebRoot))
+                Directory.CreateDirectory(AppConfig.WebRoot);
         }
 
         public T LoadObjectFromDisk<T>(string path)
@@ -123,6 +146,11 @@ namespace KeySndr.Base.Providers
                 return null;
 
             return LoadObjectFromDisk<InputConfiguration>(path);
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

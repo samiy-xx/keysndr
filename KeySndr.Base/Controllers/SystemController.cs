@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using KeySndr.Base.Commands;
@@ -26,6 +27,15 @@ namespace KeySndr.Base.Controllers
         public ApiResult<IEnumerable<string>> GetProcessNames()
         {
             var cmd = new GetProcessNames(systemProvider);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpGet]
+        public ApiResult<Object> Reload()
+        {
+            var cmd = new ReloadSystem();
             cmd.Execute();
             return cmd.Result;
         }

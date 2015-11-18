@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KeySndr.Common.Providers;
 
 namespace KeySndr.Base
 {
@@ -22,6 +20,16 @@ namespace KeySndr.Base
             where T : IProvider
         {
             return (T)Providers.FirstOrDefault(p => p.GetType().GetInterfaces().Any(i => i == typeof(T)));
+        }
+
+        public static void Destroy()
+        {
+            foreach (var p in Providers)
+            {
+                p.Dispose();
+            }
+
+            Providers.Clear();
         }
     }
 }

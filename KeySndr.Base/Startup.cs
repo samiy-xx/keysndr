@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using KeySndr.Base.Providers;
-
 using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
@@ -21,10 +17,13 @@ namespace KeySndr.Base
     {
         public void Configuration(IAppBuilder appBuilder)
         {
-            appBuilder.Map(new PathString("/manage"), ConfigureManager);
             var appConfig = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
-            var config = new HttpConfiguration();
+
+            appBuilder.Map(new PathString("/manage"), ConfigureManager);
+            if (!string.IsNullOrEmpty(appConfig.WebRoot) && Directory.Exists(appConfig.WebRoot))
+                ConfigureUserSpace(appBuilder);
             
+            var config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
@@ -32,10 +31,13 @@ namespace KeySndr.Base
                 );
             config.EnableCors();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-            var fileSystem = new PhysicalFileSystem(appConfig.WebRoot);
-          
             appBuilder.UseWebApi(config);
-            
+        }
+
+        private void ConfigureUserSpace(IAppBuilder appBuilder)
+        {
+            var appConfig = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
+            var fileSystem = new PhysicalFileSystem(appConfig.WebRoot);
             appBuilder.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = new[] { "index.html" } });
             appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
@@ -54,15 +56,14 @@ namespace KeySndr.Base
         private void ConfigureManager(IAppBuilder appBuilder)
         {
             var fileSystem = new PhysicalFileSystem("./Portal");
-            //var fileSystem = new CustomEmbeddedFileSystem(typeof(Sender).Assembly, "KeySndr.Base");
             appBuilder.UseDefaultFiles(new DefaultFilesOptions {DefaultFileNames = new[] {"index.html"}});
 
-            appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
+            /*appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
                 RequestPath = new PathString(""),
                 Formatter = new HtmlDirectoryFormatter(),
                 FileSystem = fileSystem
-            });
+            });*/
 
             appBuilder.UseStaticFiles(new StaticFileOptions
             {

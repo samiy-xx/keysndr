@@ -15,5 +15,10 @@ namespace KeySndr.Base.Providers
         {
             AppConfig = c;
         }
+
+        public void Dispose()
+        {
+            
+        }
     }
 }

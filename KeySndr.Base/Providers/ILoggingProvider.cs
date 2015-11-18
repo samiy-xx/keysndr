@@ -1,4 +1,5 @@
 ﻿using System;
+using KeySndr.Common.Providers;
 
 namespace KeySndr.Base.Providers
 {

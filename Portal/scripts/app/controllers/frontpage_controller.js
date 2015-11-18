@@ -103,8 +103,25 @@
             });
         }
 
-        scope.getLegacyConfigurations();
-        scope.getViewConfigurations();
+        scope.init = function() {
+            service.getSettings().then(function(response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.displayErrorMessage("Failed to get app settings", result.errorMessage, 5000);
+                    return;
+                }
+
+                var appSettings = result.content;
+                if (appSettings.firstTimeRunning) {
+                    window.location.href = "setup.html";
+                    return;
+                }
+                scope.getLegacyConfigurations();
+                scope.getViewConfigurations();
+            });
+        }
+
+        scope.init();
     }
 
 })();

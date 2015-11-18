@@ -66,18 +66,13 @@
         },
 
         getExportedConfig: function(configName) {
-            /*return $http({
-                url: rootUrl + "export/download?configName=" + configName,
-                method: 'GET',
-                responseType: 'arraybuffer',
-                cache: false,
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8'
-                }
-            });*/
             return $http.get(rootUrl + "export/download?configName=" + configName, {
                  responseType: "arraybuffer"
             });
+        },
+
+        signalReload: function() {
+            return $http.get(rootUrl + "system/reload");
         }
     }
 }]);

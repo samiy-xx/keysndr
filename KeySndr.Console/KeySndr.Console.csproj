@@ -81,6 +81,10 @@
       <Project>{9413db07-5510-46a4-82b0-38485af52792}</Project>
       <Name>KeySndr.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KeySndr.Common\KeySndr.Common.csproj">
+      <Project>{0EAA5376-3D71-426F-953B-1A06388CEEA3}</Project>
+      <Name>KeySndr.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

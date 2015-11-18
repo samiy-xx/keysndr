@@ -1,6 +1,8 @@
-﻿namespace KeySndr.Common.Providers
+﻿using System;
+
+namespace KeySndr.Common.Providers
 {
-    public interface IProvider
+    public interface IProvider : IDisposable
     {
     }
 }

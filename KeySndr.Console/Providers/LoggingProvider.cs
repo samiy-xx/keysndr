@@ -19,5 +19,10 @@ namespace KeySndr.Console.Providers
         {
             System.Console.WriteLine(m);
         }
+
+        public void Dispose()
+        {
+           
+        }
     }
 }

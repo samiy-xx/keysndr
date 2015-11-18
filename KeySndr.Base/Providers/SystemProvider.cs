@@ -8,5 +8,10 @@ namespace KeySndr.Base.Providers
         {
             return WinUtils.GetProcessNames();
         }
+
+        public void Dispose()
+        {
+            
+        }
     }
 }

@@ -8,7 +8,6 @@
         scope.message = "";
         scope.errorMessage = "";
 
-
         scope.displaySuccessMessage = function(messageHeader, messageBody, milliseconds) {
             scope.header = messageHeader;
             scope.message = messageBody;

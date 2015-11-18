@@ -24,6 +24,9 @@ namespace KeySndr.Base.Commands
         {
             try
             {
+                if (config.FirstTimeRunning)
+                    config.FirstTimeRunning = false;
+
                 appConfigProvider.AppConfig = config;
                 fileSystemProvider.SaveAppConfiguration();
 

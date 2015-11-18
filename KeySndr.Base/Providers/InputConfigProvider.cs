@@ -60,5 +60,10 @@ namespace KeySndr.Base.Providers
                 configs.Clear();
             }
         }
+
+        public void Dispose()
+        {
+            Clear();
+        }
     }
 }

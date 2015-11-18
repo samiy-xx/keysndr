@@ -39,6 +39,7 @@
             <div class="col-md-10">
                 <h3>Configurations with view</h3>
                 <div class="well">
+                    <p data-ng-show="availableViewConfigurations.length === 0">Nothing here. Try creating some.</p>
                     <ul class="list-group">
                         <li class="list-group-item clearfix" data-ng-repeat="conf in availableViewConfigurations">
                             {{ conf }}
@@ -62,6 +63,7 @@
             <div class="col-md-10">
                 <h3>Grid configurations</h3>
                 <div class="well">
+                    <p data-ng-show="availableLegacyConfigurations.length === 0">Nothing here. Try creating some.</p>
                     <ul class="list-group">
                         <li class="list-group-item clearfix" data-ng-repeat="conf in availableLegacyConfigurations">
                             {{ conf }}

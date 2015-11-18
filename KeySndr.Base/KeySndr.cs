@@ -2,48 +2,95 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Timers;
 using KeySndr.Base.BeaconLib;
 using KeySndr.Base.Domain;
+using KeySndr.Base.Exceptions;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
+using KeySndr.Common.Providers;
 using Microsoft.Owin.Hosting;
 
 namespace KeySndr.Base
 {
     public class KeySndrApp
     {
+        public const string WebFolderName = "Web";
+        public const string ConfigurationsFolderName = "Configurations";
+        public const string ScriptsFolderName = "Scripts";
+
         private IDisposable webServer;
         private AppConfig AppConfig;
         private Beacon beacon;
+        private List<IProvider> providers;
 
         public KeySndrApp()
         {
-            RegisterProviders();
+            providers = new List<IProvider>();
+        }
+
+        public KeySndrApp(List<IProvider> p)
+        {
+            providers = p;
         }
 
         public void Run()
         {
-            VerifyFileSystem();
+            RegisterProviders();
             LoadAppConfig();
+            VerifyStorage();
             StartWebServer();
 
+            TempEventNotifier.OnReloadRequested += OnReloadRequested;
             LoadInputConfigurations();
             LoadInputScripts();
         }
 
+        private void OnReloadRequested(object sender, EventArgs eventArgs)
+        {
+            ReloadAll();
+        }
+
+
+        public void StopAll()
+        {
+            TempEventNotifier.OnReloadRequested -= OnReloadRequested;
+            StopServer();
+            beacon.Dispose();
+            ObjectFactory.Destroy();
+        }
+
+        public void ReloadAll()
+        {
+            StopAll();
+            Run();
+        }
+
+        private void VerifyStorage()
+        {
+            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
+            try
+            {
+                fs.Verify();
+                fs.SaveAppConfiguration();
+            }
+            catch (DataFolderDoesNotExistException e)
+            {
+                ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig.FirstTimeRunning = true;
+            }
+        }
+
         private void RegisterProviders()
         {
+            foreach (var provider in providers)
+            {
+                ObjectFactory.AddProvider(provider);
+            }
             ObjectFactory.AddProvider(new FileSystemProvider());
             ObjectFactory.AddProvider(new AppConfigProvider());
             ObjectFactory.AddProvider(new ScriptProvider());
             ObjectFactory.AddProvider(new InputConfigProvider());
             ObjectFactory.AddProvider(new SystemProvider());
-        }
-
-        private void VerifyFileSystem()
-        {
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
-            fs.VerifyFolderStructure();
         }
 
         private void LoadAppConfig()
@@ -57,7 +104,7 @@ namespace KeySndr.Base
             else
             {
                 acp.AppConfig = new AppConfig();
-                fs.SaveAppConfiguration();
+                //fs.SaveAppConfiguration();
             }
             AppConfig = acp.AppConfig;
         }
@@ -70,11 +117,12 @@ namespace KeySndr.Base
             };
             beacon.Start();
         }
+
         private void StartWebServer()
         {
             SetupBeacon(AppConfig.LastPort);
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Starting web server");
-            var url = $"http://+:{AppConfig.LastPort}";
+            var url = $"http://{AppConfig.LastIp}:{AppConfig.LastPort}";
             webServer = WebApp.Start<Startup>(url: url);
         }
 
@@ -174,6 +222,22 @@ namespace KeySndr.Base
 
             var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
             return fs.LoadObjectFromDisk<InputConfiguration>(Path.Combine(AppConfig.ConfigFolder, fileName));
+        }
+    }
+
+    public static class TempEventNotifier
+    {
+        public static EventHandler<EventArgs> OnReloadRequested;
+
+        public static void ReloadRequested()
+        {
+            var t = new Timer {Interval = 1000};
+            t.Elapsed += delegate(object sender, ElapsedEventArgs args)
+            {
+                t.Stop();
+                OnReloadRequested?.Invoke(new object(), EventArgs.Empty);
+            };
+            t.Start();
         }
     }
 }

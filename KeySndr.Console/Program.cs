@@ -1,4 +1,6 @@
-﻿using KeySndr.Base;
+﻿using System.Collections.Generic;
+using KeySndr.Base;
+using KeySndr.Common.Providers;
 using KeySndr.Console.Providers;
 
 namespace KeySndr.Console
@@ -7,12 +9,12 @@ namespace KeySndr.Console
     {
         static void Main(string[] args)
         {
-            var keysndr = new KeySndrApp();
+            var providers = new List<IProvider>();
+            providers.Add(new LoggingProvider());
 
-            ObjectFactory.AddProvider(new LoggingProvider());
+            var keysndr = new KeySndrApp(providers);
             keysndr.Run();
 
-            
             System.Console.ReadLine();
         }
     }

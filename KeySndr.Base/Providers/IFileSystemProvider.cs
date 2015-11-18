@@ -3,13 +3,13 @@ using System.IO;
 using System.Threading.Tasks;
 using KeySndr.Base.Domain;
 using KeySndr.Common;
+using KeySndr.Common.Providers;
 
 namespace KeySndr.Base.Providers
 {
     public interface IFileSystemProvider : IProvider
     {
-        void VerifyFolderStructure();
-
+        void Verify();
         T LoadObjectFromDisk<T>(string path);
         string LoadStringFromDisk(string path);
         IEnumerable<string> GetDirectoryFileNames(string path, bool fileNameWithoutPath = false);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KeySndr.Base.Domain;
+using KeySndr.Common.Providers;
 
 namespace KeySndr.Base.Providers
 {
