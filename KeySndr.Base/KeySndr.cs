@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using System.Timers;
 using KeySndr.Base.BeaconLib;
 using KeySndr.Base.Domain;
 using KeySndr.Base.Exceptions;
 using KeySndr.Base.Providers;
-using KeySndr.Common;
 using KeySndr.Common.Providers;
 using Microsoft.Owin.Hosting;
-using Nowin;
 
 namespace KeySndr.Base
 {
@@ -101,7 +98,6 @@ namespace KeySndr.Base
         {
             if (AppConfig.FirstTimeRunning || !AppConfig.UseObjectStorage)
                 ObjectFactory.AddProvider(new FileStorageProvider());
-
             else 
                 ObjectFactory.AddProvider(new DbStorageProvider());    
         }
@@ -132,11 +128,8 @@ namespace KeySndr.Base
             var options = new StartOptions
             {
                 ServerFactory = "Nowin",
-                Port = 45889
+                Port = AppConfig.LastPort
             };
-
-            var url = $"http://{AppConfig.LastIp}:{AppConfig.LastPort}";
-            //Nowin.OwinServerFactory.
             webServer = WebApp.Start<Startup>(options);
         }
 
@@ -179,8 +172,6 @@ namespace KeySndr.Base
                 }
             });
         }
-
-        
     }
 
     public static class TempEventNotifier

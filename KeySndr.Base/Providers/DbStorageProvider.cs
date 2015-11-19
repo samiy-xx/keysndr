@@ -4,6 +4,8 @@ using System.Linq;
 using KeySndr.Base.Domain;
 using KeySndr.Common;
 using DBreeze;
+using DBreeze.DataTypes;
+using Newtonsoft.Json;
 
 namespace KeySndr.Base.Providers
 {
@@ -20,6 +22,8 @@ namespace KeySndr.Base.Providers
         public void Dispose()
         {
             engine?.Dispose();
+            DBreeze.Utils.CustomSerializator.Serializator = JsonConvert.SerializeObject;
+            DBreeze.Utils.CustomSerializator.Deserializator = JsonConvert.DeserializeObject;
         }
 
         public void Verify()
@@ -29,7 +33,13 @@ namespace KeySndr.Base.Providers
                 return;
             if (string.IsNullOrEmpty(acp.AppConfig.DataFolder))
                 return;
-            engine = new DBreezeEngine(acp.AppConfig.DataFolder);
+            var config = new DBreezeConfiguration
+            {
+                Storage = DBreezeConfiguration.eStorage.DISK,
+                DBreezeDataFolderName = acp.AppConfig.DataFolder
+            };
+            engine = new DBreezeEngine(config);
+           
             isVerified = true;
         }
 
@@ -41,7 +51,7 @@ namespace KeySndr.Base.Providers
             {
                 try
                 {
-                    transaction.Insert<string, InputConfiguration>(KeySndrApp.ConfigurationsFolderName, c.Name, c);
+                    transaction.Insert<string, DbMJSON<InputConfiguration>>(KeySndrApp.ConfigurationsFolderName, c.Name, c);
                     transaction.Commit();
                 }
                 catch (Exception e)
@@ -58,11 +68,12 @@ namespace KeySndr.Base.Providers
             {
                 try
                 {
-                    transaction.Insert<string, InputScript>(KeySndrApp.ScriptsFolderName, s.Name, s);
+                    transaction.Insert<string, DbMJSON<InputScript>>(KeySndrApp.ScriptsFolderName, s.Name, s);
                     transaction.Commit();
                 }
                 catch (Exception e)
                 {
+                    
                 }
             }
         }
@@ -80,6 +91,7 @@ namespace KeySndr.Base.Providers
                 }
                 catch (Exception e)
                 {
+                    
                 }
             }
         }
@@ -111,9 +123,8 @@ namespace KeySndr.Base.Providers
                 try
                 {
                     configurations =
-                        transaction.SelectForward<string, InputConfiguration>(KeySndrApp.ScriptsFolderName)
-                            .Select(c => c.Value)
-                            .ToList();
+                            transaction.SelectForward<string, DbMJSON<InputConfiguration>>(KeySndrApp.ConfigurationsFolderName)
+                           .Select(c => c.Value.Get).ToList();
                 }
                 catch (Exception e)
                 {
@@ -133,8 +144,8 @@ namespace KeySndr.Base.Providers
                 try
                 {
                     scripts =
-                        transaction.SelectForward<string, InputScript>(KeySndrApp.ScriptsFolderName)
-                            .Select(c => c.Value)
+                        transaction.SelectForward<string, DbMJSON<InputScript>>(KeySndrApp.ScriptsFolderName)
+                            .Select(c => c.Value.Get)
                             .ToList();
                 }
                 catch (Exception e)
