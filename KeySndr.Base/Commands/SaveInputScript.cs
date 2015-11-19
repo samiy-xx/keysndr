@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using KeySndr.Base.Domain;
 using KeySndr.Base.Providers;
@@ -10,15 +9,15 @@ namespace KeySndr.Base.Commands
     public class SaveInputScript : ICommand<ApiResult<Object>>
     {
         private readonly IAppConfigProvider appConfigProvider;
-        private readonly IFileSystemProvider fileSystemProvider;
+        private readonly IStorageProvider storageProvider;
         private readonly IScriptProvider scriptProvider;
         private readonly InputScript script;
 
         public ApiResult<Object> Result { get; private set; }
 
-        public SaveInputScript(IFileSystemProvider fs, IAppConfigProvider a, IScriptProvider s, InputScript c)
+        public SaveInputScript(IStorageProvider fs, IAppConfigProvider a, IScriptProvider s, InputScript c)
         {
-            fileSystemProvider = fs;
+            storageProvider = fs;
             appConfigProvider = a;
             scriptProvider = s;
             script = c;
@@ -30,7 +29,7 @@ namespace KeySndr.Base.Commands
             {
                 if (!scriptProvider.Scripts.Contains(script))
                     scriptProvider.AddOrUpdate(script, true);
-                fileSystemProvider.SaveObjectToDisk(script, Path.Combine(appConfigProvider.AppConfig.ScriptsFolder, script.FileName));
+                storageProvider.SaveScript(script);
                 Result = new ApiResult<object>
                 {
                     Content = "empty",

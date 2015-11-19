@@ -21,5 +21,6 @@ namespace KeySndr.Base.Providers
         AppConfig LoadAppConfiguration();
         void SaveAppConfiguration();
         InputConfiguration LoadInputConfiguration(string path);
+        bool DirectoryExists(string path);
     }
 }

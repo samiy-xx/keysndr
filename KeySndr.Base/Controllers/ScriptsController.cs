@@ -14,20 +14,20 @@ namespace KeySndr.Base.Controllers
 {
     public class ScriptsController : ApiController
     {
-        private readonly IFileSystemProvider fileSystemProvider;
+        private readonly IStorageProvider storageProvider;
         private readonly IAppConfigProvider appConfigProvider;
         private readonly IScriptProvider scriptProvider;
 
         public ScriptsController()
         {
-            fileSystemProvider = ObjectFactory.GetProvider<IFileSystemProvider>();
+            storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
             appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
             scriptProvider = ObjectFactory.GetProvider<IScriptProvider>();
         }
 
-        public ScriptsController(IFileSystemProvider p, IAppConfigProvider a, IScriptProvider s)
+        public ScriptsController(IStorageProvider p, IAppConfigProvider a, IScriptProvider s)
         {
-            fileSystemProvider = p;
+            storageProvider = p;
             appConfigProvider = a;
             scriptProvider = s;
         }
@@ -54,7 +54,7 @@ namespace KeySndr.Base.Controllers
         [HttpPost]
         public ApiResult<Object> Save(InputScript configuration)
         {
-            var cmd = new SaveInputScript(fileSystemProvider, appConfigProvider, scriptProvider, configuration);
+            var cmd = new SaveInputScript(storageProvider, appConfigProvider, scriptProvider, configuration);
             cmd.Execute();
             return cmd.Result;
         }

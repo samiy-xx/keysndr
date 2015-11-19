@@ -27,6 +27,11 @@ namespace KeySndr.Base.Providers
             
         }
 
+        public bool DirectoryExists(string path)
+        {
+            return Directory.Exists(path);
+        }
+
         public void Verify()
         {
             VerifyFolderStructure();

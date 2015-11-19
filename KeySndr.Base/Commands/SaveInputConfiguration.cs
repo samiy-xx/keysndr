@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
@@ -8,7 +6,7 @@ namespace KeySndr.Base.Commands
 {
     public class SaveInputConfiguration : ICommand<ApiResult<Object>>
     {
-        private readonly IFileSystemProvider fileSystemProvider;
+        private readonly IStorageProvider storageProvider;
         private readonly IAppConfigProvider appConfigProvider;
         private readonly IInputConfigProvider inputConfigProvider;
 
@@ -16,9 +14,9 @@ namespace KeySndr.Base.Commands
 
         public ApiResult<Object> Result { get; private set; }
 
-        public SaveInputConfiguration(IFileSystemProvider fs, IAppConfigProvider a, IInputConfigProvider i, InputConfiguration c)
+        public SaveInputConfiguration(IStorageProvider fs, IAppConfigProvider a, IInputConfigProvider i, InputConfiguration c)
         {
-            fileSystemProvider = fs;
+            storageProvider = fs;
             appConfigProvider = a;
             inputConfigProvider = i;
             configuration = c;
@@ -30,7 +28,7 @@ namespace KeySndr.Base.Commands
             {
 
                 inputConfigProvider.AddOrUpdate(configuration);
-                fileSystemProvider.SaveObjectToDisk(configuration, Path.Combine(appConfigProvider.AppConfig.ConfigFolder, configuration.FileName));
+                storageProvider.SaveInputConfiguration(configuration);
                 Result = new ApiResult<object>
                 {
                     Content = "empty",

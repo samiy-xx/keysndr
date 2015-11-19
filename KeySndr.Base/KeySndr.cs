@@ -10,6 +10,7 @@ using KeySndr.Base.Providers;
 using KeySndr.Common;
 using KeySndr.Common.Providers;
 using Microsoft.Owin.Hosting;
+using Nowin;
 
 namespace KeySndr.Base
 {
@@ -36,8 +37,9 @@ namespace KeySndr.Base
 
         public void Run()
         {
-            RegisterProviders();
+            RegisterProvidersBeforeAppConfig();
             LoadAppConfig();
+            RegisterProvidersAfterAppConfig();
             VerifyStorage();
             StartWebServer();
 
@@ -69,9 +71,11 @@ namespace KeySndr.Base
         private void VerifyStorage()
         {
             var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
+            var os = ObjectFactory.GetProvider<IStorageProvider>();
             try
             {
                 fs.Verify();
+                os.Verify();
                 fs.SaveAppConfiguration();
             }
             catch (DataFolderDoesNotExistException e)
@@ -80,7 +84,7 @@ namespace KeySndr.Base
             }
         }
 
-        private void RegisterProviders()
+        private void RegisterProvidersBeforeAppConfig()
         {
             foreach (var provider in providers)
             {
@@ -93,19 +97,22 @@ namespace KeySndr.Base
             ObjectFactory.AddProvider(new SystemProvider());
         }
 
+        private void RegisterProvidersAfterAppConfig()
+        {
+            if (AppConfig.FirstTimeRunning || !AppConfig.UseObjectStorage)
+                ObjectFactory.AddProvider(new FileStorageProvider());
+
+            else 
+                ObjectFactory.AddProvider(new DbStorageProvider());    
+        }
+
         private void LoadAppConfig()
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading App Config");
             var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
             var acp = ObjectFactory.GetProvider<IAppConfigProvider>();
             var config = fs.LoadAppConfiguration();
-            if (config != null)
-                acp.AppConfig = config;
-            else
-            {
-                acp.AppConfig = new AppConfig();
-                //fs.SaveAppConfiguration();
-            }
+            acp.AppConfig = config ?? new AppConfig();
             AppConfig = acp.AppConfig;
         }
 
@@ -122,8 +129,15 @@ namespace KeySndr.Base
         {
             SetupBeacon(AppConfig.LastPort);
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Starting web server");
+            var options = new StartOptions
+            {
+                ServerFactory = "Nowin",
+                Port = 45889
+            };
+
             var url = $"http://{AppConfig.LastIp}:{AppConfig.LastPort}";
-            webServer = WebApp.Start<Startup>(url: url);
+            //Nowin.OwinServerFactory.
+            webServer = WebApp.Start<Startup>(options);
         }
 
         private void StopServer()
@@ -136,22 +150,14 @@ namespace KeySndr.Base
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading input configurations");
             var inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
+            var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
             inputConfigProvider.Clear();
 
             await Task.Run(() =>
             {
-                foreach (var f in GetAllConfigurationFiles())
+                foreach (var loadInputConfiguration in storageProvider.LoadInputConfigurations())
                 {
-                    try
-                    {
-                        var c = LoadInputConfiguration(f);
-                        c.FileName = f;
-                        inputConfigProvider.Add(c);
-                    }
-                    catch (Exception e)
-                    {
-                        ObjectFactory.GetProvider<ILoggingProvider>().Error("Error loading configuration " + f + " " + e.Message, e);
-                    }
+                    inputConfigProvider.Add(loadInputConfiguration);
                 }
             });
         }
@@ -160,69 +166,21 @@ namespace KeySndr.Base
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading Scripts");
             var sp = ObjectFactory.GetProvider<IScriptProvider>();
+            var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
             sp.Clear();
 
             var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
             await Task.Run(async () =>
             {
-                foreach (var f in GetAllScriptFiles())
+                foreach (var s in storageProvider.LoadInputScripts())
                 {
-                    var script = LoadInputScript(f);
-                    script.FileName = f;
-                    
-                    foreach (var sourceFile in script.SourceFiles)
-                    {
-                        try
-                        {
-                            sourceFile.Contents = fs.LoadStringFromDisk(sourceFile.FileName);
-                        }
-                        catch (Exception e)
-                        {
-                            
-                        }
-                    }
-                    sp.AddScript(script, true);
-                    await script.RunTest();
+                    sp.AddScript(s, true);
+                    await s.RunTest();
                 }
-                
             });
         }
 
-        private IEnumerable<string> GetAllScriptFiles()
-        {
-            if (string.IsNullOrEmpty(AppConfig.ScriptsFolder))
-                return new string[0];
-
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
-            return fs.GetDirectoryFileNames(AppConfig.ScriptsFolder, "script", true);
-        }
-
-        private IEnumerable<string> GetAllConfigurationFiles()
-        {
-            if (string.IsNullOrEmpty(AppConfig.ConfigFolder))
-                return new string[0];
-
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
-            return fs.GetDirectoryFileNames(AppConfig.ConfigFolder, "json", true);
-        }
-
-        private InputScript LoadInputScript(string fileName)
-        {
-            if (string.IsNullOrEmpty(AppConfig.ScriptsFolder))
-                return null;
-
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
-            return fs.LoadObjectFromDisk<InputScript>(Path.Combine(AppConfig.ScriptsFolder, fileName));
-        }
-
-        private InputConfiguration LoadInputConfiguration(string fileName)
-        {
-            if (string.IsNullOrEmpty(AppConfig.ConfigFolder))
-                return null;
-
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
-            return fs.LoadObjectFromDisk<InputConfiguration>(Path.Combine(AppConfig.ConfigFolder, fileName));
-        }
+        
     }
 
     public static class TempEventNotifier

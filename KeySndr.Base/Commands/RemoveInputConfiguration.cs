@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
@@ -8,16 +7,16 @@ namespace KeySndr.Base.Commands
     public class RemoveInputConfiguration : ICommand<ApiResult<Object>>
     {
         private readonly IInputConfigProvider inputConfigProvider;
-        private readonly IFileSystemProvider fileSystemProvider;
+        private readonly IStorageProvider storageProvider;
         private readonly IAppConfigProvider appConfigProvider;
         private readonly string configName;
 
         public ApiResult<Object> Result { get; private set; }
 
-        public RemoveInputConfiguration(IInputConfigProvider p, IFileSystemProvider f, IAppConfigProvider a, string name)
+        public RemoveInputConfiguration(IInputConfigProvider p, IStorageProvider f, IAppConfigProvider a, string name)
         {
             inputConfigProvider = p;
-            fileSystemProvider = f;
+            storageProvider = f;
             appConfigProvider = a;
             configName = name;
         }
@@ -40,9 +39,7 @@ namespace KeySndr.Base.Commands
 
             try
             {
-                var pathToConfigs = appConfigProvider.AppConfig.ConfigFolder;
-                var path = Path.Combine(pathToConfigs, config.FileName);
-                fileSystemProvider.RemoveFile(path);
+                storageProvider.RemoveInputConfiguration(config);
                 inputConfigProvider.Remove(config);
                 Result = new ApiResult<Object>
                 {

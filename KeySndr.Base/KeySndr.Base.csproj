@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DBreeze, Version=1.72.2015.827, Culture=neutral, PublicKeyToken=174b57f1c155f3c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\DBreeze.1.72.0\lib\net45\DBreeze.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.7.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.9.7\lib\net20\Ionic.Zip.dll</HintPath>
       <Private>True</Private>
@@ -60,6 +64,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nowin, Version=0.20.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nowin.0.20.0.0\lib\net45\Nowin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -144,6 +152,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Providers\AppConfigProvider.cs" />
+    <Compile Include="Providers\DbStorageProvider.cs" />
+    <Compile Include="Providers\FileStorageProvider.cs" />
     <Compile Include="Providers\FileSystemProvider.cs" />
     <Compile Include="Providers\IAppConfigProvider.cs" />
     <Compile Include="Providers\IFileSystemProvider.cs" />
@@ -151,6 +161,7 @@
     <Compile Include="Providers\ILoggingProvider.cs" />
     <Compile Include="Providers\InputConfigProvider.cs" />
     <Compile Include="Providers\IScriptProvider.cs" />
+    <Compile Include="Providers\IStorageProvider.cs" />
     <Compile Include="Providers\ISystemProvider.cs" />
     <Compile Include="Providers\ScriptProvider.cs" />
     <Compile Include="Providers\SystemProvider.cs" />

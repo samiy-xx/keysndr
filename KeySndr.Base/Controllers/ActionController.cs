@@ -10,20 +10,20 @@ namespace KeySndr.Base.Controllers
 {
     public class ActionController : ApiController
     {
-        private readonly IFileSystemProvider fileSystemProvider;
+        private readonly IStorageProvider storageProvider;
         private readonly IAppConfigProvider appConfigProvider;
         private readonly IInputConfigProvider inputConfigProvider;
 
         public ActionController()
         {
-            fileSystemProvider = ObjectFactory.GetProvider<IFileSystemProvider>();
+            storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
             appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
             inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
         }
 
         public ActionController(IFileSystemProvider p, IAppConfigProvider a)
         {
-            fileSystemProvider = p;
+            //fileSystemProvider = p;
             appConfigProvider = a;
         }
 
@@ -85,7 +85,7 @@ namespace KeySndr.Base.Controllers
         [HttpDelete]
         public ApiResult<Object> RemoveConfiguration(string name)
         {
-            var cmd = new RemoveInputConfiguration(inputConfigProvider, fileSystemProvider, appConfigProvider, name);
+            var cmd = new RemoveInputConfiguration(inputConfigProvider, storageProvider, appConfigProvider, name);
             cmd.Execute();
             return cmd.Result;
         }
@@ -103,7 +103,7 @@ namespace KeySndr.Base.Controllers
         [HttpPost]
         public ApiResult<Object> Save(InputConfiguration configuration)
         {
-            var cmd = new SaveInputConfiguration(fileSystemProvider, appConfigProvider, inputConfigProvider, configuration);
+            var cmd = new SaveInputConfiguration(storageProvider, appConfigProvider, inputConfigProvider, configuration);
             cmd.Execute();
             return cmd.Result;
         }
