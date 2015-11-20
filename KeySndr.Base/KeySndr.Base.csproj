@@ -123,6 +123,7 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ReloadSystem.cs" />
     <Compile Include="Commands\RemoveInputConfiguration.cs" />
+    <Compile Include="Commands\RemoveInputScript.cs" />
     <Compile Include="Commands\SaveInputConfiguration.cs" />
     <Compile Include="Commands\SaveInputScript.cs" />
     <Compile Include="Commands\StoreAppConfig.cs" />
