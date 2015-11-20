@@ -11,6 +11,10 @@
                 && action.mouseSequences.length === 0
                 && action.scriptSequences.length === 0)
                 return;
+
+            if (!action.enabled)
+                return;
+
             var executionContainer = {
                 useForegroundWindow: true,
                 useDesktop: false,
