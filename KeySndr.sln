@@ -37,6 +37,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Portal", "Portal\", "{A9AD1
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeySndr.Base.Tests", "KeySndr.Base.Tests\KeySndr.Base.Tests.csproj", "{3A5AF1C9-A68E-406C-B89F-651A0E396006}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{A9AD1CE8-D046-4CF7-A6A3-22324EB836AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9AD1CE8-D046-4CF7-A6A3-22324EB836AB}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9AD1CE8-D046-4CF7-A6A3-22324EB836AB}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{3A5AF1C9-A68E-406C-B89F-651A0E396006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A5AF1C9-A68E-406C-B89F-651A0E396006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A5AF1C9-A68E-406C-B89F-651A0E396006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A5AF1C9-A68E-406C-B89F-651A0E396006}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
