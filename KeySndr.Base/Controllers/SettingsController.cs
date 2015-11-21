@@ -11,17 +11,14 @@ namespace KeySndr.Base.Controllers
     public class SettingsController : ApiController
     {
         private readonly IAppConfigProvider appConfigProvider;
-        private readonly IFileSystemProvider fileSystemProvider;
 
         public SettingsController()
         {
             appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
-            fileSystemProvider = ObjectFactory.GetProvider<IFileSystemProvider>();
         }
 
-        public SettingsController(IFileSystemProvider p, IAppConfigProvider a)
+        public SettingsController(IAppConfigProvider a)
         {
-            fileSystemProvider = p;
             appConfigProvider = a;
         }
 
@@ -38,7 +35,7 @@ namespace KeySndr.Base.Controllers
         [HttpPost]
         public ApiResult<Object> StoreAppSettings(AppConfig c)
         {
-            var cmd = new StoreAppConfig(fileSystemProvider, appConfigProvider, c);
+            var cmd = new StoreAppConfig(appConfigProvider, c);
             cmd.Execute();
             return cmd.Result;
         }

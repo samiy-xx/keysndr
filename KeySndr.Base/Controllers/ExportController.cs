@@ -8,23 +8,17 @@ namespace KeySndr.Base.Controllers
 {
     public class ExportController : ApiController
     {
-        private readonly IFileSystemProvider fileSystemProvider;
-        private readonly IAppConfigProvider appConfigProvider;
         private readonly IInputConfigProvider inputConfigProvider;
         private readonly IScriptProvider scriptProvider;
 
         public ExportController()
         {
-            fileSystemProvider = ObjectFactory.GetProvider<IFileSystemProvider>();
-            appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
             inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
             scriptProvider = ObjectFactory.GetProvider<IScriptProvider>();
         }
 
-        public ExportController(IFileSystemProvider f, IAppConfigProvider a, IInputConfigProvider i, IScriptProvider s)
+        public ExportController(IAppConfigProvider a, IInputConfigProvider i, IScriptProvider s)
         {
-            fileSystemProvider = f;
-            appConfigProvider = a;
             inputConfigProvider = i;
             scriptProvider = s;
         }

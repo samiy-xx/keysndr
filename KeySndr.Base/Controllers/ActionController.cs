@@ -21,9 +21,8 @@ namespace KeySndr.Base.Controllers
             inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
         }
 
-        public ActionController(IFileSystemProvider p, IAppConfigProvider a)
+        public ActionController(IAppConfigProvider a)
         {
-            //fileSystemProvider = p;
             appConfigProvider = a;
         }
 

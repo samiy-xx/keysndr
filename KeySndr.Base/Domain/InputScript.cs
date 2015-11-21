@@ -12,12 +12,13 @@ namespace KeySndr.Base.Domain
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("sourceFiles")]
-        public List<SourceFile> SourceFiles { get; set; }
+        [JsonProperty("sourceFileNames")]
+        public List<string> SourceFileNames { get; set; }
 
         [JsonProperty("fileName")]
         public string FileName { get; set; }
 
+        public List<SourceFile> SourceFiles { get; set; }
         public bool HasSourceFiles => SourceFiles.Count > 0;
         public bool IsValid { get; set; }
         public List<string> Errors { get; private set; }
@@ -27,6 +28,7 @@ namespace KeySndr.Base.Domain
         public InputScript()
         {
             SourceFiles = new List<SourceFile>();
+            SourceFileNames = new List<string>();
             Errors = new List<string>();
         }
 

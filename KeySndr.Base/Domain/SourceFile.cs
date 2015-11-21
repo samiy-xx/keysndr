@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace KeySndr.Base.Domain
@@ -13,7 +9,6 @@ namespace KeySndr.Base.Domain
         [JsonProperty("fileName")]
         public string FileName { get; set; }
 
-
         public string Contents { get; set; }
         public bool IsValid { get; set; }
         public bool ParseOk { get; set; }
@@ -22,10 +17,20 @@ namespace KeySndr.Base.Domain
 
         public SourceFile()
         {
+            FileName = string.Empty;
+            Contents = string.Empty;
+            IsValid = false;
+            ParseOk = false;
+            CanExecute = false;
+            Error = string.Empty;
         }
 
         public SourceFile(string fileName, string contents)
         {
+            IsValid = false;
+            ParseOk = false;
+            CanExecute = false;
+            Error = string.Empty;
             FileName = fileName;
             Contents = contents;
         }

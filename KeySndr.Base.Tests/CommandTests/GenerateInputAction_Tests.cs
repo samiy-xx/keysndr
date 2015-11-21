@@ -1,5 +1,4 @@
-﻿using System;
-using KeySndr.Base.Commands;
+﻿using KeySndr.Base.Commands;
 using KeySndr.Common;
 using NUnit.Framework;
 

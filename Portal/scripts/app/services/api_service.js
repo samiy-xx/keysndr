@@ -17,6 +17,10 @@
             return $http.get(rootUrl + "action/getnewconfiguration?actionCount=" + actionCount);
         },
 
+        getNewScript: function() {
+            return $http.get(rootUrl + "scripts/getnewscript");
+        },
+
         getNewInputAction: function() {
             return $http.get(rootUrl + "action/getnewinputaction");
         },
@@ -39,6 +43,10 @@
 
         saveScript: function (script) {
             return $http.post(rootUrl + "scripts/save", script);
+        },
+
+        removeScript: function(script) {
+            return $http.post(rootUrl + "scripts/remove", script);
         },
 
         validateScript: function(script) {

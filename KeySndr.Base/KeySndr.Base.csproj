@@ -112,6 +112,7 @@
     <Compile Include="Commands\ExecuteInputAction.cs" />
     <Compile Include="Commands\GenerateInputAction.cs" />
     <Compile Include="Commands\GenerateInputConfiguration.cs" />
+    <Compile Include="Commands\GenerateScript.cs" />
     <Compile Include="Commands\GetAllInputConfigurations.cs" />
     <Compile Include="Commands\GetAllScriptObjects.cs" />
     <Compile Include="Commands\GetAllScripts.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Domain\SourceFile.cs" />
     <Compile Include="Exceptions\DataFolderDoesNotExistException.cs" />
     <Compile Include="Exceptions\ScriptException.cs" />
+    <Compile Include="FileSystemUtils.cs" />
     <Compile Include="IntKeysConverter.cs" />
     <Compile Include="KeySndr.cs" />
     <Compile Include="ObjectFactory.cs" />
@@ -155,9 +157,7 @@
     <Compile Include="Providers\AppConfigProvider.cs" />
     <Compile Include="Providers\DbStorageProvider.cs" />
     <Compile Include="Providers\FileStorageProvider.cs" />
-    <Compile Include="Providers\FileSystemProvider.cs" />
     <Compile Include="Providers\IAppConfigProvider.cs" />
-    <Compile Include="Providers\IFileSystemProvider.cs" />
     <Compile Include="Providers\IInputConfigProvider.cs" />
     <Compile Include="Providers\ILoggingProvider.cs" />
     <Compile Include="Providers\InputConfigProvider.cs" />
@@ -165,6 +165,7 @@
     <Compile Include="Providers\IStorageProvider.cs" />
     <Compile Include="Providers\ISystemProvider.cs" />
     <Compile Include="Providers\ScriptProvider.cs" />
+    <Compile Include="Providers\StorageProvider.cs" />
     <Compile Include="Providers\SystemProvider.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="Startup.cs" />

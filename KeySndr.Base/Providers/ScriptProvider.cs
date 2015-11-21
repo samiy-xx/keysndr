@@ -48,7 +48,6 @@ namespace KeySndr.Base.Providers
                     if (createContext)
                         Create(script);
                 }
-
             }
         }
 
@@ -87,7 +86,7 @@ namespace KeySndr.Base.Providers
         {
             lock (contexts)
             {
-                return contexts.FirstOrDefault(s => s.Script == script);
+                return contexts.FirstOrDefault(s => s.Script.Equals(script));
             }
         }
 

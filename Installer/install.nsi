@@ -2,8 +2,8 @@
 ;Basic Example Script
 ;Written by Joost Verburg
  
-  !define MUI_PRODUCT "KeySndrServer"
-
+!define MUI_PRODUCT "KeySndr"
+!define MUI_PRODUCT_EXE "KeySndrWin"
 
 ;--------------------------------
 ;Include Modern UI
@@ -92,12 +92,16 @@ Section "Server" SecDummy
   SetOutPath "$INSTDIR"
   
   ;ADD YOUR OWN FILES HERE...
+  File "..\KeySndr.Win\bin\release\DBreeze.dll"
+  File "..\KeySndr.Win\bin\release\DBreeze.xml"
+  File "..\KeySndr.Win\bin\release\Ionic.Zip.dll"
+  File "..\KeySndr.Win\bin\release\Ionic.Zip.xml"
   File "..\KeySndr.Win\bin\release\Jint.dll"
   File "..\KeySndr.Win\bin\release\KeySndr.Base.dll"
   File "..\KeySndr.Win\bin\release\KeySndr.Common.dll"
   File "..\KeySndr.Win\bin\release\KeySndr.InputManager.dll"
-  File "..\KeySndr.Win\bin\release\KeySndr.Win.exe"
-  File "..\KeySndr.Win\bin\release\KeySndr.Win.exe.config"
+  File "..\KeySndr.Win\bin\release\KeySndrWin.exe"
+  File "..\KeySndr.Win\bin\release\KeySndrWin.exe.config"
   File "..\KeySndr.Win\bin\release\Microsoft.Owin.dll"
   File "..\KeySndr.Win\bin\release\Microsoft.Owin.xml"
   File "..\KeySndr.Win\bin\release\Microsoft.Owin.FileSystems.dll"
@@ -108,24 +112,25 @@ Section "Server" SecDummy
   File "..\KeySndr.Win\bin\release\Microsoft.Owin.StaticFiles.xml"
   File "..\KeySndr.Win\bin\release\Newtonsoft.Json.dll"
   File "..\KeySndr.Win\bin\release\Newtonsoft.Json.xml"
+  File "..\KeySndr.Win\bin\release\Nowin.dll"
   File "..\KeySndr.Win\bin\release\Owin.dll"
   File "..\KeySndr.Win\bin\release\System.Net.Http.Formatting.dll"
   File "..\KeySndr.Win\bin\release\System.Net.Http.Formatting.xml"
   File "..\KeySndr.Win\bin\release\System.Web.Cors.dll"
-    File "..\KeySndr.Win\bin\release\System.Web.Http.Cors.dll"
-	  File "..\KeySndr.Win\bin\release\System.Web.Http.Cors.xml"
+  File "..\KeySndr.Win\bin\release\System.Web.Http.Cors.dll"
+  File "..\KeySndr.Win\bin\release\System.Web.Http.Cors.xml"
   File "..\KeySndr.Win\bin\release\System.Web.Http.dll"
   File "..\KeySndr.Win\bin\release\System.Web.Http.Owin.dll"
   File "..\KeySndr.Win\bin\release\System.Web.Http.Owin.xml"
   File "..\KeySndr.Win\bin\release\System.Web.Http.xml"
-  File /r "..\KeySndr.Win\bin\release\Portal\*.*"
+  File /r "..\KeySndr.Win\bin\release\Portal"
   
   
-  CreateShortCut "$DESKTOP\${MUI_PRODUCT}.lnk" "$INSTDIR\${MUI_PRODUCT}.exe" ""
+  CreateShortCut "$DESKTOP\${MUI_PRODUCT}.lnk" "$INSTDIR\${MUI_PRODUCT_EXE}.exe" ""
   ;create start-menu items
   CreateDirectory "$SMPROGRAMS\${MUI_PRODUCT}"
   CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\${MUI_PRODUCT}.lnk" "$INSTDIR\${MUI_PRODUCT}.exe" "" "$INSTDIR\${MUI_PRODUCT}.exe" 0
+  CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\${MUI_PRODUCT}.lnk" "$INSTDIR\${MUI_PRODUCT_EXE}.exe" "" "$INSTDIR\${MUI_PRODUCT_EXE}.exe" 0
   ;Store installation folder
   WriteRegStr HKLM "Software\Blockz3D\KeySndr" "" $INSTDIR
   
@@ -153,7 +158,7 @@ Section "Uninstall"
   ;ADD YOUR OWN FILES HERE...
   Delete "$INSTDIR\*"
 
-  RMDir "$INSTDIR"
+  RMDir /r "$INSTDIR"
   Delete "$DESKTOP\${MUI_PRODUCT}.lnk"
   Delete "$SMPROGRAMS\${MUI_PRODUCT}\*.*"
   RmDir  "$SMPROGRAMS\${MUI_PRODUCT}"

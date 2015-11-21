@@ -18,9 +18,9 @@ namespace KeySndr.Base
         public const string ScriptsFolderName = "Scripts";
 
         private IDisposable webServer;
-        private AppConfig AppConfig;
+        private AppConfig appConfig;
         private Beacon beacon;
-        private List<IProvider> providers;
+        private readonly List<IProvider> providers;
 
         public KeySndrApp()
         {
@@ -67,8 +67,8 @@ namespace KeySndr.Base
 
         private void VerifyStorage()
         {
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
             var os = ObjectFactory.GetProvider<IStorageProvider>();
+            var fs = new FileSystemUtils();
             try
             {
                 fs.Verify();
@@ -87,7 +87,6 @@ namespace KeySndr.Base
             {
                 ObjectFactory.AddProvider(provider);
             }
-            ObjectFactory.AddProvider(new FileSystemProvider());
             ObjectFactory.AddProvider(new AppConfigProvider());
             ObjectFactory.AddProvider(new ScriptProvider());
             ObjectFactory.AddProvider(new InputConfigProvider());
@@ -96,7 +95,7 @@ namespace KeySndr.Base
 
         private void RegisterProvidersAfterAppConfig()
         {
-            if (AppConfig.FirstTimeRunning || !AppConfig.UseObjectStorage)
+            if (appConfig.FirstTimeRunning || !appConfig.UseObjectStorage)
                 ObjectFactory.AddProvider(new FileStorageProvider());
             else 
                 ObjectFactory.AddProvider(new DbStorageProvider());    
@@ -105,30 +104,30 @@ namespace KeySndr.Base
         private void LoadAppConfig()
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading App Config");
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
+            var fs = new FileSystemUtils();
             var acp = ObjectFactory.GetProvider<IAppConfigProvider>();
             var config = fs.LoadAppConfiguration();
             acp.AppConfig = config ?? new AppConfig();
-            AppConfig = acp.AppConfig;
+            appConfig = acp.AppConfig;
         }
 
         private void SetupBeacon(int port)
         {
             beacon = new Beacon("KeySndrServer", (ushort)port)
             {
-                BeaconData = AppConfig.BroadcastIdentifier
+                BeaconData = appConfig.BroadcastIdentifier
             };
             beacon.Start();
         }
 
         private void StartWebServer()
         {
-            SetupBeacon(AppConfig.LastPort);
+            SetupBeacon(appConfig.LastPort);
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Starting web server");
             var options = new StartOptions
             {
                 ServerFactory = "Nowin",
-                Port = AppConfig.LastPort
+                Port = appConfig.LastPort
             };
             webServer = WebApp.Start<Startup>(options);
         }
@@ -162,7 +161,6 @@ namespace KeySndr.Base
             var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
             sp.Clear();
 
-            var fs = ObjectFactory.GetProvider<IFileSystemProvider>();
             await Task.Run(async () =>
             {
                 foreach (var s in storageProvider.LoadInputScripts())

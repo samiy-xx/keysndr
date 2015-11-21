@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using KeySndr.Base.Domain;
 using KeySndr.Base.Exceptions;
+using KeySndr.Base.Providers;
 using KeySndr.Common;
 using Newtonsoft.Json;
 
-namespace KeySndr.Base.Providers
+namespace KeySndr.Base
 {
-    public class FileSystemProvider : IFileSystemProvider
+    public class FileSystemUtils
     {
         private const string AppConfigName = "app.json";
-        private const string ConfigurationFileExtension = ".json";
         private const string AppDataFolderName = "KeySndr";
 
         public string AppDataFolder => Path.Combine(
@@ -22,14 +23,24 @@ namespace KeySndr.Base.Providers
 
         public AppConfig AppConfig => ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
 
-        public FileSystemProvider()
+        public FileSystemUtils()
         {
-            
+
         }
 
         public bool DirectoryExists(string path)
         {
             return Directory.Exists(path);
+        }
+
+        public bool FileExists(string path)
+        {
+            return File.Exists(path);
+        }
+
+        public void CreateDirectory(string path)
+        {
+            Directory.CreateDirectory(path);
         }
 
         public void Verify()
@@ -90,7 +101,7 @@ namespace KeySndr.Base.Providers
 
         public IEnumerable<string> GetDirectoryFileNames(string path, bool fileNameWithoutPath = false)
         {
-            if (!Directory.Exists(path)) 
+            if (!Directory.Exists(path))
                 return new string[0];
 
             var files = Directory.GetFiles(path);
@@ -108,12 +119,12 @@ namespace KeySndr.Base.Providers
         public IEnumerable<string> GetAllConfigurationFiles(string path)
         {
             return GetDirectoryFileNames(path, "json").Select(Path.GetFileNameWithoutExtension);
-        } 
+        }
 
         public IEnumerable<FileInfo> GetDirectoryFiles(string path)
         {
-            return !Directory.Exists(path) 
-                ? new FileInfo[0] 
+            return !Directory.Exists(path)
+                ? new FileInfo[0]
                 : Directory.GetFiles(path).Select(f => new FileInfo(f));
         }
 
@@ -121,7 +132,7 @@ namespace KeySndr.Base.Providers
         {
             if (!File.Exists(path))
                 return;
-            
+
             File.Delete(path);
         }
 
@@ -155,7 +166,7 @@ namespace KeySndr.Base.Providers
 
         public void Dispose()
         {
-            
+
         }
     }
 }

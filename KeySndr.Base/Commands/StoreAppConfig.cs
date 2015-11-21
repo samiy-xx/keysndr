@@ -8,14 +8,14 @@ namespace KeySndr.Base.Commands
     public class StoreAppConfig : ICommand<ApiResult<Object>>
     {
         private readonly AppConfig config;
-        private readonly IFileSystemProvider fileSystemProvider;
+        private readonly FileSystemUtils fileUtils;
         private readonly IAppConfigProvider appConfigProvider;
 
         public ApiResult<Object> Result { get; private set; }
 
-        public StoreAppConfig(IFileSystemProvider p, IAppConfigProvider a, AppConfig c)
+        public StoreAppConfig(IAppConfigProvider a, AppConfig c)
         {
-            fileSystemProvider = p;
+            fileUtils = new FileSystemUtils();
             appConfigProvider = a;
             config = c;
         }
@@ -28,7 +28,7 @@ namespace KeySndr.Base.Commands
                     config.FirstTimeRunning = false;
 
                 appConfigProvider.AppConfig = config;
-                fileSystemProvider.SaveAppConfiguration();
+                fileUtils.SaveAppConfiguration();
 
                 Result = new ApiResult<object>
                 {

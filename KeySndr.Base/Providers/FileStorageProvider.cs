@@ -2,62 +2,58 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KeySndr.Base.Domain;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Providers
 {
-    public class FileStorageProvider : IStorageProvider
+    public class FileStorageProvider : StorageProvider
     {
-        private readonly IFileSystemProvider fileSystemProvider;
-        private readonly IAppConfigProvider appConfigProvider;
-
         public FileStorageProvider()
+            : base()
         {
-            fileSystemProvider = ObjectFactory.GetProvider<IFileSystemProvider>();
-            appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
+            
         }
 
-        public void Verify()
+        public override void Verify()
         {
-            fileSystemProvider.Verify();
+            FileSystemUtils.Verify();
         }
 
-        public void SaveInputConfiguration(InputConfiguration c)
+        public override void SaveInputConfiguration(InputConfiguration c)
         {
-            var path = appConfigProvider.AppConfig.ConfigFolder;
-            if (!fileSystemProvider.DirectoryExists(path))
+            var path = AppConfigProvider.AppConfig.ConfigFolder;
+            if (!FileSystemUtils.DirectoryExists(path))
                 throw new Exception("Directory does not exist");
-            fileSystemProvider.SaveObjectToDisk(c, Path.Combine(path, c.FileName));
+            FileSystemUtils.SaveObjectToDisk(c, Path.Combine(path, c.FileName));
         }
 
-        public void SaveScript(InputScript s)
+        public override void SaveScript(InputScript s)
         {
-            var path = appConfigProvider.AppConfig.ScriptsFolder;
-            if (!fileSystemProvider.DirectoryExists(path))
+            var path = AppConfigProvider.AppConfig.ScriptsFolder;
+            if (!FileSystemUtils.DirectoryExists(path))
                 throw new Exception("Directory does not exist");
-            fileSystemProvider.SaveObjectToDisk(s, Path.Combine(path, s.FileName));
+            FileSystemUtils.SaveObjectToDisk(s, Path.Combine(path, s.FileName));
+            CreateSourceFilesDirectoryIfNotExists(s);
         }
 
-        public void RemoveInputConfiguration(InputConfiguration i)
+        public override void RemoveInputConfiguration(InputConfiguration i)
         {
-            var path = appConfigProvider.AppConfig.ConfigFolder;
-            if (!fileSystemProvider.DirectoryExists(path))
+            var path = AppConfigProvider.AppConfig.ConfigFolder;
+            if (!FileSystemUtils.DirectoryExists(path))
                 throw new Exception("Directory does not exist");
-            fileSystemProvider.RemoveFile(Path.Combine(path, i.FileName));
+            FileSystemUtils.RemoveFile(Path.Combine(path, i.FileName));
         }
 
-        public void RemoveScript(InputScript s)
+        public override void RemoveScript(InputScript s)
         {
-            var path = appConfigProvider.AppConfig.ScriptsFolder;
-            if (!fileSystemProvider.DirectoryExists(path))
+            var path = AppConfigProvider.AppConfig.ScriptsFolder;
+            if (!FileSystemUtils.DirectoryExists(path))
                 throw new Exception("Directory does not exist");
-            fileSystemProvider.RemoveFile(Path.Combine(path, s.FileName));
+            FileSystemUtils.RemoveFile(Path.Combine(path, s.FileName));
         }
 
-        public IEnumerable<InputConfiguration> LoadInputConfigurations()
+        public override IEnumerable<InputConfiguration> LoadInputConfigurations()
         {
             var c = new List<InputConfiguration>();
             foreach (var file in GetAllConfigurationFiles())
@@ -71,7 +67,7 @@ namespace KeySndr.Base.Providers
             return c;
         }
 
-        public IEnumerable<InputScript> LoadInputScripts()
+        public override IEnumerable<InputScript> LoadInputScripts()
         {
             var c = new List<InputScript>();
             foreach (var file in GetAllScriptFiles())
@@ -80,42 +76,45 @@ namespace KeySndr.Base.Providers
                 if (i == null)
                     continue;
                 i.FileName = file;
+                LoadAllSourceFiles(i);
                 c.Add(i);
             }
             return c;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             
         }
-
+        
         private IEnumerable<string> GetAllScriptFiles()
         {
-            return string.IsNullOrEmpty(appConfigProvider.AppConfig.ScriptsFolder) 
+            return string.IsNullOrEmpty(AppConfigProvider.AppConfig.ScriptsFolder) 
                 ? new string[0] 
-                : fileSystemProvider.GetDirectoryFileNames(appConfigProvider.AppConfig.ScriptsFolder, "script", true);
+                : FileSystemUtils.GetDirectoryFileNames(AppConfigProvider.AppConfig.ScriptsFolder, "script", true);
         }
 
         private IEnumerable<string> GetAllConfigurationFiles()
         {
-            return string.IsNullOrEmpty(appConfigProvider.AppConfig.ConfigFolder) 
+            return string.IsNullOrEmpty(AppConfigProvider.AppConfig.ConfigFolder) 
                 ? new string[0] 
-                : fileSystemProvider.GetDirectoryFileNames(appConfigProvider.AppConfig.ConfigFolder, "json", true);
+                : FileSystemUtils.GetDirectoryFileNames(AppConfigProvider.AppConfig.ConfigFolder, "json", true);
         }
 
         private InputScript LoadInputScript(string fileName)
         {
-            return string.IsNullOrEmpty(appConfigProvider.AppConfig.ScriptsFolder)
+            return string.IsNullOrEmpty(AppConfigProvider.AppConfig.ScriptsFolder)
                 ? null 
-                : fileSystemProvider.LoadObjectFromDisk<InputScript>(Path.Combine(appConfigProvider.AppConfig.ScriptsFolder, fileName));
+                : FileSystemUtils.LoadObjectFromDisk<InputScript>(Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, fileName));
         }
+
+        
 
         private InputConfiguration LoadInputConfiguration(string fileName)
         {
-            return string.IsNullOrEmpty(appConfigProvider.AppConfig.ConfigFolder) 
+            return string.IsNullOrEmpty(AppConfigProvider.AppConfig.ConfigFolder) 
                 ? null 
-                : fileSystemProvider.LoadObjectFromDisk<InputConfiguration>(Path.Combine(appConfigProvider.AppConfig.ConfigFolder, fileName));
+                : FileSystemUtils.LoadObjectFromDisk<InputConfiguration>(Path.Combine(AppConfigProvider.AppConfig.ConfigFolder, fileName));
         }
     }
 }

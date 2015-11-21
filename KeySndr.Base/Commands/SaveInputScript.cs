@@ -8,17 +8,15 @@ namespace KeySndr.Base.Commands
 {
     public class SaveInputScript : ICommand<ApiResult<Object>>
     {
-        private readonly IAppConfigProvider appConfigProvider;
         private readonly IStorageProvider storageProvider;
         private readonly IScriptProvider scriptProvider;
         private readonly InputScript script;
 
         public ApiResult<Object> Result { get; private set; }
 
-        public SaveInputScript(IStorageProvider fs, IAppConfigProvider a, IScriptProvider s, InputScript c)
+        public SaveInputScript(IStorageProvider fs, IScriptProvider s, InputScript c)
         {
             storageProvider = fs;
-            appConfigProvider = a;
             scriptProvider = s;
             script = c;
         }
@@ -27,9 +25,12 @@ namespace KeySndr.Base.Commands
         {
             try
             {
-                if (!scriptProvider.Scripts.Contains(script))
-                    scriptProvider.AddOrUpdate(script, true);
-                storageProvider.SaveScript(script);
+                SaveToStorage();
+                ReloadSources();
+                AddOrUpdateScriptProvider();
+                RunTests();
+                
+                
                 Result = new ApiResult<object>
                 {
                     Content = "empty",
@@ -49,6 +50,25 @@ namespace KeySndr.Base.Commands
             }
         }
 
+        private void AddOrUpdateScriptProvider()
+        {
+            if (!scriptProvider.Scripts.Contains(script))
+                scriptProvider.AddOrUpdate(script, true);
+        }
 
+        private void SaveToStorage()
+        {
+            storageProvider.SaveScript(script);
+        }
+
+        private void ReloadSources()
+        {
+            storageProvider.LoadAllSourceFiles(script);
+        }
+
+        private async void RunTests()
+        {
+            await script.RunTest();
+        }
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using KeySndr.Base;
+using KeySndr.Common.Providers;
+using KeySndr.Win.Providers;
 
 namespace KeySndr.Win
 {
@@ -16,7 +19,14 @@ namespace KeySndr.Win
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            var providers = new List<IProvider>()
+            {
+                new LoggingProvider()
+            };
+            var keysndr = new KeySndrApp(providers);
+            keysndr.Run();
+            Application.Run(new Form1(keysndr));
         }
     }
 }

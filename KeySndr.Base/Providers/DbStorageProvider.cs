@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using KeySndr.Base.Domain;
 using KeySndr.Common;
@@ -9,24 +10,25 @@ using Newtonsoft.Json;
 
 namespace KeySndr.Base.Providers
 {
-    public class DbStorageProvider : IStorageProvider
+    public class DbStorageProvider : StorageProvider
     {
         private DBreezeEngine engine = null;
         private bool isVerified;
 
         public DbStorageProvider()
+            : base()
         {
             isVerified = false;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             engine?.Dispose();
             DBreeze.Utils.CustomSerializator.Serializator = JsonConvert.SerializeObject;
             DBreeze.Utils.CustomSerializator.Deserializator = JsonConvert.DeserializeObject;
         }
 
-        public void Verify()
+        public override void Verify()
         {
             var acp = ObjectFactory.GetProvider<IAppConfigProvider>();
             if (engine != null)
@@ -43,7 +45,7 @@ namespace KeySndr.Base.Providers
             isVerified = true;
         }
 
-        public void SaveInputConfiguration(InputConfiguration c)
+        public override void SaveInputConfiguration(InputConfiguration c)
         {
             if (!isVerified)
                 throw new Exception("Storage not verified");
@@ -60,7 +62,7 @@ namespace KeySndr.Base.Providers
             }
         }
 
-        public void SaveScript(InputScript s)
+        public override void SaveScript(InputScript s)
         {
             if (!isVerified)
                 throw new Exception("Storage not verified");
@@ -76,9 +78,11 @@ namespace KeySndr.Base.Providers
                     
                 }
             }
+            
+            CreateSourceFilesDirectoryIfNotExists(s);
         }
 
-        public void RemoveInputConfiguration(InputConfiguration i)
+        public override void RemoveInputConfiguration(InputConfiguration i)
         {
             if (!isVerified)
                 throw new Exception("Storage not verified");
@@ -96,7 +100,7 @@ namespace KeySndr.Base.Providers
             }
         }
 
-        public void RemoveScript(InputScript s)
+        public override void RemoveScript(InputScript s)
         {
             if (!isVerified)
                 throw new Exception("Storage not verified");
@@ -113,7 +117,7 @@ namespace KeySndr.Base.Providers
             }
         }
 
-        public IEnumerable<InputConfiguration> LoadInputConfigurations()
+        public override IEnumerable<InputConfiguration> LoadInputConfigurations()
         {
             if (!isVerified)
                 throw new Exception("Storage not verified");
@@ -134,7 +138,7 @@ namespace KeySndr.Base.Providers
             return configurations;
         }
 
-        public IEnumerable<InputScript> LoadInputScripts()
+        public override IEnumerable<InputScript> LoadInputScripts()
         {
             if (!isVerified)
                 throw new Exception("Storage not verified");
@@ -152,6 +156,11 @@ namespace KeySndr.Base.Providers
                 {
                     scripts = new InputScript[0];
                 }
+            }
+
+            foreach (var inputScript in scripts)
+            {
+                LoadAllSourceFiles(inputScript);
             }
             return scripts;
         }
