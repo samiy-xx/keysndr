@@ -4,7 +4,7 @@ KeySndr is a server software for receiving signals from client applications and 
 
 ### Releases
 
-* [Release 0.8.0]
+* [Releases]
 
 ### Tech
 
@@ -33,7 +33,7 @@ MIT
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-   [release 0.8.0]: <https://github.com/samiy-xx/keysndr/releases/download/v0.8.0/keysndr_win_installer.exe>
+   [releases]: <https://github.com/samiy-xx/keysndr/releases>
    [Nowin]: <https://github.com/Bobris/Nowin>
    [DBreeze]: <https://github.com/hhblaze/DBreeze>
    [Owin]: <https://github.com/owin/owin>
