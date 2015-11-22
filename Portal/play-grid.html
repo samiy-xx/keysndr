@@ -10,11 +10,13 @@
     <link href="css/play.css" rel="stylesheet" />
 
     <script src="scripts/jquery-2.1.4.js"></script>
+    <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/angular.js"></script>
     <script src="scripts/angular-ui/ui-bootstrap.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/angular-deckgrid/angular-deckgrid.js"></script>
     <script src="scripts/app/controllers/play-grid-controller.js"></script>
+    <script src="scripts/app/directives/blink-element.js"></script>
     <script src="scripts/app/services/api_service.js"></script>
 </head>
 <body ng-app="keysndr">
@@ -34,6 +36,7 @@
                 <tr data-ng-repeat="row in configuration" class="grid-row">
                     <td
                         class="grid-cell"
+                        blink-element="1000"
                         data-ng-repeat="col in row"
                         data-ng-class="{clickable : col.name.length > 0}"
                         data-ng-style="{'background-color': col.color, 'color': col.textColor}"

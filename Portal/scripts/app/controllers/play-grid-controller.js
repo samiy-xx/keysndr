@@ -12,7 +12,7 @@
                 && action.scriptSequences.length === 0)
                 return;
 
-            if (!action.enabled)
+            if (!action.isEnabled)
                 return;
 
             var executionContainer = {
