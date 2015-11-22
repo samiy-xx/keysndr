@@ -12,11 +12,14 @@ namespace KeySndr.Base.Commands
 
         private readonly IInputConfigProvider inputConfigProvider;
         private readonly IScriptProvider scriptProvider;
+        private readonly IAppConfigProvider appConfigProvider;
+
         private readonly string configName;
         public MemoryStream Result { get; set; }
 
-        public ZipPackageForExport(IInputConfigProvider i, IScriptProvider s, string config)
+        public ZipPackageForExport(IInputConfigProvider i, IScriptProvider s, IAppConfigProvider a, string config)
         {
+            appConfigProvider = a;
             inputConfigProvider = i;
             scriptProvider = s;
             configName = config;
@@ -33,10 +36,12 @@ namespace KeySndr.Base.Commands
             using (var zip = new ZipFile())
             {
                 zip.CompressionLevel = CompressionLevel.Level0;
-                zip.AddDirectoryByName("Configurations");
-                zip.AddDirectoryByName("Scripts");
-                zip.AddDirectoryByName("Maps");
-                zip.AddEntry("Config\\" + inputConfig.FileName, JsonSerializer.Serialize(inputConfig));
+                zip.AddDirectoryByName(KeySndrApp.ConfigurationsFolderName);
+                zip.AddDirectoryByName(KeySndrApp.ScriptsFolderName);
+                zip.AddDirectoryByName(KeySndrApp.MappingsFolderName);
+                
+
+                zip.AddEntry(KeySndrApp.ConfigurationsFolderName + "\\" + inputConfig.FileName, JsonSerializer.Serialize(inputConfig));
                 
                 foreach (var inputAction in inputConfig.Actions)
                 {
@@ -49,16 +54,24 @@ namespace KeySndr.Base.Commands
                             if (inputScript == null)
                                 continue;
 
-                            zip.AddDirectoryByName("Scripts\\" + inputScript.Name);
+                            zip.AddDirectoryByName(KeySndrApp.ScriptsFolderName + "\\" + inputScript.Name);
 
                             foreach (var sourceFile in inputScript.SourceFiles)
                             {
-                                zip.AddEntry("Scripts\\" + inputScript.Name + "\\" + inputScript.FileName, sourceFile.Contents);
+                                zip.AddEntry(KeySndrApp.ScriptsFolderName + "\\" + inputScript.Name + "\\" + inputScript.FileName, sourceFile.Contents);
                             }
 
-                            zip.AddEntry("Scripts\\" + inputScript.FileName, JsonSerializer.Serialize(inputScript));
+                            zip.AddEntry(KeySndrApp.ScriptsFolderName + "\\" + inputScript.FileName, JsonSerializer.Serialize(inputScript));
                         }
                     }
+                    
+                }
+                if (inputConfig.HasView)
+                {
+                    zip.AddDirectoryByName("View");
+                    var path = Path.Combine(appConfigProvider.AppConfig.WebRoot, inputConfig.View);
+                    if (new FileSystemUtils().DirectoryExists(path))
+                        zip.AddDirectory(path, "View");
                 }
 
                 stream.Seek(0, SeekOrigin.Begin);

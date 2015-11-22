@@ -81,6 +81,12 @@
 
         signalReload: function() {
             return $http.get(rootUrl + "system/reload");
+        },
+
+        upload: function (file) {
+            var fd = new FormData();
+            fd.append("file", file);
+            return $http.post(rootUrl + "import/upload", file);
         }
     }
 }]);

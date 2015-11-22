@@ -122,6 +122,7 @@
     <Compile Include="Commands\GetProcessNames.cs" />
     <Compile Include="Commands\GetViewConfigurations.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ImportZipPackage.cs" />
     <Compile Include="Commands\ReloadSystem.cs" />
     <Compile Include="Commands\RemoveInputConfiguration.cs" />
     <Compile Include="Commands\RemoveInputScript.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Controllers\ActionController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\FileResult.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
@@ -236,6 +238,10 @@
     </Content>
     <Content Include="..\Portal\scripts\app\directives\blink-element.js">
       <Link>Portal\scripts\app\directives\blink-element.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\app\directives\file-upload.js">
+      <Link>Portal\scripts\app\directives\file-upload.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Portal\scripts\jquery-ui.js">

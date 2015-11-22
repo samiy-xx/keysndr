@@ -17,6 +17,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/app/controllers/main-controller.js"></script>
     <script src="scripts/app/controllers/frontpage_controller.js"></script>
+    <script src="scripts/app/directives/file-upload.js"></script>
     <script src="scripts/app/services/api_service.js"></script>
 </head>
 <body ng-app="keysndr" data-ng-controller="mainController">
@@ -57,6 +58,7 @@
         <div class="row">
             <div class="col-md-10">
                 <button data-ng-click="createView()" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create</button>
+                <button type="button" class="btn btn-default" file-upload><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Import</button>
             </div>
         </div>
         <div class="row" data-ng-show="availableViewConfigurations !== null">
@@ -81,6 +83,7 @@
         <div class="row">
             <div class="col-md-10">
                 <button data-ng-click="createGrid()" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create</button>
+                <button type="button" class="btn btn-default" file-upload><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Import</button>
             </div>
         </div>
     </div>

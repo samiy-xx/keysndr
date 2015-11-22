@@ -6,20 +6,20 @@ using KeySndr.Base.Providers;
 
 namespace KeySndr.Base.Controllers
 {
-    public class ExportController : ApiController
+    public class ImportController : ApiController
     {
         private readonly IInputConfigProvider inputConfigProvider;
         private readonly IScriptProvider scriptProvider;
         private readonly IAppConfigProvider appConfigProvider;
-        
-        public ExportController()
+
+        public ImportController()
         {
             inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
             scriptProvider = ObjectFactory.GetProvider<IScriptProvider>();
             appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
         }
 
-        public ExportController(IAppConfigProvider a, IInputConfigProvider i, IScriptProvider s, IStorageProvider t)
+        public ImportController(IAppConfigProvider a, IInputConfigProvider i, IScriptProvider s, IStorageProvider t)
         {
             appConfigProvider = a;
             inputConfigProvider = i;
@@ -27,12 +27,12 @@ namespace KeySndr.Base.Controllers
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        [HttpGet]
-        public IHttpActionResult Download(string configName)
+        [HttpPost]
+        public IHttpActionResult Upload(string configName)
         {
             var cmd = new ZipPackageForExport(inputConfigProvider, scriptProvider, appConfigProvider, configName);
             cmd.Execute();
-            var stream = (MemoryStream) cmd.Result;
+            var stream = (MemoryStream)cmd.Result;
             return new FileResult(stream, Request);
         }
     }

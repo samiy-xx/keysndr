@@ -16,6 +16,7 @@ namespace KeySndr.Base
         public const string WebFolderName = "Web";
         public const string ConfigurationsFolderName = "Configurations";
         public const string ScriptsFolderName = "Scripts";
+        public const string MappingsFolderName = "Mappings";
 
         private IDisposable webServer;
         private AppConfig appConfig;
