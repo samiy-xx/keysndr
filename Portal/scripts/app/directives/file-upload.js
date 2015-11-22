@@ -4,7 +4,7 @@
 
     function FileUpload() {
         function link(scope, element, attributes) {
-            $(element).append("<input type='file'>");
+            $(element).append("<input type='file' style='display:none'>");
             var fButton = $(element).find(">:first-child");
             
             fButton.onClick = function(e) {
