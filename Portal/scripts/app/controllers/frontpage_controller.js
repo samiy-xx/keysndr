@@ -68,6 +68,12 @@
             });
         }
 
+        scope.dataFromFile = function(file) {
+            service.upload(file).then(function(response) {
+                
+            });
+        }
+
         scope.exportView = function (index) {
             service.getExportedConfig(scope.availableViewConfigurations[index]).then(function (response) {
                 var result = response.data;

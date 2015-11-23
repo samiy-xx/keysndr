@@ -86,7 +86,16 @@
         upload: function (file) {
             var fd = new FormData();
             fd.append("file", file);
-            return $http.post(rootUrl + "import/upload", file);
-        }
+            return $http.post(rootUrl + "import/upload", fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            });
+    /*return $http({
+                method: "POST",
+                data: fd,
+                url: rootUrl + "import/upload",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}  
+            });*/
+}
     }
 }]);

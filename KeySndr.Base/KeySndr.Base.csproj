@@ -244,6 +244,10 @@
       <Link>Portal\scripts\app\directives\file-upload.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Portal\scripts\app\directives\on-read-file.js">
+      <Link>Portal\scripts\app\directives\on-read-file.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\jquery-ui.js">
       <Link>Portal\scripts\jquery-ui.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

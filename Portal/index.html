@@ -17,6 +17,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/app/controllers/main-controller.js"></script>
     <script src="scripts/app/controllers/frontpage_controller.js"></script>
+    <script src="scripts/app/directives/on-read-file.js"></script>
     <script src="scripts/app/directives/file-upload.js"></script>
     <script src="scripts/app/services/api_service.js"></script>
 </head>
@@ -25,6 +26,12 @@
 
 <div class="container body-content" data-ng-cloak>
     <div data-ng-controller="frontPageController">
+        <input id="fileInput" type="file" on-read-file="dataFromFile($fileContent)" style="display: none"/>
+        <script>
+            function chooseFile() {
+                $("#fileInput").click();
+            }
+        </script>
         <div class="row" ng-show="hasError">
             <div class="col-md-10">
                 <div class="panel panel-danger">
@@ -58,7 +65,7 @@
         <div class="row">
             <div class="col-md-10">
                 <button data-ng-click="createView()" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create</button>
-                <button type="button" class="btn btn-default" file-upload><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Import</button>
+                <button type="button" class="btn btn-default" onclick="chooseFile()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Import</button>
             </div>
         </div>
         <div class="row" data-ng-show="availableViewConfigurations !== null">
@@ -83,7 +90,7 @@
         <div class="row">
             <div class="col-md-10">
                 <button data-ng-click="createGrid()" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create</button>
-                <button type="button" class="btn btn-default" file-upload><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Import</button>
+                <button type="button" class="btn btn-default" onclick="chooseFile()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Import</button>
             </div>
         </div>
     </div>

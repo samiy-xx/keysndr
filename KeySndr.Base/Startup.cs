@@ -30,6 +30,7 @@ namespace KeySndr.Base
                 defaults: new {id = RouteParameter.Optional}
                 );
             config.EnableCors();
+            config.Formatters.FormUrlEncodedFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/zip"));
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             appBuilder.UseWebApi(config);
         }
