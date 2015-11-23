@@ -3,7 +3,7 @@
     app.controller('setupController', ["$scope", "apiService", "$timeout" ,SetupController]);
 
     function SetupController(scope, service, $timeout) {
-        scope.stage = 1;
+        scope.stage = 0;
         scope.config = null;
         scope.displayLoading = false;
         scope.loadCount = 0;
@@ -11,6 +11,9 @@
         var stop = null;
 
         scope.canAdvance = function () {
+            if (scope.stage === 0)
+                return true;
+
             if (scope.stage === 1) {
                 if (scope.config === null)
                     return false;
@@ -28,10 +31,17 @@
             if (!scope.canAdvance())
                 return;
             scope.stage++;
+            scope.advanced();
+        }
+
+        scope.advanced = function() {
+            if (scope.stage == 3) {
+                $timeout(function () { scope.reload(); }, 1000);
+            }
         }
 
         scope.goBack = function() {
-            if (scope.stage <= 1)
+            if (scope.stage <= 0)
                 return;
 
             scope.stage--;

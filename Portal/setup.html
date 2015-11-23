@@ -28,6 +28,7 @@
 
         <div class="row" data-ng-show="config != null">
             <div class="col-md-8">
+                <div data-ng-show="stage === 0" data-ng-include src="'views/partials/setup-stage-0.html'"></div>
                 <div data-ng-show="stage === 1" data-ng-include src="'views/partials/setup-stage-1.html'"></div>
                 <div data-ng-show="stage === 2" data-ng-include src="'views/partials/setup-stage-2.html'"></div>
                 <div data-ng-show="stage === 3" data-ng-include src="'views/partials/setup-stage-3.html'"></div>
@@ -36,15 +37,16 @@
                         <button title="Go Back"
                                 type="button"
                                 class="btn"
-                                data-ng-class="{'btn-danger': stage <= 1, 'btn-primary': stage > 1}"
-                                data-ng-disabled="stage <= 1"
+                                data-ng-class="{'btn-danger': stage <= 0, 'btn-primary': stage > 0}"
+                                data-ng-disabled="stage <= 0 || stage === 3"
                                 data-ng-click="goBack()">
                             <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
                         </button>
                         <button title="Next step"
                                 type="button"
                                 class="btn"
-                                data-ng-class="{'btn-danger': stage >= 2, 'btn-primary': stage < 2}"
+                                data-ng-disabled="stage === 3"
+                                data-ng-class="{'btn-danger': stage >= 3, 'btn-primary': stage < 3}"
                                 data-ng-click="advance()">
                             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
                         </button>

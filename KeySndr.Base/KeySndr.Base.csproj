@@ -264,6 +264,10 @@
       <Link>Portal\views\partials\setup-stage-3.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Portal\views\partials\setup-stage-0.html">
+      <Link>Portal\views\partials\setup-stage-0.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="..\Portal\views\partials\success-message-row.html">
       <Link>Portal\views\partials\success-message-row.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
