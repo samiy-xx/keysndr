@@ -2,6 +2,12 @@
 
 KeySndr is a server software for receiving signals from client applications and transforming these into keyboard input to be used in creating macros for games or other apps.
 
+### Client
+
+* [KeySndr Android] client
+* Windows Phone 8.1 client eventually
+* Modern Browser on any device. ie. dont try with older IE versions
+
 ### Releases
 
 * [Releases]
@@ -48,3 +54,4 @@ MIT
    [Owin]: <https://github.com/owin/owin>
    [Jint]: <https://github.com/sebastienros/jint>
    [Installer]: <https://github.com/samiy-xx/keysndr/releases/download/v0.8.0/keysndr_win_installer.exe>
+   [KeySndr Android]: <https://github.com/samiy-xx/KeySndr.Clients> 
