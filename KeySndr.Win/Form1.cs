@@ -39,7 +39,7 @@ namespace KeySndr.Win
         private void SetupInterface()
         {
             Text += $" {AssembyInfo.GetAssemblyVersion(typeof (Form1))}";
-            Text += $" ({AssembyInfo.GetAssemblyVersion(typeof (KeySndrApp))})";
+            Text += $" (Base lib {AssembyInfo.GetAssemblyVersion(typeof (KeySndrApp))})";
         }
 
         private void SetupLogging()
