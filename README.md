@@ -23,15 +23,21 @@ KeySndr uses the following
 
 Plus many others
 
-### Clients
+### Client info
 
-* Any modern browser
-* Android client at google play
 
 By default, the webserver listens to port 45889 on your PC at all available interfaces
 
 http://localhost:45889/manage/index.html for the admin interface
 
+With the admin, you can create new configurations. Available are grid based configurations and new html view based configurations that allow more visual customisation.
+
+Example view configuration coming soon.
+
+### Typical url scheme
+
+* For grid based configs: http://YOUR_PUBLIC_IP_IN_LOCAL_NETWORK:YOUR_PORT/play-grid.html?name=CONFIGURATION_NAME
+* For view based configs: http://YOUR_PUBLIC_IP_IN_LOCAL_NETWORK:YOUR_PORT/CONFIG_NAME/index.html
 ### Installation
 
 The [Installer] will install the app to program files.
