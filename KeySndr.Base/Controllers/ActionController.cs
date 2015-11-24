@@ -21,9 +21,11 @@ namespace KeySndr.Base.Controllers
             inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
         }
 
-        public ActionController(IAppConfigProvider a)
+        public ActionController(IAppConfigProvider a, IInputConfigProvider i, IStorageProvider s)
         {
             appConfigProvider = a;
+            inputConfigProvider = i;
+            storageProvider = s;
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
