@@ -44,6 +44,7 @@
     <Compile Include="InputAction.cs" />
     <Compile Include="InputActionExecutionContainer.cs" />
     <Compile Include="InputConfiguration.cs" />
+    <Compile Include="InputMap.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="MouseSequenceItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

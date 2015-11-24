@@ -56,7 +56,7 @@ namespace KeySndr.Base.Providers
                     transaction.Insert<string, DbMJSON<InputConfiguration>>(KeySndrApp.ConfigurationsFolderName, c.Name, c);
                     transaction.Commit();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
             }
@@ -73,7 +73,7 @@ namespace KeySndr.Base.Providers
                     transaction.Insert<string, DbMJSON<InputScript>>(KeySndrApp.ScriptsFolderName, s.Name, s);
                     transaction.Commit();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     
                 }
@@ -93,7 +93,7 @@ namespace KeySndr.Base.Providers
                     transaction.RemoveKey<string>(KeySndrApp.ConfigurationsFolderName, i.Name);
                     transaction.Commit();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     
                 }
@@ -111,7 +111,7 @@ namespace KeySndr.Base.Providers
                     transaction.RemoveKey<string>(KeySndrApp.ConfigurationsFolderName, s.Name);
                     transaction.Commit();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
             }
@@ -130,7 +130,7 @@ namespace KeySndr.Base.Providers
                             transaction.SelectForward<string, DbMJSON<InputConfiguration>>(KeySndrApp.ConfigurationsFolderName)
                            .Select(c => c.Value.Get).ToList();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     configurations = new InputConfiguration[0];
                 }
@@ -152,7 +152,7 @@ namespace KeySndr.Base.Providers
                             .Select(c => c.Value.Get)
                             .ToList();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     scripts = new InputScript[0];
                 }

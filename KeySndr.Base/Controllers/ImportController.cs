@@ -15,12 +15,13 @@ namespace KeySndr.Base.Controllers
         private readonly IInputConfigProvider inputConfigProvider;
         private readonly IScriptProvider scriptProvider;
         private readonly IAppConfigProvider appConfigProvider;
-
+        private readonly IStorageProvider storageProvider;
         public ImportController()
         {
             inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
             scriptProvider = ObjectFactory.GetProvider<IScriptProvider>();
             appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
+            storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
         }
 
         public ImportController(IAppConfigProvider a, IInputConfigProvider i, IScriptProvider s, IStorageProvider t)
@@ -28,6 +29,7 @@ namespace KeySndr.Base.Controllers
             appConfigProvider = a;
             inputConfigProvider = i;
             scriptProvider = s;
+            storageProvider = t;
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -43,7 +45,7 @@ namespace KeySndr.Base.Controllers
             if (data.Files.ContainsKey("file"))
             {
                 var f = data.Files["file"].File;
-                var cmd = new ImportZipPackage(inputConfigProvider, scriptProvider, appConfigProvider, f);
+                var cmd = new ImportZipPackage(inputConfigProvider, scriptProvider, storageProvider, appConfigProvider, f);
                 cmd.Execute();
             }
             return new HttpResponseMessage(HttpStatusCode.OK);

@@ -5,15 +5,14 @@
     function BlinkElement() {
         function link(scope, element, attributes) {
             var ms = attributes.blinkElement;
-            var originalColor = $(element).css('backgroundColor');
-
-            $(element).click(function() {
+            $(element).click(function () {
+                var originalColor = $(element).css('backgroundColor');
                 $(this).animate({
-                    backgroundColor: "#aa0000"
-                }, 200, function() {
+                    backgroundColor: "rgba(81, 203, 238, 1)"
+                }, 100, function() {
                     $(this).animate({
                         backgroundColor: originalColor
-                    }, 200);
+                    }, 100);
                 });
             });
         }

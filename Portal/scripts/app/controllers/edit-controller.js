@@ -170,11 +170,13 @@
             var found = false;
             for (var i = 0; i < scope.currentAction.scriptSequences.length; i++) {
                 var s = scope.currentAction.scriptSequences[i];
-                if (s === name)
+                if (s.scriptName === name)
                     found = true;
             }
             if (!found)
-                scope.currentAction.scriptSequences.push(name);
+                scope.currentAction.scriptSequences.push({
+                    scriptName: name
+                });
         }
 
         scope.init = function (count) {

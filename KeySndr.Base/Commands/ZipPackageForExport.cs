@@ -54,11 +54,11 @@ namespace KeySndr.Base.Commands
                             if (inputScript == null)
                                 continue;
 
-                            zip.AddDirectoryByName(KeySndrApp.ScriptsFolderName + "\\" + inputScript.Name);
+                            zip.AddDirectoryByName(KeySndrApp.ScriptsFolderName + "\\Sources");
 
                             foreach (var sourceFile in inputScript.SourceFiles)
                             {
-                                zip.AddEntry(KeySndrApp.ScriptsFolderName + "\\" + inputScript.Name + "\\" + inputScript.FileName, sourceFile.Contents);
+                                zip.AddEntry(KeySndrApp.ScriptsFolderName + "\\Sources\\" + sourceFile.FileName, sourceFile.Contents);
                             }
 
                             zip.AddEntry(KeySndrApp.ScriptsFolderName + "\\" + inputScript.FileName, JsonSerializer.Serialize(inputScript));
