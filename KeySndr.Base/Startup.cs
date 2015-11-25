@@ -58,22 +58,12 @@ namespace KeySndr.Base
         {
             var fileSystem = new PhysicalFileSystem("./Portal");
             appBuilder.UseDefaultFiles(new DefaultFilesOptions {DefaultFileNames = new[] {"index.html"}});
-
-            /*appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
-            {
-                RequestPath = new PathString(""),
-                Formatter = new HtmlDirectoryFormatter(),
-                FileSystem = fileSystem
-            });*/
-
             appBuilder.UseStaticFiles(new StaticFileOptions
             {
                 RequestPath = new PathString(""),
                 FileSystem = fileSystem,
                 ServeUnknownFileTypes = true,
             });
-
-
         }
     }
 

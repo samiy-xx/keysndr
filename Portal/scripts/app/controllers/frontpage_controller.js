@@ -70,7 +70,8 @@
 
         scope.dataFromFile = function(file) {
             service.upload(file).then(function(response) {
-                
+                scope.getLegacyConfigurations();
+                scope.getViewConfigurations();
             });
         }
 
@@ -89,7 +90,15 @@
         }
 
         scope.removeView = function (index) {
-            scope.availableViewConfigurations.splice(index, 1);
+            service.removeConfiguration(scope.availableViewConfigurations[index]).then(function (response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.hasError = true;
+                    scope.errorMessage = result.errorMessage;
+                    return;
+                }
+                scope.availableViewConfigurations.splice(index, 1);
+            });
         }
 
         scope.editView = function (index) {
@@ -105,7 +114,7 @@
                     return;
                 }
                 var url = result.content.view;
-                window.location.href = "/" + url + "/index.html";
+                window.location.href = "/Views/" + url + "/index.html";
             });
         }
 

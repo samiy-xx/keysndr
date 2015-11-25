@@ -144,33 +144,14 @@ namespace KeySndr.Base
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading input configurations");
             var inputConfigProvider = ObjectFactory.GetProvider<IInputConfigProvider>();
-            var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
-            inputConfigProvider.Clear();
-
-            await Task.Run(() =>
-            {
-                foreach (var loadInputConfiguration in storageProvider.LoadInputConfigurations())
-                {
-                    inputConfigProvider.Add(loadInputConfiguration);
-                }
-            });
+            await inputConfigProvider.Prepare();
         }
 
         public async Task LoadInputScripts()
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading Scripts");
             var sp = ObjectFactory.GetProvider<IScriptProvider>();
-            var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
-            sp.Clear();
-
-            await Task.Run(async () =>
-            {
-                foreach (var s in storageProvider.LoadInputScripts())
-                {
-                    sp.AddScript(s, true);
-                    await s.RunTest();
-                }
-            });
+            await sp.Prepare();
         }
     }
 

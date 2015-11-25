@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using KeySndr.Common;
 using KeySndr.Common.Providers;
 
@@ -12,5 +13,7 @@ namespace KeySndr.Base.Providers
         IEnumerable<InputConfiguration> Configs { get; }
         InputConfiguration FindConfigForName(string name);
         void Clear();
+
+        Task Prepare();
     }
 }

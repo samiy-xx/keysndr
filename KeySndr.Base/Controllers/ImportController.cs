@@ -46,7 +46,7 @@ namespace KeySndr.Base.Controllers
             {
                 var f = data.Files["file"].File;
                 var cmd = new ImportZipPackage(inputConfigProvider, scriptProvider, storageProvider, appConfigProvider, f);
-                cmd.Execute();
+                await cmd.Execute();
             }
             return new HttpResponseMessage(HttpStatusCode.OK);
         }

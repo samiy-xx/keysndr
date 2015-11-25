@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using KeySndr.Base.Domain;
 
 namespace KeySndr.Base.Providers
@@ -96,6 +97,25 @@ namespace KeySndr.Base.Providers
             {
                 scripts.Clear();
             }
+            lock (contexts)
+            {
+                contexts.Clear();
+            }
+        }
+
+        public async Task Prepare()
+        {
+            var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
+            Clear();
+
+            await Task.Run(async () =>
+            {
+                foreach (var s in storageProvider.LoadInputScripts())
+                {
+                    AddScript(s, true);
+                    await s.RunTest();
+                }
+            });
         }
 
         public void Dispose()

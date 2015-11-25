@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using KeySndr.Base.Domain;
 using KeySndr.Common.Providers;
@@ -18,5 +15,7 @@ namespace KeySndr.Base.Providers
         IScriptContext GetContext(InputScript script);
         IScriptContext FindContextForName(string scriptName);
         void Clear();
+
+        Task Prepare();
     }
 }

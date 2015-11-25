@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Ionic.Zip;
 using KeySndr.Base.Domain;
@@ -11,7 +10,7 @@ using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class ImportZipPackage : ICommand<ApiResult<Object>>
+    public class ImportZipPackage : IAsyncCommand<ApiResult<Object>>
     {
         private readonly IAppConfigProvider appConfigProvider;
         private readonly IInputConfigProvider inputConfigProvider;
@@ -31,7 +30,7 @@ namespace KeySndr.Base.Commands
             bytes = b;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             using (var zip = ZipFile.Read(new MemoryStream(bytes)))
             {
@@ -42,6 +41,9 @@ namespace KeySndr.Base.Commands
                 SaveConfigurations(configurations, zip);
                 SaveScripts(scripts);
                 SaveMaps(maps);
+
+                await inputConfigProvider.Prepare();
+                await scriptProvider.Prepare();
             }
         }
 
@@ -99,7 +101,7 @@ namespace KeySndr.Base.Commands
 
                 if (configuration.HasView)
                 {
-                    SaveView(zip, appConfigProvider.AppConfig.WebRoot + "\\" + configuration.View);
+                    SaveView(zip, appConfigProvider.AppConfig.WebRoot);
                 }
             }    
         }
@@ -123,7 +125,7 @@ namespace KeySndr.Base.Commands
 
         private void SaveView(ZipFile zip, string path)
         {
-            var entries = zip.Entries.Where(e => e.FileName.StartsWith("View/"));
+            var entries = zip.Entries.Where(e => e.FileName.StartsWith(KeySndrApp.ViewsFolderName + "/"));
             foreach (var entry in entries)
             {
                 entry.Extract(path, ExtractExistingFileAction.OverwriteSilently);

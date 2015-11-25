@@ -35,9 +35,14 @@
         }
 
         scope.advanced = function() {
+            if (scope.stage === 2) {
+                scope.advance();
+            }
             if (scope.stage == 3) {
                 $timeout(function () { scope.reload(); }, 1000);
             }
+
+
         }
 
         scope.goBack = function() {

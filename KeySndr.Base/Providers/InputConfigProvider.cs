@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Providers
@@ -59,6 +60,20 @@ namespace KeySndr.Base.Providers
             {
                 configs.Clear();
             }
+        }
+
+        public async Task Prepare()
+        {
+            var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
+            Clear();
+
+            await Task.Run(() =>
+            {
+                foreach (var loadInputConfiguration in storageProvider.LoadInputConfigurations())
+                {
+                    Add(loadInputConfiguration);
+                }
+            });
         }
 
         public void Dispose()
