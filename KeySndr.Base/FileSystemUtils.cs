@@ -60,9 +60,6 @@ namespace KeySndr.Base
             if (string.IsNullOrEmpty(AppConfig.DataFolder) || !Directory.Exists(AppConfig.DataFolder))
                 throw new DataFolderDoesNotExistException();
 
-            if (!Directory.Exists(AppConfig.DataFolder))
-                Directory.CreateDirectory(AppConfig.DataFolder);
-
             if (!Directory.Exists(AppConfig.ConfigFolder))
                 Directory.CreateDirectory(AppConfig.ConfigFolder);
 
@@ -71,6 +68,9 @@ namespace KeySndr.Base
 
             if (!Directory.Exists(AppConfig.WebRoot))
                 Directory.CreateDirectory(AppConfig.WebRoot);
+
+            if (!Directory.Exists(AppConfig.ViewsRoot))
+                Directory.CreateDirectory(AppConfig.ViewsRoot);
         }
 
         public T LoadObjectFromDisk<T>(string path)
@@ -97,6 +97,11 @@ namespace KeySndr.Base
         public void SaveObjectToDisk(object o, string path)
         {
             File.WriteAllText(path, JsonConvert.SerializeObject(o, Formatting.Indented), Encoding.UTF8);
+        }
+
+        public void SaveStringToDisk(string text, string path)
+        {
+            File.WriteAllText(path, text);
         }
 
         public IEnumerable<string> GetDirectoryFileNames(string path, bool fileNameWithoutPath = false)

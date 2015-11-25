@@ -14,6 +14,7 @@ namespace KeySndr.Base
     public class KeySndrApp
     {
         public const string WebFolderName = "Web";
+        public const string ViewsFolderName = "Views";
         public const string ConfigurationsFolderName = "Configurations";
         public const string ScriptsFolderName = "Scripts";
         public const string MappingsFolderName = "Mappings";

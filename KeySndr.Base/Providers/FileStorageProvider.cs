@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using KeySndr.Base.Domain;
 using KeySndr.Common;
 
@@ -26,6 +25,16 @@ namespace KeySndr.Base.Providers
             if (!FileSystemUtils.DirectoryExists(path))
                 throw new Exception("Directory does not exist");
             FileSystemUtils.SaveObjectToDisk(c, Path.Combine(path, c.FileName));
+            CreateViewFolder(c);
+        }
+
+        private void CreateViewFolder(InputConfiguration c)
+        {
+            if (!c.HasView)
+                return;
+            var path = Path.Combine(AppConfigProvider.AppConfig.ViewsRoot, c.View);
+            if (!FileSystemUtils.DirectoryExists(path))
+                FileSystemUtils.CreateDirectory(path);
         }
 
         public override void SaveScript(InputScript s)
@@ -35,6 +44,17 @@ namespace KeySndr.Base.Providers
                 throw new Exception("Directory does not exist");
             FileSystemUtils.SaveObjectToDisk(s, Path.Combine(path, s.FileName));
             CreateSourceFilesDirectoryIfNotExists(s);
+            CreatePlaceholderSourceFiles(s);
+        }
+
+        private void CreatePlaceholderSourceFiles(InputScript s)
+        {
+            foreach (var sourceName in s.SourceFileNames)
+            {
+                var path = Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, s.Name, sourceName);
+                if (!FileSystemUtils.FileExists(path))
+                    FileSystemUtils.SaveStringToDisk("// Code away!!", path);
+            }
         }
 
         public override void RemoveInputConfiguration(InputConfiguration i)
@@ -107,8 +127,6 @@ namespace KeySndr.Base.Providers
                 ? null 
                 : FileSystemUtils.LoadObjectFromDisk<InputScript>(Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, fileName));
         }
-
-        
 
         private InputConfiguration LoadInputConfiguration(string fileName)
         {

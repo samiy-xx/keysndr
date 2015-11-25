@@ -68,10 +68,10 @@ namespace KeySndr.Base.Commands
                 }
                 if (inputConfig.HasView)
                 {
-                    zip.AddDirectoryByName("View");
-                    var path = Path.Combine(appConfigProvider.AppConfig.WebRoot, inputConfig.View);
+                    zip.AddDirectoryByName("Views");
+                    var path = Path.Combine(appConfigProvider.AppConfig.ViewsRoot, inputConfig.View);
                     if (new FileSystemUtils().DirectoryExists(path))
-                        zip.AddDirectory(path, "View");
+                        zip.AddDirectory(path, "Views");
                 }
 
                 stream.Seek(0, SeekOrigin.Begin);
