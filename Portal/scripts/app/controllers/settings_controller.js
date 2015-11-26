@@ -9,12 +9,10 @@
             service.getSettings().then(function(response) {
                 var result = response.data;
                 if (!result.success) {
-                    scope.errorMessage = result.errorMessage;
-                    scope.hasError = true;
+                    scope.displayErrorMessage("Failed to load settings", result.errorMessage, 5000);
                     return;
                 }
                 scope.appSettings = result.content;
-                scope.hasError = false;
             });
         };
 
@@ -22,13 +20,10 @@
             service.saveSettings(scope.appSettings).then(function(response) {
                 var result = response.data;
                 if (!result.success) {
-                    scope.errorMessage = result.errorMessage;
-                    scope.message = result.message;
-                    scope.hasError = true;
+                    scope.displayErrorMessage("Failed to save settings", result.errorMessage, 5000);
                     return;
                 }
-                scope.message = "Settings saved";
-                scope.hasError = false;
+                scope.displaySuccessMessage("Settings saved", result.errorMessage, 3000);
             });
         };
         scope.getAppSettings();

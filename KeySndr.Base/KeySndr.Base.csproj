@@ -224,6 +224,10 @@
       <Link>Portal\css\scripts.css</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="..\Portal\mappings.html">
+      <Link>Portal\mappings.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="..\Portal\scripts\app\controllers\edit-controller.js">
       <Link>Portal\scripts\app\controllers\edit-controller.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -232,6 +236,10 @@
       <Link>Portal\setup.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="..\Portal\scripts\app\controllers\mappings-controller.js">
+      <Link>Portal\scripts\app\controllers\mappings-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\app\controllers\setup-controller.js">
       <Link>Portal\scripts\app\controllers\setup-controller.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

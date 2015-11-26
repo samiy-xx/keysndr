@@ -5,20 +5,24 @@
 
     function PlayGridController(scope, service, location) {
         scope.configuration = null;
+        scope.useDesktopWindow = false;
+        scope.useForegroundWindow = true;
+        scope.processName = "";
 
         scope.execute = function (action) {
             if (action.sequences.length === 0
                 && action.mouseSequences.length === 0
-                && action.scriptSequences.length === 0)
+                && action.scriptSequences.length === 0
+                )
                 return;
 
             if (!action.isEnabled)
                 return;
 
             var executionContainer = {
-                useForegroundWindow: true,
-                useDesktop: false,
-                processName: "",
+                useForegroundWindow: scope.useForegroundWindow,
+                useDesktop: scope.useDesktopWindow,
+                processName: scope.processName,
                 inputAction: action
             };
             service.executeAction(executionContainer).then(function (response) {
@@ -53,7 +57,9 @@
                         return;
                     }
                     var actions = result.content.actions;
-
+                    scope.processName = result.content.processName;
+                    scope.useDesktopWindow = result.content.useDesktopWindow;
+                    scope.useForegroundWindow = result.content.useForegroundWindow;
                     scope.configuration = listToMatrix(actions, 5);
                 });
             }

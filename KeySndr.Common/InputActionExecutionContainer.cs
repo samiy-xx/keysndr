@@ -23,5 +23,13 @@ namespace KeySndr.Common
             UseDesktop = false;
             UseForegroundWindow = false;
         }
+
+        public static InputActionExecutionContainer Wrap(InputAction a)
+        {
+            return new InputActionExecutionContainer()
+            {
+                InputAction = a
+            };
+        }
     }
 }

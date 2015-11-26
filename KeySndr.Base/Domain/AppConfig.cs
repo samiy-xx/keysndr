@@ -6,8 +6,8 @@ namespace KeySndr.Base.Domain
     [JsonObject(MemberSerialization.OptIn)]
     public class AppConfig
     {
-        [JsonProperty("lastProcessName")]
-        public string LastProcessName { get; set; }
+        //[JsonProperty("lastProcessName")]
+        //public string LastProcessName { get; set; }
 
         [JsonProperty("lastPath")]
         public string LastPath { get; set; }
@@ -18,8 +18,8 @@ namespace KeySndr.Base.Domain
         [JsonProperty("lastIp")]
         public string LastIp { get; set; }
 
-        [JsonProperty("useForegroundWindow")]
-        public bool UseForegroundWindow { get; set; }
+        //[JsonProperty("useForegroundWindow")]
+        //public bool UseForegroundWindow { get; set; }
 
         [JsonProperty("updateVersionCheckUrl")]
         public string UpdateVersionCheckUrl { get; set; }
@@ -39,8 +39,8 @@ namespace KeySndr.Base.Domain
         [JsonProperty("firstTimeRunning")]
         public bool FirstTimeRunning { get; set; }
 
-        [JsonProperty("useObjectStorage")]
-        public bool UseObjectStorage { get; set; }
+        //[JsonProperty("useObjectStorage")]
+        //public bool UseObjectStorage { get; set; }
 
         public IntPtr ProcessNumber { get; set; }
         public string ConfigFolder => $@"{DataFolder}\{KeySndrApp.ConfigurationsFolderName}";
@@ -49,10 +49,10 @@ namespace KeySndr.Base.Domain
         public string ViewsRoot => $@"{DataFolder}\{KeySndrApp.WebFolderName}\{KeySndrApp.ViewsFolderName}";
         public AppConfig()
         {
-            LastProcessName = string.Empty;
+            //LastProcessName = string.Empty;
             ProcessNumber = IntPtr.Zero;
             LastPath = "c:\\";
-            UseForegroundWindow = false;
+            //UseForegroundWindow = false;
             LastPort = 45889;
             LastIp = "+";
             CheckUpdateOnStart = false;
@@ -61,22 +61,22 @@ namespace KeySndr.Base.Domain
             DataFolder = string.Empty;
             EnableKeyboardAndMouse = false;
             FirstTimeRunning = true;
-            UseObjectStorage = false;
+            //UseObjectStorage = false;
         }
 
         public AppConfig CopyFrom(AppConfig c)
         {
-            LastProcessName = c.LastProcessName;
+            //LastProcessName = c.LastProcessName;
             LastPath = c.LastPath;
             LastPort = c.LastPort;
             LastIp = c.LastIp;
-            UseForegroundWindow = c.UseForegroundWindow;
+            //UseForegroundWindow = c.UseForegroundWindow;
             UpdateVersionCheckUrl = c.UpdateVersionCheckUrl;
             ProcessNumber = c.ProcessNumber;
             DataFolder = c.DataFolder;
             EnableKeyboardAndMouse = c.EnableKeyboardAndMouse;
             FirstTimeRunning = c.FirstTimeRunning;
-            UseObjectStorage = c.UseObjectStorage;
+            //UseObjectStorage = c.UseObjectStorage;
             return this;
         }
     }

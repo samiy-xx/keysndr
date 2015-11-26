@@ -131,7 +131,5 @@ namespace KeySndr.Base.Commands
                 entry.Extract(path, ExtractExistingFileAction.OverwriteSilently);
             }
         }
-
-        //
     }
 }

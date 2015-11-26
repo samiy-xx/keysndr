@@ -22,36 +22,22 @@
     <header ng-include src="'views/partials/navigation.html'"></header>
 <div class="container body-content">
     <div data-ng-controller="settingsController">
-        <div class="row" ng-show="hasError">
-            <div class="col-md-10">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">{{ message }}</div>
-                    <div class="panel-body">
-                        {{ errorMessage }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" ng-show="!hasError && message.length > 0">
-            <div class="col-md-10">
-                <div class="panel panel-success">
-                    <div class="panel-heading">{{ message }}</div>
-                    <div class="panel-body">
-                        Settings saved with success
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div ng-include src="'views/partials/success-message-row.html'"></div>
+        <div ng-include src="'views/partials/error-message-row.html'"></div>
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <div class="form-horizontal">
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="input_settings_ip" class="control-label">Server IP</label>
                         <input id="input_settings_ip" type="text" class="form-control" data-ng-model="appSettings.lastIp"/>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label for="input_settings_port" class="control-label">Server Port</label>
                         <input id="input_settings_port" type="text" class="form-control" data-ng-model="appSettings.lastPort"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="input_settings_config_folder" class="control-label">Data Folder</label>
+                        <input id="input_settings_config_folder" type="text" class="form-control" data-ng-model="appSettings.dataFolder" />
                     </div>
                     <div class="form-group">
                         <label for="input_settings_id" class="control-label">Broadcast Identifier</label>
@@ -61,10 +47,8 @@
                         <label for="input_settings_version" class="control-label">Version Check Url</label>
                         <input id="input_settings_version" type="text" class="form-control" data-ng-model="appSettings.updateVersionCheckUrl"/>
                     </div>
-                    <div class="form-group">
-                        <label for="input_settings_config_folder" class="control-label">Data Folder</label>
-                        <input id="input_settings_config_folder" type="text" class="form-control" data-ng-model="appSettings.dataFolder"/>
-                    </div>
+                    
+                    <!--
                     <div class="form-group">
                         <label for="input_settings_process" class="control-label">Process Name</label>
                         <input id="input_settings_process" type="text" class="form-control" data-ng-model="appSettings.lastProcessName"/>
@@ -72,15 +56,15 @@
                     <div class="form-group">
                         <label for="input_settings_fore" class="control-label">Use Foreground Window</label>
                         <input id="input_settings_fore" type="checkbox" class="form-control" data-ng-model="appSettings.useForegroundWindow"/>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label for="input_settings_updates" class="control-label">Check updates on start</label>
                         <input id="input_settings_updates" type="checkbox" class="form-control" data-ng-model="appSettings.checkUpdateOnStart"/>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="input_settings_updates" class="control-label">Enable Keyboard and Mouse (Experimental)</label>
                         <input id="input_settings_updates" type="checkbox" class="form-control" data-ng-model="appSettings.enableKeyboardAndMouse"/>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <div class="col-md-offset-2">
                             <input type="submit" value="Save" class="btn btn-default" data-ng-click="saveSettings()"/>

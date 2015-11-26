@@ -97,10 +97,10 @@ namespace KeySndr.Base
 
         private void RegisterProvidersAfterAppConfig()
         {
-            if (appConfig.FirstTimeRunning || !appConfig.UseObjectStorage)
+            //if (appConfig.FirstTimeRunning || !appConfig.UseObjectStorage)
                 ObjectFactory.AddProvider(new FileStorageProvider());
-            else 
-                ObjectFactory.AddProvider(new DbStorageProvider());    
+            //else 
+            //    ObjectFactory.AddProvider(new DbStorageProvider());    
         }
 
         private void LoadAppConfig()

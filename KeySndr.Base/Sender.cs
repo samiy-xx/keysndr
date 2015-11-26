@@ -29,25 +29,11 @@ namespace KeySndr.Base
                     if (sequenceItem.Entry.Key == null)
                         continue;
 
-                    if (sequenceItem.WindowsModifiers.Any())
-                    {
-                        var keys = new List<Keys>();
-                        keys.AddRange(sequenceItem.WindowsModifiers.Select(m => (Keys) m.Value));
-                        keys.Add((Keys) sequenceItem.Entry.Value);
-                        Keyboard.ShortcutKeys(keys.ToArray(), sequenceItem.KeepDown);
-                    }
-                    else
-                    {
-                        if (sequenceItem.Modifiers.Any())
-                        {
-                            foreach (var sequenceKeyValuePair in sequenceItem.Modifiers)
-                            {
-                                Keyboard.KeyPress(converter.ConvertFromInt(sequenceKeyValuePair.Value),
-                                    sequenceItem.KeepDown);
-                            }
-                        }
-                        Keyboard.KeyPress(converter.ConvertFromInt(sequenceItem.Entry.Value), sequenceItem.KeepDown);
-                    }
+                    
+                    var keys = new List<Keys>();
+                    keys.AddRange(sequenceItem.Modifiers.Select(m => (Keys)m.Value));
+                    keys.Add((Keys)sequenceItem.Entry.Value);
+                    Keyboard.ShortcutKeys(keys.ToArray(), sequenceItem.KeepDown);
                 }
             });
         }
@@ -81,7 +67,7 @@ namespace KeySndr.Base
                     {
                         ctx.Run();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         
                     }
@@ -93,44 +79,6 @@ namespace KeySndr.Base
     public class Sender
     {
         private static readonly ILoggingProvider Log = ObjectFactory.GetProvider<ILoggingProvider>();
-
-        public async static Task Send(InputAction action)
-        {
-            var config = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
-            var processSet = false;
-
-            if (config.UseForegroundWindow)
-            {
-                var ptr = WindowsApi.GetForegroundWindow();
-                if (ptr != IntPtr.Zero)
-                {
-                    WindowsApi.SetFocus(ptr);
-                    processSet = true;
-                }
-            }
-
-            if (!processSet && !string.IsNullOrEmpty(config.LastProcessName))
-            {
-                var process = WinUtils.GetProcessByName(config.LastProcessName);
-                if (process != null)
-                {
-                    WindowsApi.SetForegroundWindow(process.MainWindowHandle);
-                    WindowsApi.SetFocus(process.MainWindowHandle);
-                    processSet = true;
-                }
-            }
-            /*if (config.ProcessNumber == IntPtr.Zero)
-            {
-                var process = WinUtils.GetProcessByName(config.LastProcessName);
-                if (process != null)
-                    config.ProcessNumber = process.MainWindowHandle;
-            }
-            if (config.ProcessNumber == IntPtr.Zero)
-                return;
-            */
-                        if (processSet)
-                await new Sender().SendAction(action);
-        }
 
         public async static Task Send(InputActionExecutionContainer container)
         {
@@ -168,13 +116,19 @@ namespace KeySndr.Base
                 
             }
 
-            if (!processSet)
-            {
-                await Send(container.InputAction);
-                return;
-            }
+           // if (!processSet)
+            //{
+            //    await Send(container.InputAction);
+            //    return;
+            //}
+            
+            if (processSet)
+                await new Sender().SendAction(container.InputAction);
+        }
 
-            await new Sender().SendAction(container.InputAction);
+        public async static Task Send(InputAction a)
+        {
+            await new Sender().SendAction(a);
         }
 
         public async Task SendAction(InputAction action)
@@ -182,19 +136,6 @@ namespace KeySndr.Base
             var sndr = new SenderInternal(action);
            
             Log.Debug("Running action " + action.Name);
-            /*if (!useFg)
-            {
-                Log.Debug("Setting focus to chosen window");
-                WindowsApi.SetForegroundWindow(currentHandle);
-                WindowsApi.SetFocus(currentHandle);
-            }
-            else
-            {
-                Log.Debug("Setting focus to foreground window");
-                var ptr = WindowsApi.GetForegroundWindow();
-                if (ptr != IntPtr.Zero)
-                    WindowsApi.SetFocus(ptr);
-            }*/
             
             if (action.HasKeySequences)
                 await sndr.SendKeyBoardSequences();
