@@ -20,5 +20,111 @@
 
 <body ng-app="keysndrsite" data-ng-controller="siteController">
     <header ng-include src="'views/partials/navigation.html'"></header>
+    <div class="row">
+    <div class="col-md-12">
+        <div id="myCarousel" class="carousel slide" data-interval="5000" data-ride="carousel">
+            <!-- Carousel indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+            </ol>
+            <!-- Wrapper for carousel items -->
+            <div class="carousel-inner">
+                <div class="active item">
+                    <img src="/media/carousel/web_hi_res_512.png" alt="First Slide" class="img-rounded img-responsive" style="margin: 0 auto;">
+                    <div class="carousel-caption" >
+                        <h3 style="background: #000000">KeySndr</h3>
+                        <p style="background: #000000">Macro automation for Android&trade;</p>
+                        <p style="background: #000000">Control PC games from your Android device.</p>
+                        <p>@Html.ActionLink("Download", "Downloads", "Home", new { area = "" }, new { target = "_self", @class = "btn btn-success" })</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/media/carousel/sshot_slide1.png" alt="Second Slide" class="img-rounded img-responsive">
+                    <div class="carousel-caption">
+                        <h3>Connect to a server</h3>
+                        <p>Run a server on your PC. Select any configuration stored on the server.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/media/carousel/sshot_slide2.png" alt="Third Slide" class="img-rounded img-responsive">
+                    <div class="carousel-caption">
+                        <h3>Create configurations</h3>
+                        <p>Create configurations for any game you want to automate</p>
+                        <p>Throttle controls for Elite: Dangerous presented here</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/media/carousel/sshot_slide3.png" alt="Fourth Slide" class="img-rounded img-responsive">
+                    <div class="carousel-caption">
+                        <h3>Customise colors</h3>
+                        <p>Set any text and backgroud color to actions you create</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/media/carousel/sshot_slide4.png" alt="Fifth Slide" class="img-rounded img-responsive">
+                    <div class="carousel-caption">
+                        <h3>Keyboard input</h3>
+                        <p>Set keyboard inputs to the action. Control, Alt and Shift modifiers</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel controls -->
+            <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="well">
+            <h3>Key features</h3>
+            <ul>
+                <li>
+                    Simple clutter free interface
+                </li>
+                <li>
+                    GridView to present actions in your configuration
+                </li>
+                <li>
+                    Send keyboard input to your favorite apps/games
+                </li>
+                <li>
+                    Javascript support on the server. Execute scripts from your Android device.
+                </li>
+            </ul>
+        </div>
+     </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>KeySndr</h2>
+        <ul>
+            <li>Macro app for your Android device</li>
+            <li>Create configurations on your device or this site</li>
+            <li>Use it to send keyboard input to your PC games</li>
+        </ul>
+        <p>
+            @Html.ActionLink("Create Configurations", "Configurations", "Home", new { area = "" }, new { target = "_self", @class="btn btn-default" })
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Server app</h2>
+        <p>Server application is required on your pc to receive the input from your device and forward it to your selected game</p>
+        <p>@Html.ActionLink("Downloads", "Downloads", "Home", new { area = "" }, new { target = "_self", @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Tutorial</h2>
+        <p>Take a look at these short tutorials for the client and the server applications. These will help you get started on using the app.</p>
+        <p>@Html.ActionLink("Learn more", "Tutorial", "Home", new { area = "" }, new { target = "_self", @class = "btn btn-default" })</p>
+    </div>
+</div>
 </body>
 </html>
