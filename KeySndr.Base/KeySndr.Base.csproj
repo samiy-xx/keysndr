@@ -252,6 +252,10 @@
       <Link>Portal\scripts\app\directives\file-upload.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Portal\scripts\app\directives\key-listener.js">
+      <Link>Portal\scripts\app\directives\key-listener.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\app\directives\on-read-file.js">
       <Link>Portal\scripts\app\directives\on-read-file.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

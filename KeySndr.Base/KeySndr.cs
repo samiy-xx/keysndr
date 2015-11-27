@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Timers;
 using KeySndr.Base.BeaconLib;
@@ -126,18 +127,27 @@ namespace KeySndr.Base
         {
             SetupBeacon(appConfig.LastPort);
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Starting web server");
-            var options = new StartOptions
+            try
             {
-                ServerFactory = "Nowin",
-                Port = appConfig.LastPort
-            };
-            webServer = WebApp.Start<Startup>(options);
+                var options = new StartOptions
+                {
+                    ServerFactory = "Nowin",
+                    Port = appConfig.LastPort
+                };
+                webServer = WebApp.Start<Startup>(options);
+            }
+            catch (TargetInvocationException e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+                if (!string.IsNullOrEmpty(e.InnerException?.Message))
+                    ObjectFactory.GetProvider<ILoggingProvider>().Error(e.InnerException.Message, e.InnerException);
+            }
         }
 
         private void StopServer()
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Stopping web server");
-            webServer.Dispose();
+            webServer?.Dispose();
         }
 
         public async Task LoadInputConfigurations()

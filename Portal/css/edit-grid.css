@@ -46,3 +46,7 @@ td {
     margin: 5px;
     padding: 5px;
 }
+.panel-body > .input-group {
+    margin: 5px;
+    padding: 5px;
+}

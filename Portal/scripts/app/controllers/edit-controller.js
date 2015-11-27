@@ -97,6 +97,38 @@
                 );
         }
 
+        scope.getModifierKeyName = function(c) {
+            for (var i in scope.keyModifiers) {
+                var modValue = scope.keyModifiers[i];
+                if (modValue === c)
+                    return i;
+            }
+            return null;
+        }
+
+        scope.getKeyName = function(c) {
+            for (var i = 0; i < scope.keys.length; i++) {
+                var entry = scope.keys[i];
+                if (entry.value === c)
+                    return entry.key;
+            }
+            return null;
+        }
+
+        scope.setKey = function(index, c) {
+            var keyName = scope.getKeyName(c);
+            scope.$apply(function() {
+                scope.currentAction.sequences[index].entry.key = keyName;
+                scope.currentAction.sequences[index].entry.value = c;
+            });
+        }
+        scope.setIntModifierForSequence = function(index, c) {
+            scope.$apply(function() {
+                scope.setModifierForSequence(index, scope.getModifierKeyName(c));
+            });
+            
+        }
+
         scope.setModifierForSequence = function (index, keyName) {
 
             var value = scope.keyModifiers[keyName];
@@ -110,8 +142,9 @@
                 });
                 return;
             }
-            sequence.modifiers.splice(i, i + 1);
-
+            sequence.modifiers.splice(i, 1);
+            if (sequence) {
+            }
         }
 
         scope.setWinModifierForSequence = function (index, keyName) {

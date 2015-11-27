@@ -8,7 +8,7 @@
     <link rel="SHORTCUT ICON" href="media/favicon.ico" />
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/edit-grid.css" rel="stylesheet" />
-
+    
     <script src="scripts/jquery-2.1.4.js"></script>
     <script src="scripts/angular.js"></script>
     <script src="scripts/bootstrap.js"></script>
@@ -19,6 +19,7 @@
     <script src="scripts/app/controllers/main-controller.js"></script>
     <script src="scripts/app/controllers/edit-controller.js"></script>
     <script src="scripts/app/controllers/edit-grid-controller.js"></script>
+    <script src="scripts/app/directives/key-listener.js"></script>
     <script src="scripts/app/services/api_service.js"></script>
 </head>
 <body ng-app="keysndr" data-ng-controller="mainController">
@@ -27,6 +28,7 @@
     <div data-ng-controller="editGridController" style="height: 100%; width: 100%;">
         <div ng-include src="'views/partials/success-message-row.html'"></div>
         <div ng-include src="'views/partials/error-message-row.html'"></div>
+    
         <div class="row">
             <div class="col-md-6">
                 <div class="well">
@@ -34,7 +36,7 @@
                         <span class="input-group-addon" id="basic-addon_1">Config name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         <input type="text" class="form-control" placeholder="Config Name" ng-model="inputConfiguration.name" aria-describedby="basic-addon_1">
                     </div>
-                    <!-- Begin selecting action target -->
+                    
                     <div class="input-group">
                         <div class="input-group-btn">
                             <button title="Use desktop as the action target"
@@ -73,10 +75,7 @@
                                ng-model="inputConfiguration.processName"
                                aria-describedby="basic-addon_2">
                     </div>
-                    <!--<div class="input-group">
-                        <span class="input-group-addon" id="basic-addon_2">File Name&nbsp;&nbsp;</span>
-                        <input type="text" class="form-control" placeholder="File Name" ng-model="inputConfiguration.fileName" aria-describedby="basic-addon_2">
-                    </div>-->
+                    
                 </div>
             </div>
             <div class="col-md-6">
@@ -236,25 +235,10 @@
                                     <option value="" disabled>Choose Key</option>
                                 </select>
                             </div>
-
-                            <!--<h3>Windows modifier keys</h3>
-                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                <div class="btn-group" role="group">
-                                    <button type="button" data-ng-class="(hasWinModifier($index, 'Control')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setWinModifierForSequence($index, 'Control')">
-                                        <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Ctrl
-                                    </button>
-                                </div>
-                                <div class="btn-group" role="group">
-                                    <button type="button" data-ng-class="(hasWinModifier($index, 'Alt')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setWinModifierForSequence($index, 'Alt')">
-                                        <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Alt
-                                    </button>
-                                </div>
-                                <div class="btn-group" role="group">
-                                    <button type="button" data-ng-class="(hasWinModifier($index, 'Shift')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setWinModifierForSequence($index, 'Shift')">
-                                        <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Shift
-                                    </button>
-                                </div>
-                            </div>-->
+                            <div class="input-group" key-listener="{{ $index }}">
+                                <span class="input-group-addon" id="basic-addon-3-{{ $index}}">Keyboard</span>
+                                <input type="text" class="form-control" placeholder="Focus here and type a key" aria-describedby="basic-addon-3-{{ $index}}">
+                            </div>
 
                             <h3>Modifiers</h3>
                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
