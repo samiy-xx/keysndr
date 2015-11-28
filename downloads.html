@@ -95,7 +95,7 @@
                             </div>
                             <div class="panel-body">
                                 <p data-ng-repeat="release in releases | limitTo:3">
-                                    <a href="{{ release.url }}">{{ release.tag_name }}</a>
+                                    <a href="{{ release.html_url }}">{{ release.tag_name }}</a>
                                     <span data-ng-show="release.prerelease">(Beta)</span>
                                     <span>{{ release.created_at | date:'yyyy-MM-dd'}}</span>
                                 </p>
