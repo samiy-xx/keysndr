@@ -14,10 +14,12 @@
                     scope.errorMessage = result.errorMessage;
                     return;
                 }
+
                 var i = scope.inputConfiguration.actions.map(function (e) { return e.name; }).indexOf(scope.currentAction.name);
                 if (i > -1) {
-                    scope.currentAction = null;
+                    
                     scope.inputConfiguration.actions[i] = result.content;
+                    scope.wipeCurrentAction();
                 }
                 scope.configuration = listToMatrix(scope.inputConfiguration.actions, 5);
             }); 

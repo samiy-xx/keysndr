@@ -5,7 +5,6 @@
     function EditController(scope, service, $location) {
         scope.currentAction = null;
         scope.inputConfiguration = null;
-        scope.currentAction = null;
         scope.keys = AppKeys;
         scope.keyModifiers = AppModifiers;
         scope.winModifiers = WinModifiers;
@@ -43,6 +42,10 @@
                 }
                 scope.displaySuccessMessage("Configuration saved", "OK", 5000);
             });
+        }
+
+        scope.wipeCurrentAction = function() {
+            scope.currentAction = null;
         }
 
         scope.setForEdit = function (a) {
