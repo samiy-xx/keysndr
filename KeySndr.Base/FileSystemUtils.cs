@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using KeySndr.Base.Domain;
 using KeySndr.Base.Exceptions;
 using KeySndr.Base.Providers;
@@ -14,7 +13,7 @@ namespace KeySndr.Base
 {
     public class FileSystemUtils
     {
-        private const string AppConfigName = "app.json";
+        private const string AppConfigName = "keysndr.conf";
         private const string AppDataFolderName = "KeySndr";
 
         public string AppDataFolder => Path.Combine(
@@ -22,11 +21,6 @@ namespace KeySndr.Base
                 AppDataFolderName);
 
         public AppConfig AppConfig => ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
-
-        public FileSystemUtils()
-        {
-
-        }
 
         public bool DirectoryExists(string path)
         {

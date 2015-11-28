@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace KeySndr.Common
@@ -6,6 +7,9 @@ namespace KeySndr.Common
     [DataContract]
     public class InputConfiguration
     {
+        [DataMember(Name = "id")]
+        public Guid Id { get; set; }
+
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
@@ -31,6 +35,7 @@ namespace KeySndr.Common
 
         public InputConfiguration()
         {
+            Id = Guid.NewGuid();
             Name = string.Empty;
             View = string.Empty;
             FileName = string.Empty;
@@ -42,6 +47,7 @@ namespace KeySndr.Common
 
         public InputConfiguration(string name, List<InputAction> actions)
         {
+            Id = Guid.NewGuid();
             Name = name;
             FileName = string.Empty;
             ProcessName = string.Empty;
@@ -64,7 +70,7 @@ namespace KeySndr.Common
 
         protected bool Equals(InputConfiguration other)
         {
-            return string.Equals(Name, other.Name);
+            return Id.Equals(other.Id);
         }
 
         public override bool Equals(object obj)
@@ -72,12 +78,12 @@ namespace KeySndr.Common
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((InputConfiguration)obj);
+            return Equals((InputConfiguration) obj);
         }
 
         public override int GetHashCode()
         {
-            return Name?.GetHashCode() ?? 0;
+            return Id.GetHashCode();
         }
     }
 }

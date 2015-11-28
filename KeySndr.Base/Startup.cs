@@ -8,7 +8,6 @@ using KeySndr.Base.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
-using Microsoft.Owin.StaticFiles.DirectoryFormatters;
 using Owin;
 
 namespace KeySndr.Base

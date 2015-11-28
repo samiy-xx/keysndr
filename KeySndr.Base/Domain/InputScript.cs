@@ -9,6 +9,9 @@ namespace KeySndr.Base.Domain
     [JsonObject(MemberSerialization.OptIn)]
     public class InputScript
     {
+        [JsonProperty("id")]
+        public Guid Id { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -27,6 +30,7 @@ namespace KeySndr.Base.Domain
 
         public InputScript()
         {
+            Id = Guid.NewGuid();
             SourceFiles = new List<SourceFile>();
             SourceFileNames = new List<string>();
             Errors = new List<string>();
@@ -59,7 +63,7 @@ namespace KeySndr.Base.Domain
 
         protected bool Equals(InputScript other)
         {
-            return string.Equals(Name, other.Name);
+            return Id.Equals(other.Id);
         }
 
         public override bool Equals(object obj)
@@ -72,7 +76,7 @@ namespace KeySndr.Base.Domain
 
         public override int GetHashCode()
         {
-            return Name?.GetHashCode() ?? 0;
+            return Id.GetHashCode();
         }
     }
 }

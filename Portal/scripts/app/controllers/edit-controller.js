@@ -10,6 +10,7 @@
         scope.keyModifiers = AppModifiers;
         scope.winModifiers = WinModifiers;
         scope.availableScripts = [];
+        scope.editing = false;
         scope.processSelector = {
             'useDesktopWindow': false,
             'useForegroundWindow': false,
@@ -215,6 +216,7 @@
         scope.init = function (count) {
             var s = $location.search();
             if (s !== null && s !== undefined && s.hasOwnProperty("name")) {
+                scope.editing = true;
                 service.getConfiguration(s.name).then(function (response) {
                     var result = response.data;
                     if (!result.success) {
