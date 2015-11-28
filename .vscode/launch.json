@@ -2,11 +2,11 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Launch",
+			"name": "node gulp.js",
 			"type": "node",
 			"request": "launch",
-			"program": "app.js",
-			"stopOnEntry": false,
+			"program": "./node_modules/gulp/bin/gulp.js",
+			"stopOnEntry": true,
 			"args": [],
 			"cwd": ".",
 			"runtimeExecutable": null,

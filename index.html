@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1" />
-    <meta name="viewport" content="height=device-height, user-scalable=no initial-scale=1"/>
-    <title>KeySndr - Management</title>
+    <title>KeySndr</title>
     <link rel="SHORTCUT ICON" href="media/favicon.ico" />
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet"/>
@@ -13,13 +11,13 @@
     <script src="scripts/angular.js"></script>
     <script src="scripts/bootstrap.js"></script>
     <script src="scripts/angular-ui/ui-bootstrap.js"></script>
-    <script src="scripts/FileSaver.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/app/controllers/site-controller.js"></script>
 </head>
 
 <body ng-app="keysndrsite" data-ng-controller="siteController">
     <header ng-include src="'views/partials/navigation.html'"></header>
+    <div class="container body-content">
     <div class="row">
     <div class="col-md-12">
         <div id="myCarousel" class="carousel slide" data-interval="5000" data-ride="carousel">
@@ -39,7 +37,7 @@
                         <h3 style="background: #000000">KeySndr</h3>
                         <p style="background: #000000">Macro automation for Android&trade;</p>
                         <p style="background: #000000">Control PC games from your Android device.</p>
-                        <p>@Html.ActionLink("Download", "Downloads", "Home", new { area = "" }, new { target = "_self", @class = "btn btn-success" })</p>
+                        <p style="background: #000000"><a href="downloads.html" target="_self">Download</a></p>
                     </div>
                 </div>
                 <div class="item">
@@ -88,16 +86,16 @@
             <h3>Key features</h3>
             <ul>
                 <li>
-                    Simple clutter free interface
+                    GridView to present actions in your configuration
                 </li>
                 <li>
-                    GridView to present actions in your configuration
+                    Customizable views. Create your own, the way you want it!   
                 </li>
                 <li>
                     Send keyboard input to your favorite apps/games
                 </li>
                 <li>
-                    Javascript support on the server. Execute scripts from your Android device.
+                    Javascript support on the server. Execute scripts by pressing a button.
                 </li>
             </ul>
         </div>
@@ -107,24 +105,24 @@
     <div class="col-md-4">
         <h2>KeySndr</h2>
         <ul>
-            <li>Macro app for your Android device</li>
-            <li>Create configurations on your device or this site</li>
-            <li>Use it to send keyboard input to your PC games</li>
+            <li>Macro app for any device running a modern browser</li>
+            <li>Create configurations using the management portal</li>
+            <li>Send keyboard input to your PC games</li>
         </ul>
-        <p>
-            @Html.ActionLink("Create Configurations", "Configurations", "Home", new { area = "" }, new { target = "_self", @class="btn btn-default" })
-        </p>
+        
     </div>
     <div class="col-md-4">
         <h2>Server app</h2>
         <p>Server application is required on your pc to receive the input from your device and forward it to your selected game</p>
-        <p>@Html.ActionLink("Downloads", "Downloads", "Home", new { area = "" }, new { target = "_self", @class = "btn btn-default" })</p>
+       <p><a href="downloads.html" target="_self" class="btn btn-default">Downloads</a></p>
+    
     </div>
     <div class="col-md-4">
         <h2>Tutorial</h2>
         <p>Take a look at these short tutorials for the client and the server applications. These will help you get started on using the app.</p>
-        <p>@Html.ActionLink("Learn more", "Tutorial", "Home", new { area = "" }, new { target = "_self", @class = "btn btn-default" })</p>
+        <p><a href="tutorial.html" target="_self" class="btn btn-default">Tutorial</a></p>
     </div>
+</div>
 </div>
 </body>
 </html>
