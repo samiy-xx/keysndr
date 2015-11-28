@@ -1,3 +1,5 @@
+baseurl: "/keysndr"
+url: "http://samiy-xx.github.io/keysndr"
 gems:
 - jekyll-mentions
 - jemoji
