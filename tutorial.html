@@ -14,6 +14,7 @@
     <script src="scripts/FileSaver.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/app/controllers/site-controller.js"></script>
+    <script src="scripts/app/controllers/tab-controller.js"></script>
 </head>
 
 <body ng-app="keysndrsite" data-ng-controller="siteController">
@@ -21,7 +22,212 @@
     <div class="container body-content">
         <div class="row">
             <div class="col-md-12">
-                
+                <h2>Tutorial</h2>
+<div class="row" data-ng-controller="tabController">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li role="presentation" data-ng-class="activeTab === 0 ? 'active' : 'not-so-active'" data-ng-click="setActive(0)"><a href="#"><span class="glyphicon glyphicon-phone"></span> Android</a></li>
+            <li role="presentation" data-ng-class="activeTab === 1 ? 'active' : 'not-so-active'" data-ng-click="setActive(1)"><a href="#"><span class="glyphicon glyphicon-unchecked"></span> Server</a></li>
+            <li role="presentation" data-ng-class="activeTab === 2 ? 'active' : 'not-so-active'" data-ng-click="setActive(2)"><a href="#"><span class="glyphicon glyphicon-film"></span> Videos</a></li>
+        </ul>
+
+
+        <div class="tab-pane" data-ng-show="activeTab == 0">
+            <h3>Tutorial for Android client version 0.6.9</h3>
+            <p>Sections</p>
+            <ol>
+                <li><a href="#first">Starting app for the first time</a></li>
+                <li><a href="#second">Starting app for the first time</a></li>
+                <li><a href="#third">After connection established</a></li>
+                <li><a href="#fourth">Client ready for action</a></li>
+                <li><a href="#fifth">Editing action</a></li>
+                <li><a href="#sixth">Editing sequence keyboard entry</a></li>
+            </ol>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="img-rounded img-responsive" alt="App settings screen" src="media/client/Screenshot_2015-10-03-23-55-10.png" />
+                </div>
+                <div class="col-md-6">
+                    <p><a name="first">First run</a></p>
+                    <p>On your first run, the settings screen will be presented.</p>
+                    <p>Here the client will automatically attempt to locate the server.</p>
+                    <p>If the Ip and Port text fields are not filled in after few seconds, check that the server is running. Check that the server is on the same sub net as your android device is.</p>
+                    <p>If none of these help, fill in these fields manually.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="img-rounded img-responsive" alt="App empty screen" src="media/client/Screenshot_2015-10-03-23-55-22.png"/>
+                </div>
+                <div class="col-md-6">
+                    <p><a name="second">App default activity</a>
+                    </p>
+                    <p>Top bar buttons from left to right</p>
+                    <ul>
+                        <li>Attempt to connect to the server.</li>
+                        <li>Download configuration from the server. (Have to be connected to the server first)</li>
+                        <li>Create new configuration. (Have to be connected to the server first)</li>
+                        <li>Settings.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="img-rounded img-responsive" alt="App select configuration" src="media/client/Screenshot_2015-10-03-23-55-34.png"/>
+                </div>
+                <div class="col-md-6">
+                    <p><a name="third">After connection established</a>
+                    </p>
+                    <p>Dialog allows you to select a configuration from the server</p>
+                    <p>* If this is the first run, another dialog will be presented for creating a new configuration.</p>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="img-rounded img-responsive" alt="App ready for action" src="media/client/Screenshot_2015-10-03-23-57-17.png"/>
+                </div>
+                <div class="col-md-6">
+                    <p><a name="fourth">Client ready for action</a>
+                    </p>
+                    <p>Active configuration presented here.</p>
+                    <p>Single click on any of the actions will be sent to the server.</p>
+                    <p>Long click on the action will allow you to move, edit or delete the action.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="img-rounded img-responsive" alt="Select color" src="media/client/Screenshot_2015-10-03-23-59-32.png"/>
+                </div>
+                <div class="col-md-6">
+                    <p><a name="fifth">Editing action</a>
+                    </p>
+                    <p>Here you can change the name of the action, select text and background color and add new keyboard sequences.</p>
+                    
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="img-rounded img-responsive" alt="Add keyboard entry" src="media/client/Screenshot_2015-10-03-23-59-44.png" />
+                </div>
+                <div class="col-md-6">
+                    <p><a name="sixth">Editing sequence keyboard entry</a>
+                    </p>
+                    <ul>
+                        <li>Key: The actual keyboard key you want to send</li>
+                        <li>Milliseconds: How many milliseconds the key will be pressed down. Here you might need to experiment a bit. Too low value might not be recognized by the game. Start with 250ms and work your way up or down from that.</li>
+                        <li>Modifiers: Control, Shift or Alt key</li>
+                    </ul>
+                    
+                    
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" data-ng-show="activeTab == 1">
+            <p>Sections</p>
+            <ol>
+                <li><a href="#installer">Installer</a></li>
+                <li><a href="#server">Server</a></li>
+            </ol>
+            <h3>Tutorial for server version 0.5.5753.37645</h3>
+
+            <p>
+                <span>* Server configuration is stored at <span style="font-style: italic">%localappdata%\KeySndr\app.json</span>. For example <span style="font-style: italic">C:\Users\user\AppData\Local\KeySndr\app.json</span></span>
+            </p>
+
+            <p><a name="installer">Installer</a></p>
+            <p>&nbsp;</p>
+            <img class="img-rounded img-responsive" alt="Installer slide 1" src="media/installer_slide_1.png"/>
+            <p>
+                <span>Installer started. Press "I Agree" to continue installation.</span>
+            </p>
+            <img class="img-rounded img-responsive" alt="Installer slide 2" src="media/installer_slide_2.png" />
+            <p>
+                <span>Choosing components. Currently, you really want to select both of these.</span>
+            </p>
+            <img class="img-rounded img-responsive" alt="Installer slide 3" src="media/installer_slide_3.png" />
+            <p>
+                <span>Choose install location.</span>
+            </p>
+            <img class="img-rounded img-responsive" alt="Installer slide 4" src="media/installer_slide_4.png" />
+            <p>
+                <span>Install finished. Press Close.</span>
+            </p>
+            <p>&nbsp;</p>
+            <p><a name="server">Server</a></p>
+            <p>&nbsp;</p>
+            <img class="img-rounded img-responsive" alt="Server interface 1" src="media/server_interface.png"/>
+            <p>&nbsp;</p>
+            <p>
+                <span>1.</span>
+                <span>Fill in the port number. This should be a number between 1024 and 65355. Make sure that the port is not taken.</span>
+            </p>
+            <p>
+                <span>2.</span>
+                <span>Server starts accepting connections on port defined in (1.). Server starts broadcasting in local network to help clients finding the server.</span>
+            </p>
+            <p>
+                <span>3.</span>
+                <span>Server stops broadcasting and accepting connections. All existing connections are disconnected.</span>
+            </p>
+            <p>
+                <span>4.</span>
+                <span>This area allows choosing an window which will receive keyboard input (unless selecting otherwise at (5.)). If the chosen window is not active, the server will set it active before sending the keyboard input</span>
+            </p>
+            <p>
+                <span>5.</span>
+                <span>Choosing this will ignore selection made in (4.) and send keyboard input to current active window.</span>
+            </p>
+            <p>
+                <span>6.</span>
+                <span>Relevant logging information is presented here.</span>
+            </p>
+
+            <p>&nbsp;</p>
+
+            <img class="img-rounded img-responsive" alt="Server interface 2" src="media/server_interface_2.png"/>
+            <p>&nbsp;</p>
+            <p>
+                <span>1.</span>
+                <span>Closes all connections and exits the application.</span>
+            </p>
+            <p>
+                <span>2.</span>
+                <span>Allow importing an configuration file from harddrive. This could be an configuration made at <a href="/Home/Configurations">this site</a>.</span>
+            </p>
+            <p>
+                <span>3.</span>
+                <span>Checks if there's an updated version of the server available.</span>
+            </p>
+        </div>
+
+        <div class="tab-pane" data-ng-show="activeTab == 2">
+            <div class="row">
+                <div class="col-md-8">
+
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/aKt9EtgmVuo" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <p>Short video of KeySndr Android interface</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/i1U6jD5MXZA" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <p>Video showing KeySndr in action while playing <a href="https://www.elitedangerous.com/" target="_blank">Elite: Dangerous </a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
         </div>
     </div>
