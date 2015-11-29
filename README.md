@@ -37,7 +37,8 @@ Example view configuration coming soon.
 ### Typical url scheme
 
 * For grid based configs: http://YOUR_PUBLIC_IP_IN_LOCAL_NETWORK:YOUR_PORT/play-grid.html?name=CONFIGURATION_NAME
-* For view based configs: http://YOUR_PUBLIC_IP_IN_LOCAL_NETWORK:YOUR_PORT/CONFIG_NAME/index.html
+* For view based configs: http://YOUR_PUBLIC_IP_IN_LOCAL_NETWORK:YOUR_PORT/Views/CONFIG_NAME/index.html
+
 ### Installation
 
 The [Installer] will install the app to program files.
