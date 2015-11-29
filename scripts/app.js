@@ -8,7 +8,11 @@ app.config(['$locationProvider',
         });
     }
 ]);
-
+app.filter('to_trusted', ['$sce', function($sce) {
+    return function(text) {
+        return $sce.trustAsHtml(text);
+    };
+}]);
 // Prototypes
 Array.prototype.insertAt = function (index, item) {
     this.splice(index, 0, item);
