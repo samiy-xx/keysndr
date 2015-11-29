@@ -35,7 +35,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default" data-ng-repeat="item in feed.items">
-                    <div class="panel-heading">         
+                    <div class="panel-heading">
+                        <span class="pull-right"><a href="{{ item.url }}"><img src="media/social/social-google50.png" /></a></span>    
                         <h4 class="panel-title">{{ item.actor.displayName }} {{ item.published | date:'yyyy-MM-dd'}}</h4>
                     </div>
                     <div class="panel-body">
