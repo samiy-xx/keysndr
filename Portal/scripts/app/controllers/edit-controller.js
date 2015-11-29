@@ -56,7 +56,7 @@
             service.getProcessNames().then(function (response) {
                 var result = response.data;
                 if (!result.success) {
-                    scope.setErrorMessage("Failed to load processes", scope.errorMessage, 5000);
+                    scope.displayErrorMessage("Failed to load processes", scope.errorMessage, 5000);
                     return;
                 }
 

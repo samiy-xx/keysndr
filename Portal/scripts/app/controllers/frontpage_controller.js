@@ -10,11 +10,9 @@
             service.getLegacyConfigurations().then(function(response) {
                 var result = response.data;
                 if (!result.success) {
-                    scope.errorMessage = result.errorMessage;
-                    scope.hasError = true;
+                    scope.displayErrorMessage("Failed to load legacy configurations", result.errorMessage, 5000);
                     return;
                 }
-                scope.hasError = false;
                 scope.availableLegacyConfigurations = result.content;
             });
         }
@@ -23,11 +21,9 @@
             service.getViewConfigurations().then(function (response) {
                 var result = response.data;
                 if (!result.success) {
-                    scope.errorMessage = result.errorMessage;
-                    scope.hasError = true;
+                    scope.displayErrorMessage("Failed to load view configurations", result.errorMessage, 5000);
                     return;
                 }
-                scope.hasError = false;
                 scope.availableViewConfigurations = result.content;
             });
         }
@@ -36,8 +32,7 @@
             service.removeConfiguration(scope.availableLegacyConfigurations[index]).then(function(response) {
                 var result = response.data;
                 if (!result.success) {
-                    scope.hasError = true;
-                    scope.errorMessage = result.errorMessage;
+                    scope.displayErrorMessage("Failed to remove grid", result.errorMessage, 5000);
                     return;
                 }
                 scope.availableLegacyConfigurations.splice(index, 1);
@@ -93,8 +88,7 @@
             service.removeConfiguration(scope.availableViewConfigurations[index]).then(function (response) {
                 var result = response.data;
                 if (!result.success) {
-                    scope.hasError = true;
-                    scope.errorMessage = result.errorMessage;
+                    scope.displayErrorMessage("Failed to remove view", result.errorMessage, 5000);
                     return;
                 }
                 scope.availableViewConfigurations.splice(index, 1);
