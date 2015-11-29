@@ -25,15 +25,14 @@ namespace KeySndr.Base
             {
                 foreach (var sequenceItem in action.Sequences)
                 {
-                    var converter = new IntKeysConverter();
                     if (sequenceItem.Entry.Key == null)
                         continue;
 
-                    
                     var keys = new List<Keys>();
                     keys.AddRange(sequenceItem.Modifiers.Select(m => (Keys)m.Value));
                     keys.Add((Keys)sequenceItem.Entry.Value);
                     Keyboard.ShortcutKeys(keys.ToArray(), sequenceItem.KeepDown);
+                    Thread.Sleep(sequenceItem.KeepDown + 10);
                 }
             });
         }
