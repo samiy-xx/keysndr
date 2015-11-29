@@ -48,12 +48,13 @@ table {
     background: #222;
     border-spacing: 10px;
     border-collapse: separate;
+    table-layout: fixed;
 }
 tr {
     
 }
 td {
-    width: 21%;
+    width: 20%;
     height: 15%;
     background: #000000;
     padding: 10px;
