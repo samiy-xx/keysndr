@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
@@ -26,7 +27,7 @@ namespace KeySndr.Base.Commands
         {
             try
             {
-
+                RemoveExistingIfRequired();
                 inputConfigProvider.AddOrUpdate(configuration);
                 storageProvider.SaveInputConfiguration(configuration);
                 Result = new ApiResult<object>
@@ -48,6 +49,11 @@ namespace KeySndr.Base.Commands
             }
         }
 
-
+        private void RemoveExistingIfRequired()
+        {
+            var existing = inputConfigProvider.Configs.FirstOrDefault(c => c.Equals(configuration));
+            if (existing != null && !existing.FileName.Equals(configuration.FileName))
+                storageProvider.RemoveInputConfiguration(existing);
+        }
     }
 }
