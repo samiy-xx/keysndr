@@ -92,8 +92,6 @@ Section "Server" SecDummy
   SetOutPath "$INSTDIR"
   
   ;ADD YOUR OWN FILES HERE...
-  File "..\KeySndr.Win\bin\release\DBreeze.dll"
-  File "..\KeySndr.Win\bin\release\DBreeze.xml"
   File "..\KeySndr.Win\bin\release\Ionic.Zip.dll"
   File "..\KeySndr.Win\bin\release\Ionic.Zip.xml"
   File "..\KeySndr.Win\bin\release\Jint.dll"
