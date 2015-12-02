@@ -147,6 +147,7 @@
     <Compile Include="Exceptions\DataFolderDoesNotExistException.cs" />
     <Compile Include="Exceptions\ScriptException.cs" />
     <Compile Include="FileSystemUtils.cs" />
+    <Compile Include="IFileSystemUtils.cs" />
     <Compile Include="IntKeysConverter.cs" />
     <Compile Include="KeySndr.cs" />
     <Compile Include="ObjectFactory.cs" />
@@ -157,7 +158,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Providers\AppConfigProvider.cs" />
-    <Compile Include="Providers\DbStorageProvider.cs" />
     <Compile Include="Providers\FileStorageProvider.cs" />
     <Compile Include="Providers\IAppConfigProvider.cs" />
     <Compile Include="Providers\IInputConfigProvider.cs" />

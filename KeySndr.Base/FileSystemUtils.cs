@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace KeySndr.Base
 {
-    public class FileSystemUtils
+    public class FileSystemUtils : IFileSystemUtils
     {
         private const string AppConfigName = "keysndr.conf";
         private const string AppDataFolderName = "KeySndr";

@@ -6,20 +6,29 @@ using KeySndr.Common;
 
 namespace KeySndr.Base.Providers
 {
-    public class FileStorageProvider : StorageProvider
+    public class FileStorageProvider : IStorageProvider
     {
+        protected readonly IFileSystemUtils FileSystemUtils;
+        protected readonly IAppConfigProvider AppConfigProvider;
+
         public FileStorageProvider()
-            : base()
         {
-            
+            FileSystemUtils = new FileSystemUtils();
+            AppConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
         }
 
-        public override void Verify()
+        public FileStorageProvider(IFileSystemUtils fs, IAppConfigProvider a)
+        {
+            FileSystemUtils = fs;
+            AppConfigProvider = a;
+        }
+
+        public void Verify()
         {
             FileSystemUtils.Verify();
         }
 
-        public override void SaveInputConfiguration(InputConfiguration c)
+        public virtual void SaveInputConfiguration(InputConfiguration c)
         {
             var path = AppConfigProvider.AppConfig.ConfigFolder;
             if (!FileSystemUtils.DirectoryExists(path))
@@ -28,7 +37,7 @@ namespace KeySndr.Base.Providers
             CreateViewFolder(c);
         }
 
-        public override void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o)
+        public virtual void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o)
         {
             if (!HasFileNameChanged(n.FileName, o.FileName))
             {
@@ -38,7 +47,7 @@ namespace KeySndr.Base.Providers
             UpdateInputConfigurationFile(n, o);
         }
 
-        private void UpdateInputConfigurationFile(InputConfiguration n, InputConfiguration o)
+        protected virtual void UpdateInputConfigurationFile(InputConfiguration n, InputConfiguration o)
         {
             var path = AppConfigProvider.AppConfig.ConfigFolder;
             var oldConfigPath = Path.Combine(path, o.FileName);
@@ -57,7 +66,7 @@ namespace KeySndr.Base.Providers
                 FileSystemUtils.CreateDirectory(path);
         }
 
-        public override void SaveScript(InputScript s)
+        public void SaveScript(InputScript s)
         {
             var path = AppConfigProvider.AppConfig.ScriptsFolder;
             if (!FileSystemUtils.DirectoryExists(path))
@@ -67,7 +76,7 @@ namespace KeySndr.Base.Providers
             CreatePlaceholderSourceFiles(s);
         }
 
-        public override void UpdateScript(InputScript n, InputScript o)
+        public void UpdateScript(InputScript n, InputScript o)
         {
             if (!HasFileNameChanged(n.FileName, o.FileName))
             {
@@ -113,7 +122,7 @@ namespace KeySndr.Base.Providers
             }
         }
 
-        public override void RemoveInputConfiguration(InputConfiguration i)
+        public void RemoveInputConfiguration(InputConfiguration i)
         {
             var path = AppConfigProvider.AppConfig.ConfigFolder;
             if (!FileSystemUtils.DirectoryExists(path))
@@ -121,7 +130,7 @@ namespace KeySndr.Base.Providers
             FileSystemUtils.RemoveFile(Path.Combine(path, i.FileName));
         }
 
-        public override void RemoveScript(InputScript s)
+        public void RemoveScript(InputScript s)
         {
             var path = AppConfigProvider.AppConfig.ScriptsFolder;
             if (!FileSystemUtils.DirectoryExists(path))
@@ -129,7 +138,7 @@ namespace KeySndr.Base.Providers
             FileSystemUtils.RemoveFile(Path.Combine(path, s.FileName));
         }
 
-        public override IEnumerable<InputConfiguration> LoadInputConfigurations()
+        public IEnumerable<InputConfiguration> LoadInputConfigurations()
         {
             var c = new List<InputConfiguration>();
             foreach (var file in GetAllConfigurationFiles())
@@ -143,7 +152,7 @@ namespace KeySndr.Base.Providers
             return c;
         }
 
-        public override IEnumerable<InputScript> LoadInputScripts()
+        public IEnumerable<InputScript> LoadInputScripts()
         {
             var c = new List<InputScript>();
             foreach (var file in GetAllScriptFiles())
@@ -158,7 +167,7 @@ namespace KeySndr.Base.Providers
             return c;
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             
         }
@@ -189,6 +198,67 @@ namespace KeySndr.Base.Providers
             return string.IsNullOrEmpty(AppConfigProvider.AppConfig.ConfigFolder) 
                 ? null 
                 : FileSystemUtils.LoadObjectFromDisk<InputConfiguration>(Path.Combine(AppConfigProvider.AppConfig.ConfigFolder, fileName));
+        }
+
+        public void LoadAllSourceFiles(InputScript s)
+        {
+            s.SourceFiles.Clear();
+            foreach (var sourceFile in s.SourceFileNames)
+            {
+                if (!SourceFileExists(s, sourceFile))
+                    continue;
+                var p = GetPathToSourceFile(s, sourceFile);
+                if (p == null)
+                    continue;
+
+                s.SourceFiles.Add(LoadSourceFile(p));
+            }
+        }
+
+        protected SourceFile LoadSourceFile(string path)
+        {
+            return new SourceFile
+            {
+                Contents = FileSystemUtils.LoadStringFromDisk(path),
+                FileName = Path.GetFileName(path)
+            };
+        }
+
+        protected void CreateSourceFilesDirectoryIfNotExists(InputScript s)
+        {
+            if (!HasSourceFilesDirectory(s))
+                CreateSourceFilesDirectory(s);
+        }
+
+        protected bool SourceFileExists(InputScript s, string f)
+        {
+            var pathToFile = GetPathToSourceFile(s, f);
+            return pathToFile != null && FileSystemUtils.FileExists(pathToFile);
+        }
+
+        protected bool HasSourceFilesDirectory(InputScript s)
+        {
+            var path = Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, s.Name);
+            return FileSystemUtils.DirectoryExists(path);
+        }
+
+        protected void CreateSourceFilesDirectory(InputScript s)
+        {
+            var path = Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, s.Name);
+            FileSystemUtils.CreateDirectory(path);
+        }
+
+        protected string GetPathToSourceFile(InputScript s, string f)
+        {
+            if (!HasSourceFilesDirectory(s))
+                return null;
+
+            var pathToSourceFileDirectory = Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, s.Name);
+            if (!FileSystemUtils.DirectoryExists(pathToSourceFileDirectory))
+                return null;
+
+            var fileName = Path.GetFileName(f);
+            return fileName == null ? null : Path.Combine(pathToSourceFileDirectory, fileName);
         }
     }
 }

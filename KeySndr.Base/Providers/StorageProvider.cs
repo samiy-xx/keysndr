@@ -7,13 +7,18 @@ namespace KeySndr.Base.Providers
 {
     public abstract class StorageProvider : IStorageProvider
     {
-        protected readonly FileSystemUtils FileSystemUtils;
+        protected readonly IFileSystemUtils FileSystemUtils;
         protected readonly IAppConfigProvider AppConfigProvider;
 
         protected StorageProvider()
         {
             FileSystemUtils = new FileSystemUtils();
             AppConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
+        }
+
+        protected StorageProvider(IFileSystemUtils fs)
+        {
+            FileSystemUtils = fs;
         }
 
         public abstract void Dispose();
