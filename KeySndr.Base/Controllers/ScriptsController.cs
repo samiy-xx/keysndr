@@ -47,10 +47,10 @@ namespace KeySndr.Base.Controllers
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
-        public ApiResult<Object> Save(InputScript configuration)
+        public async Task<ApiResult<Object>> Save(InputScript configuration)
         {
             var cmd = new SaveInputScript(storageProvider, scriptProvider, configuration);
-            cmd.Execute();
+            await cmd.Execute();
             return cmd.Result;
         }
 

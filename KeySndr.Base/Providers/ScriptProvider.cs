@@ -39,7 +39,7 @@ namespace KeySndr.Base.Providers
             lock (scripts)
             {
                 var index = scripts.IndexOf(script);
-                if (index > 0)
+                if (index > -1)
                 {
                     scripts[index] = script;
                 }

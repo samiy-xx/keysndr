@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using KeySndr.Base.Domain;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class SaveInputScript : ICommand<ApiResult<Object>>
+    public class SaveInputScript : IAsyncCommand<ApiResult<Object>>
     {
         private readonly IStorageProvider storageProvider;
         private readonly IScriptProvider scriptProvider;
@@ -21,14 +22,14 @@ namespace KeySndr.Base.Commands
             script = c;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             try
             {
                 SaveToStorage();
                 ReloadSources();
                 AddOrUpdateScriptProvider();
-                RunTests();
+                await RunTests();
                 
                 Result = new ApiResult<object>
                 {
@@ -51,8 +52,7 @@ namespace KeySndr.Base.Commands
 
         private void AddOrUpdateScriptProvider()
         {
-            if (!scriptProvider.Scripts.Contains(script))
-                scriptProvider.AddOrUpdate(script, true);
+            scriptProvider.AddOrUpdate(script, true);
         }
 
         private void SaveToStorage()
@@ -69,7 +69,7 @@ namespace KeySndr.Base.Commands
             storageProvider.LoadAllSourceFiles(script);
         }
         
-        private async void RunTests()
+        private async Task RunTests()
         {
             await script.RunTest();
         }
