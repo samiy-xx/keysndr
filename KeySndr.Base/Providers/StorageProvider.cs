@@ -19,7 +19,9 @@ namespace KeySndr.Base.Providers
         public abstract void Dispose();
         public abstract void Verify();
         public abstract void SaveInputConfiguration(InputConfiguration c);
+        public abstract void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o);
         public abstract void SaveScript(InputScript s);
+        public abstract void UpdateScript(InputScript n, InputScript o);
         public abstract void RemoveInputConfiguration(InputConfiguration c);
         public abstract void RemoveScript(InputScript s);
         public abstract IEnumerable<InputConfiguration> LoadInputConfigurations();

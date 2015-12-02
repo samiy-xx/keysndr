@@ -51,6 +51,7 @@
     <Compile Include="CommandTests\GenerateInputAction_Tests.cs" />
     <Compile Include="CommandTests\GenerateInputConfiguration_Tests.cs" />
     <Compile Include="CommandTests\GetAllInputConfigurations_Tests.cs" />
+    <Compile Include="CommandTests\SaveInputConfiguration_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

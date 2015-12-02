@@ -27,9 +27,9 @@ namespace KeySndr.Base.Commands
         {
             try
             {
-                RemoveExistingIfRequired();
+                SaveToStorage();
                 inputConfigProvider.AddOrUpdate(configuration);
-                storageProvider.SaveInputConfiguration(configuration);
+                
                 Result = new ApiResult<object>
                 {
                     Content = "empty",
@@ -49,11 +49,13 @@ namespace KeySndr.Base.Commands
             }
         }
 
-        private void RemoveExistingIfRequired()
+        private void SaveToStorage()
         {
             var existing = inputConfigProvider.Configs.FirstOrDefault(c => c.Equals(configuration));
             if (existing != null && !existing.FileName.Equals(configuration.FileName))
-                storageProvider.RemoveInputConfiguration(existing);
+                storageProvider.UpdateInputConfiguration(configuration, existing);
+            else
+                storageProvider.SaveInputConfiguration(configuration);
         }
     }
 }

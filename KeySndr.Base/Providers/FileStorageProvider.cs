@@ -28,6 +28,26 @@ namespace KeySndr.Base.Providers
             CreateViewFolder(c);
         }
 
+        public override void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o)
+        {
+            if (!HasFileNameChanged(n.FileName, o.FileName))
+            {
+                SaveInputConfiguration(n);
+                return;
+            }
+            UpdateInputConfigurationFile(n, o);
+        }
+
+        private void UpdateInputConfigurationFile(InputConfiguration n, InputConfiguration o)
+        {
+            var path = AppConfigProvider.AppConfig.ConfigFolder;
+            var oldConfigPath = Path.Combine(path, o.FileName);
+            var newConfigPath = Path.Combine(path, n.FileName);
+            if (!FileSystemUtils.FileExists(newConfigPath) && FileSystemUtils.FileExists(oldConfigPath))
+                FileSystemUtils.MoveFile(oldConfigPath, newConfigPath);
+            FileSystemUtils.SaveObjectToDisk(n, newConfigPath);
+        }
+
         private void CreateViewFolder(InputConfiguration c)
         {
             if (!c.HasView)
@@ -45,6 +65,42 @@ namespace KeySndr.Base.Providers
             FileSystemUtils.SaveObjectToDisk(s, Path.Combine(path, s.FileName));
             CreateSourceFilesDirectoryIfNotExists(s);
             CreatePlaceholderSourceFiles(s);
+        }
+
+        public override void UpdateScript(InputScript n, InputScript o)
+        {
+            if (!HasFileNameChanged(n.FileName, o.FileName))
+            {
+                SaveScript(n);
+                return;
+            }
+            
+            UpdateScriptDirectory(n, o);
+            UpdateScriptFile(n, o);
+        }
+
+        private bool HasFileNameChanged(string n, string o)
+        {
+            return !n.Equals(o);
+        }
+
+        private void UpdateScriptDirectory(InputScript n, InputScript o)
+        {
+            var path = AppConfigProvider.AppConfig.ScriptsFolder;
+            var oldFolderPath = Path.Combine(path, o.Name);
+            var newFolderPath = Path.Combine(path, n.Name);
+            if (!FileSystemUtils.DirectoryExists(newFolderPath) && FileSystemUtils.DirectoryExists(oldFolderPath))
+                FileSystemUtils.MoveDirectory(oldFolderPath, newFolderPath);
+        }
+
+        private void UpdateScriptFile(InputScript n, InputScript o)
+        {
+            var path = AppConfigProvider.AppConfig.ScriptsFolder;
+            var oldScriptPath = Path.Combine(path, o.FileName);
+            var newScriptPath = Path.Combine(path, n.FileName);
+            if (!FileSystemUtils.FileExists(newScriptPath) && FileSystemUtils.FileExists(oldScriptPath))
+                FileSystemUtils.MoveFile(oldScriptPath, newScriptPath);
+            FileSystemUtils.SaveObjectToDisk(n, newScriptPath);
         }
 
         private void CreatePlaceholderSourceFiles(InputScript s)

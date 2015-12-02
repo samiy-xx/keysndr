@@ -32,9 +32,19 @@ namespace KeySndr.Base
             return File.Exists(path);
         }
 
+        public void MoveFile(string path, string newPath)
+        {
+            File.Move(path, newPath);
+        }
+
         public void CreateDirectory(string path)
         {
             Directory.CreateDirectory(path);
+        }
+
+        public void MoveDirectory(string path, string newPath)
+        {
+            Directory.Move(path, newPath);
         }
 
         public void Verify()

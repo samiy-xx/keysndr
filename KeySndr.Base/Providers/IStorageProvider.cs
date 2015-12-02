@@ -9,7 +9,9 @@ namespace KeySndr.Base.Providers
     {
         void Verify();
         void SaveInputConfiguration(InputConfiguration c);
+        void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o);
         void SaveScript(InputScript s);
+        void UpdateScript(InputScript n, InputScript o);
         void RemoveInputConfiguration(InputConfiguration c);
         void RemoveScript(InputScript s);
         void LoadAllSourceFiles(InputScript s);

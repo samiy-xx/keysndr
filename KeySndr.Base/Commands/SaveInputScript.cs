@@ -30,7 +30,6 @@ namespace KeySndr.Base.Commands
                 AddOrUpdateScriptProvider();
                 RunTests();
                 
-                
                 Result = new ApiResult<object>
                 {
                     Content = "empty",
@@ -58,14 +57,18 @@ namespace KeySndr.Base.Commands
 
         private void SaveToStorage()
         {
-            storageProvider.SaveScript(script);
+            var existing = scriptProvider.Scripts.FirstOrDefault(c => c.Equals(script));
+            if (existing != null && !existing.FileName.Equals(script.FileName))
+                storageProvider.UpdateScript(script, existing);
+            else
+                storageProvider.SaveScript(script);
         }
 
         private void ReloadSources()
         {
             storageProvider.LoadAllSourceFiles(script);
         }
-
+        
         private async void RunTests()
         {
             await script.RunTest();
