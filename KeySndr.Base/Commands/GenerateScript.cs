@@ -7,10 +7,6 @@ namespace KeySndr.Base.Commands
     {
         public ApiResult<InputScript> Result { get; private set; }
 
-        public GenerateScript()
-        {
-        }
-
         public void Execute()
         {
             Result = new ApiResult<InputScript>

@@ -16,12 +16,12 @@ namespace KeySndr.Base.Tests.CommandTests
     {
         private IInputConfigProvider inputConfigProvider;
         private IAppConfigProvider appConfigProvider;
-        private FileStorageProvider storageProvider;
+        private IStorageProvider storageProvider;
         private IFileSystemUtils fileSystemUtils;
 
         private Mock<IInputConfigProvider> inputConfigProviderMock;
         private Mock<IAppConfigProvider> appConfigProviderMock;
-        private Mock<FileStorageProvider> storageProviderMock;
+        private Mock<IStorageProvider> storageProviderMock;
         private Mock<IFileSystemUtils> fileSystemUtilsMock;
 
         private SaveInputConfiguration cmd;
@@ -37,18 +37,23 @@ namespace KeySndr.Base.Tests.CommandTests
             fileSystemUtils = fileSystemUtilsMock.Object;
 
             inputConfigProviderMock = new Mock<IInputConfigProvider>();
+            
             inputConfigProvider = inputConfigProviderMock.Object;
 
             appConfigProviderMock = new Mock<IAppConfigProvider>();
             appConfigProvider = appConfigProviderMock.Object;
 
-            storageProviderMock = new Mock<FileStorageProvider>(fileSystemUtils, appConfigProvider);
+            storageProviderMock = new Mock<IStorageProvider>();
+            storageProviderMock.Setup(s => s.SaveInputConfiguration(It.IsAny<InputConfiguration>()));
+            storageProviderMock.Setup(s => s.UpdateInputConfiguration(It.IsAny<InputConfiguration>(), It.IsAny<InputConfiguration>()));
             storageProvider = storageProviderMock.Object;
 
             newConfiguration = new InputConfiguration
             {
                 FileName = "test.json"
             };
+            oldConfiguration = newConfiguration;
+            oldConfiguration.FileName = "test2.json";
         }
 
         [Test]
@@ -59,18 +64,27 @@ namespace KeySndr.Base.Tests.CommandTests
             cmd.Execute();
             var result = cmd.Result;
 
+            Assert.IsTrue(result.Success);
             inputConfigProviderMock.Verify(i => i.Configs, Times.Once);
+            inputConfigProviderMock.Verify(i => i.AddOrUpdate(It.IsAny<InputConfiguration>()),Times.Once);
             storageProviderMock.Verify(s => s.UpdateInputConfiguration(It.IsAny<InputConfiguration>(), It.IsAny<InputConfiguration>()), Times.Never);
             storageProviderMock.Verify(s => s.SaveInputConfiguration(It.IsAny<InputConfiguration>()), Times.Once);
-
-            //fileSystemUtilsMock.Verify(s => );
-            //fileSystemUtilsMock.Verify(s => s.SaveObjectToDisk(It.IsAny<object>(), It.IsAny<string>()), Times.Once);
         }
 
         [Test]
         public void UpdatingExistingConfiguration()
         {
+            //inputConfigProviderMock.Setup(i => i.Configs).Returns(new List<InputConfiguration> {oldConfiguration});
+            inputConfigProvider.AddOrUpdate(oldConfiguration);
+            cmd = new SaveInputConfiguration(storageProvider, appConfigProvider, inputConfigProvider, newConfiguration);
+            cmd.Execute();
+            var result = cmd.Result;
 
+            Assert.IsTrue(result.Success);
+            inputConfigProviderMock.Verify(i => i.Configs, Times.Once);
+            inputConfigProviderMock.Verify(i => i.AddOrUpdate(It.IsAny<InputConfiguration>()), Times.AtLeastOnce);
+            storageProviderMock.Verify(s => s.SaveInputConfiguration(It.IsAny<InputConfiguration>()), Times.Once);
+            storageProviderMock.Verify(s => s.UpdateInputConfiguration(It.IsAny<InputConfiguration>(), It.IsAny<InputConfiguration>()), Times.Once);
         }
     }
 }
