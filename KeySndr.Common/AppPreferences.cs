@@ -6,12 +6,13 @@
         public const string PortKey = "port";
         public const string FirstTimeKey = "first_time";
         public const string UseSoundsKey = "sound";
+        public const string UseCacheKey = "cache";
 
         public string Ip { get; protected set; }
         public int Port { get; protected set; }
         public bool FirtsTimeRunning { get; protected set; }
         public bool UseSounds { get; protected set; }
-
+        public bool UseCache { get; protected set; }
         public AppPreferences SetIp(string ip)
         {
             Ip = ip;
@@ -36,6 +37,11 @@
             return this;
         }
 
+        public AppPreferences SetCache(bool b)
+        {
+            UseCache = b;
+            return this;
+        }
         public abstract void Write();
     }
 }
