@@ -14,7 +14,8 @@
                     return;
                 }
                 scope.inputConfiguration.actions.push(result.content);
-                scope.currentAction = scope.inputConfiguration.actions.length - 1;
+                var l = scope.inputConfiguration.actions.length;
+                scope.currentAction = scope.inputConfiguration.actions[l - 1];
             });
         }
 
