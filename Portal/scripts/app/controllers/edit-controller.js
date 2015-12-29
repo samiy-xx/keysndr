@@ -215,6 +215,9 @@
                     scriptName: name
                 });
         }
+        scope.setCurrentAction = function(a) {
+            scope.currentAction = a;
+        }
 
         scope.init = function (count) {
             var s = $location.search();

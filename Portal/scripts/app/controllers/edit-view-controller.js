@@ -15,7 +15,7 @@
                 }
                 scope.inputConfiguration.actions.push(result.content);
                 var l = scope.inputConfiguration.actions.length;
-                scope.currentAction = scope.inputConfiguration.actions[l - 1];
+                scope.setCurrentAction(scope.inputConfiguration.actions[l - 1]);
             });
         }
 
