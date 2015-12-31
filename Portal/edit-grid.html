@@ -198,7 +198,7 @@
                     <!-- Panel -->
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
+                            <div class="panel-heading" id="heading_{{ $index }}">
                                 <div class="btn-group pull-right">
                                     <a href="#"
                                        title="Move up"
@@ -221,7 +221,7 @@
                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                     </a>
                                 </div>
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $index }}" aria-expanded="true" aria-controls="collapse_{{ $index }}">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapse_{{ $index }}" aria-expanded="true" aria-controls="collapse_{{ $index }}">
                                     <h4 class="panel-title">Input Sequence #{{ $index }}</h4>
                                 </a>
                             </div>

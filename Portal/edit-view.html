@@ -208,105 +208,110 @@
                         </div>
                     </div>
                     <div data-ng-repeat="sequence in currentAction.sequences">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="btn-group pull-right">
-                                    <a
-                                        href="#"
-                                        title="Move up"
-                                        class="btn btn-primary btn-xs"
-                                        data-ng-disabled="!canMoveSequence($index, -1)"
-                                        data-ng-click="moveSequence($index, -1)">
-                                        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                        <!-- Panel -->
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" id="heading_{{ $index }}">
+                                    <div class="btn-group pull-right">
+                                        <a href="#"
+                                           title="Move up"
+                                           class="btn btn-primary btn-xs"
+                                           data-ng-disabled="!canMoveSequence($index, -1)"
+                                           data-ng-click="moveSequence($index, -1)">
+                                            <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                                        </a>
+                                        <a href="#"
+                                           title="Move down"
+                                           class="btn btn-primary btn-xs"
+                                           data-ng-disabled="!canMoveSequence($index, 1)"
+                                           data-ng-click="moveSequence($index, 1)">
+                                            <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                                        </a>
+                                        <a href="#"
+                                           title="Remove"
+                                           class="btn btn-danger btn-xs"
+                                           data-ng-click="deleteSequence($index)">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapse_{{ $index }}" aria-expanded="true" aria-controls="collapse_{{ $index }}">
+                                        <h4 class="panel-title">Input Sequence #{{ $index }}</h4>
                                     </a>
-                                    <a
-                                        href="#"
-                                        title="Move down"
-                                        class="btn btn-primary btn-xs"
-                                        data-ng-disabled="!canMoveSequence($index, 1)"
-                                        data-ng-click="moveSequence($index, 1)">
-                                        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-                                    </a>
-                                    <a
-                                        href="#"
-                                        title="Remove"
-                                        class="btn btn-danger btn-xs"
-                                        data-ng-click="deleteSequence($index)">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </a>
                                 </div>
-                                <h4 class="panel-title">Input Sequence #{{ $index }}</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="basic-addon-1-{{ $index}}">MS</span>
-                                    <input type="text" class="form-control" data-ng-model="sequence.keepdown" aria-describedby="basic-addon-1-{{ $index}}">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="basic-addon-2-{{ $index}}">Key</span>
-                                    <select name="sequenceKey" class="form-control input-lg" ng-model="currentAction.sequences[$index].entry" ng-options="o.key for o in keys track by o.key" aria-describedby="basic-addon-2-{{ $index}}">
-                                        <option value="" disabled>Choose Key</option>
-                                    </select>
-                                </div>
-                                <div class="input-group" key-listener="{{ $index }}">
-                                    <span class="input-group-addon" id="basic-addon-3-{{ $index}}">Keyboard</span>
-                                    <input type="text" class="form-control" placeholder="Focus here and type a key" aria-describedby="basic-addon-3-{{ $index}}">
-                                </div>
-                                
+                                <div id="collapse_{{ $index }}" class="panel-collapse collapse" data-ng-class="$index == 0 ? 'in' : ''" role="tabpanel" aria-labelledby="heading_{{ $index }}">
+                                    <div class="panel-body">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon-1-{{ $index}}">MS</span>
+                                            <input type="text" class="form-control" data-ng-model="sequence.keepdown" aria-describedby="basic-addon-1-{{ $index}}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon-2-{{ $index}}">Key</span>
+                                            <select name="sequenceKey" class="form-control input-lg" ng-model="currentAction.sequences[$index].entry" ng-options="o.key for o in keys track by o.key" aria-describedby="basic-addon-2-{{ $index}}">
+                                                <option value="" disabled>Choose Key</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group" key-listener="{{ $index }}">
+                                            <span class="input-group-addon" id="basic-addon-3-{{ $index}}">Keyboard</span>
+                                            <input type="text" class="form-control" placeholder="Focus here and type a key" aria-describedby="basic-addon-3-{{ $index}}">
+                                        </div>
 
-                                <h3>Modifiers</h3>
-                                <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'ControlKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'ControlKey')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Ctrl
-                                        </button>
-                                    </div>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'Menu')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'Menu')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Alt
-                                        </button>
-                                    </div>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'ShiftKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'ShiftKey')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Shift
-                                        </button>
-                                    </div>
-                                </div>
 
-                                <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'LControlKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'LControlKey')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> L-Ctrl
-                                        </button>
-                                    </div>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'RControlKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'RControlKey')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> R-Ctrl
-                                        </button>
-                                    </div>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'LMenu')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'LMenu')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> L-Alt
-                                        </button>
-                                    </div>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'RMenu')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'RMenu')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> R-Alt
-                                        </button>
-                                    </div>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'LShiftKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'LShiftKey')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> L-Shift
-                                        </button>
-                                    </div>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" data-ng-class="(hasModifier($index, 'RShiftKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'RShiftKey')">
-                                            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> R-Shift
-                                        </button>
+                                        <h3>Modifiers</h3>
+                                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'ControlKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'ControlKey')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Ctrl
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'Menu')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'Menu')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Alt
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'ShiftKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'ShiftKey')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Shift
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'LControlKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'LControlKey')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> L-Ctrl
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'RControlKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'RControlKey')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> R-Ctrl
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'LMenu')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'LMenu')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> L-Alt
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'RMenu')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'RMenu')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> R-Alt
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'LShiftKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'LShiftKey')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> L-Shift
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" data-ng-class="(hasModifier($index, 'RShiftKey')) ? 'btn btn-success' : 'btn btn-default'" data-ng-click="setModifierForSequence($index, 'RShiftKey')">
+                                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> R-Shift
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Panel -->
                     </div>
                 </div>
             </div>
