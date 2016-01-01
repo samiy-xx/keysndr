@@ -126,33 +126,39 @@
             <div class="row">
                 <div class="col-md-6">
                     <div data-ng-repeat="action in inputConfiguration.actions">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="btn-group pull-right">
-                                    <a
-                                        href="#"
-                                        title="Remove"
-                                        class="btn btn-danger btn-xs"
-                                        data-ng-click="deleteAction($index)">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </a>
-                                    <a
-                                        href="#"
-                                        title="Edit"
-                                        class="btn btn-primary btn-xs"
-                                        data-ng-click="setForEdit(action)">
-                                        <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
+                        <!-- panel -->
+                        <div class="panel-group" id="accordion_first" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" id="heading_first_{{ $index }}">
+                                    <div class="btn-group pull-right">
+                                        <a href="#"
+                                           title="Remove"
+                                           class="btn btn-danger btn-xs"
+                                           data-ng-click="deleteAction($index)">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </a>
+                                        <a href="#"
+                                           title="Edit"
+                                           class="btn btn-primary btn-xs"
+                                           data-ng-click="setForEdit(action)">
+                                            <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion_first" data-target="#collapse_first_{{ $index }}" aria-expanded="true" aria-controls="collapse_first_{{ $index }}">
+                                        <h4 class="panel-title">Action {{ action.name }}</h4>
                                     </a>
                                 </div>
-                                <h4 class="panel-title">Action {{ action.name }}</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div class="input-group">
-                                    <p>Sequences {{ action.sequences.length}}</p>
-                                    <p>Scripts {{ action.scriptSequences.length}}</p>
+                                <div id="collapse_first_{{ $index }}" class="panel-collapse collapse" data-ng-class="$index == 0 ? 'in' : ''" role="tabpanel" aria-labelledby="heading_first_{{ $index }}">
+                                    <div class="panel-body">
+                                        <div class="input-group">
+                                            <p>Sequences {{ action.sequences.length}}</p>
+                                            <p>Scripts {{ action.scriptSequences.length}}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- panel -->
                     </div>
                 </div>
                 <div class="col-md-6">

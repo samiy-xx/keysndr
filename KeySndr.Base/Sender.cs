@@ -31,7 +31,7 @@ namespace KeySndr.Base
                     var keys = new List<Keys>();
                     keys.AddRange(sequenceItem.Modifiers.Select(m => (Keys)m.Value));
                     keys.Add((Keys)sequenceItem.Entry.Value);
-                    Keyboard.ShortcutKeys(keys.ToArray(), sequenceItem.KeepDown);
+                    Keyboard.ShortcutKeys(keys.ToArray(), 0);
                     Thread.Sleep(sequenceItem.KeepDown + DefaultDelayAfter);
                 }
             });
