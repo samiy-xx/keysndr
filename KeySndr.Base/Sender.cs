@@ -13,7 +13,7 @@ namespace KeySndr.Base
     public class SenderInternal
     {
         private readonly InputAction action;
-
+        private const int DefaultDelayAfter = 50;
         public SenderInternal(InputAction a)
         {
             action = a;
@@ -32,7 +32,7 @@ namespace KeySndr.Base
                     keys.AddRange(sequenceItem.Modifiers.Select(m => (Keys)m.Value));
                     keys.Add((Keys)sequenceItem.Entry.Value);
                     Keyboard.ShortcutKeys(keys.ToArray(), sequenceItem.KeepDown);
-                    Thread.Sleep(sequenceItem.KeepDown + 10);
+                    Thread.Sleep(sequenceItem.KeepDown + DefaultDelayAfter);
                 }
             });
         }
