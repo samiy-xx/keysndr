@@ -17,7 +17,6 @@ KeySndr is a server software for receiving signals from client applications and 
 KeySndr uses the following
 * [Owin] For running the webserver
 * [Nowin] Avoiding running the app as an admin by using this instead of the default httplistener provided by Owin
-* [DBreeze] For optional key/value storage
 * [Jint] For executing javascript
 * [Beacon] For server discovery
 
