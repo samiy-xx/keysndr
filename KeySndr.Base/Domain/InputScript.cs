@@ -46,7 +46,7 @@ namespace KeySndr.Base.Domain
                 try
                 {
                     ctx.Execute();
-                    ctx.Run();
+                    //ctx.Run();
                 }
                 catch (Exception e)
                 {

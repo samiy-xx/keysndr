@@ -145,6 +145,7 @@
     <Compile Include="FileSystemUtils.cs" />
     <Compile Include="IFileSystemUtils.cs" />
     <Compile Include="IntKeysConverter.cs" />
+    <Compile Include="JsUtils\JsTimer.cs" />
     <Compile Include="KeySndr.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -31,6 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openAdminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -38,19 +42,15 @@
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonOpenAdmin = new System.Windows.Forms.Button();
+            this.buttonReload = new System.Windows.Forms.Button();
             this.textBoxLog = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.buttonReload = new System.Windows.Forms.Button();
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.reloadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonOpenAdmin = new System.Windows.Forms.Button();
-            this.openAdminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyIcon
@@ -61,6 +61,36 @@
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             this.notifyIcon.Text = "KeySndr";
             this.notifyIcon.Visible = true;
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openAdminToolStripMenuItem,
+            this.reloadToolStripMenuItem1,
+            this.exitToolStripMenuItem1});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(141, 70);
+            // 
+            // openAdminToolStripMenuItem
+            // 
+            this.openAdminToolStripMenuItem.Name = "openAdminToolStripMenuItem";
+            this.openAdminToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.openAdminToolStripMenuItem.Text = "Open admin";
+            this.openAdminToolStripMenuItem.Click += new System.EventHandler(this.openAdminToolStripMenuItem_Click);
+            // 
+            // reloadToolStripMenuItem1
+            // 
+            this.reloadToolStripMenuItem1.Name = "reloadToolStripMenuItem1";
+            this.reloadToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.reloadToolStripMenuItem1.Text = "Reload";
+            this.reloadToolStripMenuItem1.Click += new System.EventHandler(this.reloadToolStripMenuItem1_Click);
+            // 
+            // exitToolStripMenuItem1
+            // 
+            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.exitToolStripMenuItem1.Text = "Exit";
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
             // statusStrip1
             // 
@@ -100,14 +130,14 @@
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -123,12 +153,33 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
+            // buttonOpenAdmin
+            // 
+            this.buttonOpenAdmin.Location = new System.Drawing.Point(6, 16);
+            this.buttonOpenAdmin.Name = "buttonOpenAdmin";
+            this.buttonOpenAdmin.Size = new System.Drawing.Size(188, 23);
+            this.buttonOpenAdmin.TabIndex = 4;
+            this.buttonOpenAdmin.Text = "Open admin interface";
+            this.buttonOpenAdmin.UseVisualStyleBackColor = true;
+            this.buttonOpenAdmin.Click += new System.EventHandler(this.buttonOpenAdmin_Click);
+            // 
+            // buttonReload
+            // 
+            this.buttonReload.Location = new System.Drawing.Point(6, 45);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(188, 24);
+            this.buttonReload.TabIndex = 4;
+            this.buttonReload.Text = "Reload";
+            this.buttonReload.UseVisualStyleBackColor = true;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
             // textBoxLog
             // 
             this.textBoxLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxLog.Location = new System.Drawing.Point(3, 16);
             this.textBoxLog.Multiline = true;
             this.textBoxLog.Name = "textBoxLog";
+            this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxLog.Size = new System.Drawing.Size(504, 176);
             this.textBoxLog.TabIndex = 3;
             // 
@@ -144,56 +195,6 @@
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             // 
-            // buttonReload
-            // 
-            this.buttonReload.Location = new System.Drawing.Point(6, 45);
-            this.buttonReload.Name = "buttonReload";
-            this.buttonReload.Size = new System.Drawing.Size(188, 24);
-            this.buttonReload.TabIndex = 4;
-            this.buttonReload.Text = "Reload";
-            this.buttonReload.UseVisualStyleBackColor = true;
-            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
-            // 
-            // contextMenuStrip
-            // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openAdminToolStripMenuItem,
-            this.reloadToolStripMenuItem1,
-            this.exitToolStripMenuItem1});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(141, 70);
-            // 
-            // reloadToolStripMenuItem1
-            // 
-            this.reloadToolStripMenuItem1.Name = "reloadToolStripMenuItem1";
-            this.reloadToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.reloadToolStripMenuItem1.Text = "Reload";
-            this.reloadToolStripMenuItem1.Click += new System.EventHandler(this.reloadToolStripMenuItem1_Click);
-            // 
-            // exitToolStripMenuItem1
-            // 
-            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem1.Text = "Exit";
-            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
-            // 
-            // buttonOpenAdmin
-            // 
-            this.buttonOpenAdmin.Location = new System.Drawing.Point(6, 16);
-            this.buttonOpenAdmin.Name = "buttonOpenAdmin";
-            this.buttonOpenAdmin.Size = new System.Drawing.Size(188, 23);
-            this.buttonOpenAdmin.TabIndex = 4;
-            this.buttonOpenAdmin.Text = "Open admin interface";
-            this.buttonOpenAdmin.UseVisualStyleBackColor = true;
-            this.buttonOpenAdmin.Click += new System.EventHandler(this.buttonOpenAdmin_Click);
-            // 
-            // openAdminToolStripMenuItem
-            // 
-            this.openAdminToolStripMenuItem.Name = "openAdminToolStripMenuItem";
-            this.openAdminToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openAdminToolStripMenuItem.Text = "Open admin";
-            this.openAdminToolStripMenuItem.Click += new System.EventHandler(this.openAdminToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -208,6 +209,7 @@
             this.Name = "Form1";
             this.Text = "KeySndr";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.contextMenuStrip.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -215,7 +217,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
