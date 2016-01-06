@@ -43,11 +43,21 @@ namespace KeySndr.Base
             {
                 foreach (var mouseSequenceItem in action.MouseSequences)
                 {
-                    Mouse.Move(mouseSequenceItem.X, mouseSequenceItem.Y);
-                    Mouse.ButtonDown((Mouse.MouseKeys)mouseSequenceItem.Button);
-                    Thread.Sleep(mouseSequenceItem.Time);
-                    Mouse.ButtonUp((Mouse.MouseKeys)mouseSequenceItem.Button);
-                    Thread.Sleep(50);
+                    switch (mouseSequenceItem.Type)
+                    {
+                        case 0:
+                            Mouse.ButtonDown((Mouse.MouseKeys)mouseSequenceItem.Button);
+                            Thread.Sleep(mouseSequenceItem.Time);
+                            Mouse.ButtonUp((Mouse.MouseKeys)mouseSequenceItem.Button);
+                            break;
+                        case 1:
+                            Mouse.Move(mouseSequenceItem.X, mouseSequenceItem.Y);
+                            break;
+                        default:
+                            Mouse.MoveRelative(mouseSequenceItem.X, mouseSequenceItem.Y);
+                            break;
+                    }
+                    Thread.Sleep(DefaultDelayAfter);
                 }
             });
         }

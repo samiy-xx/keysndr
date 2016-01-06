@@ -120,15 +120,11 @@ namespace KeySndr.Base.Providers
 
         public void Dispose()
         {
-            lock (scripts)
+            foreach (var scriptContext in contexts)
             {
-                scripts.Clear();
+                scriptContext.Dispose();
             }
-
-            lock (contexts)
-            {
-                contexts.Clear();
-            }
+            Clear();
         }
     }
 }

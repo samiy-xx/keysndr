@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 using Jint;
 using Jint.Runtime;
@@ -10,7 +11,7 @@ namespace KeySndr.Base.Domain
 {
     public class JintScriptingContext : IScriptContext
     {
-        private readonly Engine engine;
+        private Engine engine;
         public bool HasBeenParsed { get; private set; }
         public bool IsValid { get; private set; }
         public bool IsRunning { get; set; }
@@ -99,6 +100,15 @@ namespace KeySndr.Base.Domain
             IsRunning = false;
         }
 
+        public void Dispose()
+        {
+            IsValid = false;
+            HasBeenParsed = false;
+            IsRunning = false;
+            HasBeenExecuted = false;
+            engine = null;
+        }
+
         private void ExecutionCallback(bool b)
         {
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Execution callback called with bool "+ b);
@@ -113,6 +123,11 @@ namespace KeySndr.Base.Domain
             engine.SetValue("getKeyName", new Func<int, string>(GetKeyName));
             engine.SetValue("getKeyValue", new Func<string, int>(GetKeyValue));
             engine.SetValue("log", new Action<string>(DebugLog));
+            engine.SetValue("pause", new Action<int>(Pause));
+
+            engine.SetValue("moveMouse", new Action<int, int>(MoveMouse));
+            engine.SetValue("moveMouseRelative", new Action<int, int>(MoveMouseRelative));
+            engine.SetValue("clickMouse", new Action<int, int>(ClickMouse));
 
             engine.SetValue("sendInput", new Action<string, int>(SendInput));
             engine.SetValue("sendInputAction", new Action<InputAction>(SendInputAction));
@@ -139,6 +154,44 @@ namespace KeySndr.Base.Domain
             f.Error = e.Message;
             f.IsValid = false;
             f.ParseOk = false;
+        }
+
+        private void Pause(int ms)
+        {
+            Thread.Sleep(ms);
+        }
+
+        private void MoveMouse(int x, int y)
+        {
+            var a = new InputAction
+            {
+                Name = $"Move Mouse to {x} {y}"
+            };
+            a.MouseSequences.Add(new MouseSequenceItem(x, y, 1, -1, 0));
+            if (!testMode)
+                Sender.Send(a).Wait(100);
+        }
+
+        private void MoveMouseRelative(int x, int y)
+        {
+            var a = new InputAction
+            {
+                Name = $"Move Mouse Relative {x} {y}"
+            };
+            a.MouseSequences.Add(new MouseSequenceItem(x, y, 2, -1, 0));
+            if (!testMode)
+                Sender.Send(a).Wait(100);
+        }
+
+        private void ClickMouse(int b, int keepDown)
+        {
+            var a = new InputAction
+            {
+                Name = $"Click Mouse {b} {keepDown}"
+            };
+            a.MouseSequences.Add(new MouseSequenceItem(0, 0, 0, -b, keepDown));
+            if (!testMode)
+                Sender.Send(a).Wait(keepDown);
         }
 
         private async void SendInput(string i, int keepDown)

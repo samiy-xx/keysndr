@@ -37,6 +37,7 @@ namespace KeySndr.Base
 
         public void Run()
         {
+            ClearAllProviders();
             RegisterProvidersBeforeAppConfig();
             LoadAppConfig();
             RegisterProvidersAfterAppConfig();
@@ -82,6 +83,11 @@ namespace KeySndr.Base
             {
                 ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig.FirstTimeRunning = true;
             }
+        }
+
+        private void ClearAllProviders()
+        {
+            ObjectFactory.Destroy();
         }
 
         private void RegisterProvidersBeforeAppConfig()

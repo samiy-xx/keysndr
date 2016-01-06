@@ -9,5 +9,6 @@
         void SetTestMode(bool b);
         void Execute();
         void Run();
+        void Dispose();
     }
 }
