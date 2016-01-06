@@ -257,6 +257,166 @@
       <Link>Portal\scripts\app\directives\on-read-file.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\keymap\emacs.js">
+      <Link>Portal\scripts\codemirror-2.37\keymap\emacs.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\keymap\vim.js">
+      <Link>Portal\scripts\codemirror-2.37\keymap\vim.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\codemirror.css">
+      <Link>Portal\scripts\codemirror-2.37\lib\codemirror.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\codemirror.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\codemirror.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\closetag.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\closetag.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\continuecomment.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\continuecomment.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\continuelist.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\continuelist.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\dialog.css">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\dialog.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\dialog.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\dialog.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\foldcode.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\foldcode.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\formatting.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\formatting.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\javascript-hint.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\javascript-hint.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\loadmode.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\loadmode.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\match-highlighter.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\match-highlighter.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\multiplex.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\multiplex.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\overlay.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\overlay.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\pig-hint.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\pig-hint.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\runmode-standalone.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\runmode-standalone.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\runmode.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\runmode.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\search.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\search.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\searchcursor.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\searchcursor.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\simple-hint.css">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\simple-hint.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\simple-hint.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\simple-hint.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\xml-hint.js">
+      <Link>Portal\scripts\codemirror-2.37\lib\util\xml-hint.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\mode\javascript\javascript.js">
+      <Link>Portal\scripts\codemirror-2.37\mode\javascript\javascript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\ambiance-mobile.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\ambiance-mobile.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\ambiance.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\ambiance.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\blackboard.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\blackboard.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\cobalt.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\cobalt.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\eclipse.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\eclipse.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\elegant.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\elegant.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\erlang-dark.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\erlang-dark.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\lesser-dark.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\lesser-dark.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\monokai.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\monokai.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\neat.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\neat.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\night.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\night.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\rubyblue.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\rubyblue.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\twilight.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\twilight.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\vibrant-ink.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\vibrant-ink.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\codemirror-2.37\theme\xq-dark.css">
+      <Link>Portal\scripts\codemirror-2.37\theme\xq-dark.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\jquery-ui.js">
       <Link>Portal\scripts\jquery-ui.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
