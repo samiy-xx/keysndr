@@ -1,11 +1,18 @@
 ﻿(function () {
     'use strict';
+    app.requires.push('ui.codemirror');
     app.controller('scriptsController', ["$scope", "apiService", ScriptsController]);
 
     function ScriptsController(scope, service) {
         scope.scripts = [];
         scope.currentScript = null;
-
+        scope.codeModel = "code here";
+        scope.editorOptions = {
+            lineWrapping: true,
+            lineNumbers: true,
+            mode: 'javascript'
+        };
+        
         scope.$watch("currentScript.name", function (n, o) {
             if (scope.currentScript === null)
                 return;
@@ -114,7 +121,11 @@
                 }
             });
         }
+        scope.setSourceForEdit = function(index) {
+           // sourceFileName = scope.currentScript.sourceFileNames[index];
 
+        }
+        
         scope.getAllScripts();
     }
 

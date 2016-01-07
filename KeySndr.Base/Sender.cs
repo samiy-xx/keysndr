@@ -10,16 +10,44 @@ using KeySndr.InputManager;
 
 namespace KeySndr.Base
 {
-    public class SenderInternal
+    public static class Sender
     {
-        private readonly InputAction action;
+        private static readonly ILoggingProvider Log = ObjectFactory.GetProvider<ILoggingProvider>();
         private const int DefaultDelayAfter = 50;
-        public SenderInternal(InputAction a)
-        {
-            action = a;
+
+        public static async Task Send(InputActionExecutionContainer container)
+        {   
+            await Send(container.InputAction);
         }
 
-        public async Task SendKeyBoardSequences()
+        public static async Task Send(InputAction action)
+        {
+            Log.Debug("Running action " + action.Name);
+
+            if (action.HasKeySequences)
+                await SendKeyBoardSequences(action);
+            if (action.HasMouseSequences)
+                await SendMouseSequences(action);
+            if (action.HasScriptSequences)
+                await SendScripts(action);
+        }
+
+        public async static Task Send(MouseSequenceItem item)
+        {
+            ExecuteMouseSequenceItem(item);
+        }
+
+        public async static Task Send(SequenceItem item)
+        {
+            ExecuteSequenceItem(item);
+        }
+
+        public async static Task Send(SequenceItem[] items)
+        {
+            ExecuteSequenceItems(items);
+        }
+
+        public static async Task SendKeyBoardSequences(InputAction action)
         {
             await Task.Run(() =>
             {
@@ -28,41 +56,26 @@ namespace KeySndr.Base
                     if (sequenceItem.Entry.Key == null)
                         continue;
 
-                    var keys = new List<Keys>();
-                    keys.AddRange(sequenceItem.Modifiers.Select(m => (Keys)m.Value));
-                    keys.Add((Keys)sequenceItem.Entry.Value);
-                    Keyboard.ShortcutKeys(keys.ToArray(), sequenceItem.KeepDown);
-                    Thread.Sleep(sequenceItem.KeepDown + DefaultDelayAfter);
+                    ExecuteSequenceItem(sequenceItem);
                 }
             });
         }
 
-        public async Task SendMouseSequences()
+
+
+        public static async Task SendMouseSequences(InputAction action)
         {
             await Task.Run(() =>
             {
                 foreach (var mouseSequenceItem in action.MouseSequences)
                 {
-                    switch (mouseSequenceItem.Type)
-                    {
-                        case 0:
-                            Mouse.ButtonDown((Mouse.MouseKeys)mouseSequenceItem.Button);
-                            Thread.Sleep(mouseSequenceItem.Time);
-                            Mouse.ButtonUp((Mouse.MouseKeys)mouseSequenceItem.Button);
-                            break;
-                        case 1:
-                            Mouse.Move(mouseSequenceItem.X, mouseSequenceItem.Y);
-                            break;
-                        default:
-                            Mouse.MoveRelative(mouseSequenceItem.X, mouseSequenceItem.Y);
-                            break;
-                    }
-                    Thread.Sleep(DefaultDelayAfter);
+                    ExecuteMouseSequenceItem(mouseSequenceItem);
+                    Thread.Sleep(mouseSequenceItem.Time);
                 }
             });
         }
 
-        public async Task SendScripts()
+        public static async Task SendScripts(InputAction action)
         {
             await Task.Run(() =>
             {
@@ -71,87 +84,66 @@ namespace KeySndr.Base
                     var ctx = ObjectFactory.GetProvider<IScriptProvider>().FindContextForName(scriptSequence.ScriptName);
                     if (!ctx.IsValid || !ctx.HasBeenExecuted)
                         continue;
-                   
+
                     try
                     {
                         ctx.Run();
                     }
                     catch (Exception)
                     {
-                        
+
                     }
                 }
             });
         }
-    }
 
-    public class Sender
-    {
-        private static readonly ILoggingProvider Log = ObjectFactory.GetProvider<ILoggingProvider>();
-
-        public async static Task Send(InputActionExecutionContainer container)
+        public static void ExecuteSequenceItem(SequenceItem item)
         {
-            var processSet = false;
-
-            if (container.UseForegroundWindow)
-            {
-                var ptr = WindowsApi.GetForegroundWindow();
-                if (ptr != IntPtr.Zero)
-                {
-                    WindowsApi.SetFocus(ptr);
-                    processSet = true;
-                }
-            }
-
-            if (!processSet && container.UseDesktop)
-            {
-                var ptr = WindowsApi.GetDesktopWindow();
-                if (ptr != IntPtr.Zero)
-                {
-                    WindowsApi.SetFocus(ptr);
-                    WindowsApi.SetForegroundWindow(ptr);
-                    processSet = true;
-                }
-            }
-            if (!processSet && !string.IsNullOrEmpty(container.ProcessName))
-            {
-                var process = WinUtils.GetProcessByName(container.ProcessName);
-                if (process != null)
-                {
-                    WindowsApi.SetForegroundWindow(process.MainWindowHandle);
-                    WindowsApi.SetFocus(process.MainWindowHandle);
-                    processSet = true;
-                }
-                
-            }
-
-           // if (!processSet)
-            //{
-            //    await Send(container.InputAction);
-            //    return;
-            //}
-            
-            if (processSet)
-                await new Sender().SendAction(container.InputAction);
+            var keys = new List<Keys>();
+            keys.AddRange(item.Modifiers.Select(m => (Keys)m.Value));
+            keys.Add((Keys)item.Entry.Value);
+            Keyboard.ShortcutKeys(keys.ToArray(), item.KeepDown);
+            Thread.Sleep(item.KeepDown);
         }
 
-        public async static Task Send(InputAction a)
+        public static void ExecuteSequenceItems(SequenceItem[] items)
         {
-            await new Sender().SendAction(a);
+            foreach (var sequenceItem in items)
+            {
+                ExecuteSequenceItem(sequenceItem);
+            }
         }
 
-        public async Task SendAction(InputAction action)
+        public static void ExecuteMouseSequenceItem(MouseSequenceItem item)
         {
-            var sndr = new SenderInternal(action);
+            switch (item.Type)
+            {
+                case 0:
+                    Mouse.ButtonDown((Mouse.MouseKeys)item.Button);
+                    Thread.Sleep(item.Time);
+                    Mouse.ButtonUp((Mouse.MouseKeys)item.Button);
+                    break;
+                case 1:
+                    Mouse.Move(item.X, item.Y);
+                    break;
+                default:
+                    Mouse.MoveRelative(item.X, item.Y);
+                    break;
+            }
+        }
+
+        /*public static async Task SendAction(InputAction action)
+        {
+            var sndr = new SenderInternal();
            
             Log.Debug("Running action " + action.Name);
             
             if (action.HasKeySequences)
-                await sndr.SendKeyBoardSequences();
+                await sndr.SendKeyBoardSequences(action);
             if (action.HasMouseSequences)
-                await sndr.SendMouseSequences();
+                await sndr.SendMouseSequences(action);
             if (action.HasScriptSequences)
-                await sndr.SendScripts();
-        }
+                await sndr.SendScripts(action);
+        }*/
     }
 }

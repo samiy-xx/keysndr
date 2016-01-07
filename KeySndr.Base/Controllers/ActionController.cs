@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using KeySndr.Base.Commands;
@@ -93,7 +94,7 @@ namespace KeySndr.Base.Controllers
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
-        public ApiResult<Object> Execute(InputActionExecutionContainer actionContainer)
+        public async Task<ApiResult<Object>> Execute(InputActionExecutionContainer actionContainer)
         {
             var cmd = new ExecuteInputAction(actionContainer);
             cmd.Execute();

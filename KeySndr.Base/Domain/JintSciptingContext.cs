@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Jint;
+using Jint.Native;
 using Jint.Runtime;
 using KeySndr.Base.Exceptions;
 using KeySndr.Base.Providers;
@@ -127,17 +130,15 @@ namespace KeySndr.Base.Domain
 
             engine.SetValue("moveMouse", new Action<int, int>(MoveMouse));
             engine.SetValue("moveMouseRelative", new Action<int, int>(MoveMouseRelative));
-            engine.SetValue("clickMouse", new Action<int, int>(ClickMouse));
 
-            engine.SetValue("sendInput", new Action<string, int>(SendInput));
-            engine.SetValue("sendInputAction", new Action<InputAction>(SendInputAction));
-            engine.SetValue("sendString", new Action<string, int>(SendString));
+            engine.SetValue("clickMouse", new Action<int, int, Func<Jint.Native.JsValue, Jint.Native.JsValue[], Jint.Native.JsValue>>(ClickMouse));
+            engine.SetValue("clickMouseSync", new Action<int, int>(ClickMouseSync));
 
-            engine.SetValue("createAction", new Func<InputAction>(CreateAction));
-            engine.SetValue("createStringAction", new Func<string, int, InputAction>(CreateStringAction));
-            engine.SetValue("createSequenceFromString", new Func<int, string, SequenceItem>(CreateSequence));
-            engine.SetValue("createSequenceFromInt", new Func<int, int, SequenceItem>(CreateSequence));
-            engine.SetValue("appendSequence", new Action<InputAction, SequenceItem>(AppendSequence));
+            engine.SetValue("sendInput", new Action<string, int, Func<Jint.Native.JsValue, Jint.Native.JsValue[], Jint.Native.JsValue>>(SendInput));
+            engine.SetValue("sendInputSync", new Action<string, int>(SendInputSync));
+           
+            engine.SetValue("sendString", new Action<string, int, Func<Jint.Native.JsValue, Jint.Native.JsValue[], Jint.Native.JsValue>>(SendString));
+            engine.SetValue("sendStringSync", new Action<string, int>(SendStringSync));
         }
 
         private void SetSourceValid(SourceFile f)
@@ -183,75 +184,53 @@ namespace KeySndr.Base.Domain
                 Sender.Send(a).Wait(100);
         }
 
-        private void ClickMouse(int b, int keepDown)
-        {
-            var a = new InputAction
-            {
-                Name = $"Click Mouse {b} {keepDown}"
-            };
-            a.MouseSequences.Add(new MouseSequenceItem(0, 0, 0, -b, keepDown));
-            if (!testMode)
-                Sender.Send(a).Wait(keepDown);
-        }
-
-        private async void SendInput(string i, int keepDown)
-        {
-            var a = new InputAction
-            {
-                Name = "String action"
-            };
-            a.Sequences.Add(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i))));
-            if (!testMode)
-                await Sender.Send(a);
-        }
-
-        private async void SendInputAction(InputAction action)
+        private void ClickMouseSync(int b, int keepDown)
         {
             if (!testMode)
-                await Sender.Send(action);
+                Sender.Send(new MouseSequenceItem(0, 0, 0, -b, keepDown)).Wait(keepDown);
         }
 
-        private InputAction CreateAction()
+        private async void ClickMouse(int b, int keepDown, Func<Jint.Native.JsValue, Jint.Native.JsValue[],
+                       Jint.Native.JsValue> callBackFunction)
         {
-            return new InputAction();
+            if (!testMode)
+                await Sender.Send(new MouseSequenceItem(0, 0, 0, -b, keepDown));
+            callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
         }
 
-        private SequenceItem CreateSequence(int keepDown, string keyName)
+        private void SendInputSync(string i, int keepDown)
         {
-            return new SequenceItem(keepDown, GetKeyValue(keyName), keyName);
+            Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i)))).Wait(keepDown);
         }
 
-        private SequenceItem CreateSequence(int keepDown, int keyValue)
+        private async void SendInput(string i, int keepDown, Func<Jint.Native.JsValue, Jint.Native.JsValue[],
+                       Jint.Native.JsValue> callBackFunction)
         {
-            return new SequenceItem(keepDown, keyValue, GetKeyName(keyValue));
+            await Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i))));
+            callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
         }
 
-        private void AppendSequence(InputAction action, SequenceItem item)
+        private List<SequenceItem> CreateSequenceList(string s, int ms)
         {
-            action.Sequences.Add(item);
-        }
-
-        private InputAction CreateStringAction(string s, int ms)
-        {
-            var a = new InputAction
-            {
-                Name = "String action"
-            };
             var chars = s.ToCharArray();
-            foreach (var c in chars)
+            return chars.Select(c => new SequenceItem
             {
-                a.Sequences.Add(new SequenceItem
-                {
-                    KeepDown = ms,
-                    Entry = new SequenceKeyValuePair(c.ToString(), GetKeyValueFromCharacter(c))
-                });
-            }
-            return a;
+                KeepDown = ms, Entry = new SequenceKeyValuePair(c.ToString(), GetKeyValueFromCharacter(c))
+            }).ToList();
         }
 
-        private void SendString(string s, int ms)
+        private void SendStringSync(string s, int ms)
         {
-            SendInputAction(CreateStringAction(s, ms));
+            var sequences = CreateSequenceList(s, ms);
+            Sender.Send(sequences.ToArray()).Wait(ms * sequences.Count);
+        }
+
+        private async void SendString(string s, int ms, Func<Jint.Native.JsValue, Jint.Native.JsValue[],
+                       Jint.Native.JsValue> callBackFunction)
+        {
+            var sequences = CreateSequenceList(s, ms);
+            await Sender.Send(sequences.ToArray());
+            callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
         }
 
         private void DebugLog(string t)
