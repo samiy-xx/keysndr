@@ -131,13 +131,13 @@ namespace KeySndr.Base.Domain
             engine.SetValue("moveMouse", new Action<int, int>(MoveMouse));
             engine.SetValue("moveMouseRelative", new Action<int, int>(MoveMouseRelative));
 
-            engine.SetValue("clickMouse", new Action<int, int, Func<Jint.Native.JsValue, Jint.Native.JsValue[], Jint.Native.JsValue>>(ClickMouse));
+            engine.SetValue("clickMouse", new Action<int, int, Func<JsValue, JsValue[], JsValue>>(ClickMouse));
             engine.SetValue("clickMouseSync", new Action<int, int>(ClickMouseSync));
 
-            engine.SetValue("sendInput", new Action<string, int, Func<Jint.Native.JsValue, Jint.Native.JsValue[], Jint.Native.JsValue>>(SendInput));
+            engine.SetValue("sendInput", new Action<string, int, Func<JsValue, JsValue[], JsValue>>(SendInput));
             engine.SetValue("sendInputSync", new Action<string, int>(SendInputSync));
            
-            engine.SetValue("sendString", new Action<string, int, Func<Jint.Native.JsValue, Jint.Native.JsValue[], Jint.Native.JsValue>>(SendString));
+            engine.SetValue("sendString", new Action<string, int, Func<JsValue, JsValue[], JsValue>>(SendString));
             engine.SetValue("sendStringSync", new Action<string, int>(SendStringSync));
         }
 
@@ -164,24 +164,14 @@ namespace KeySndr.Base.Domain
 
         private void MoveMouse(int x, int y)
         {
-            var a = new InputAction
-            {
-                Name = $"Move Mouse to {x} {y}"
-            };
-            a.MouseSequences.Add(new MouseSequenceItem(x, y, 1, -1, 0));
             if (!testMode)
-                Sender.Send(a).Wait(100);
+                Sender.Send(new MouseSequenceItem(x, y, 1, -1, 0)).Wait(100);
         }
 
         private void MoveMouseRelative(int x, int y)
         {
-            var a = new InputAction
-            {
-                Name = $"Move Mouse Relative {x} {y}"
-            };
-            a.MouseSequences.Add(new MouseSequenceItem(x, y, 2, -1, 0));
             if (!testMode)
-                Sender.Send(a).Wait(100);
+                Sender.Send(new MouseSequenceItem(x, y, 2, -1, 0)).Wait(100);
         }
 
         private void ClickMouseSync(int b, int keepDown)
@@ -190,8 +180,7 @@ namespace KeySndr.Base.Domain
                 Sender.Send(new MouseSequenceItem(0, 0, 0, -b, keepDown)).Wait(keepDown);
         }
 
-        private async void ClickMouse(int b, int keepDown, Func<Jint.Native.JsValue, Jint.Native.JsValue[],
-                       Jint.Native.JsValue> callBackFunction)
+        private async void ClickMouse(int b, int keepDown, Func<JsValue, JsValue[], JsValue> callBackFunction)
         {
             if (!testMode)
                 await Sender.Send(new MouseSequenceItem(0, 0, 0, -b, keepDown));
@@ -200,13 +189,14 @@ namespace KeySndr.Base.Domain
 
         private void SendInputSync(string i, int keepDown)
         {
-            Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i)))).Wait(keepDown);
+            if (!testMode)
+                Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i)))).Wait(keepDown);
         }
 
-        private async void SendInput(string i, int keepDown, Func<Jint.Native.JsValue, Jint.Native.JsValue[],
-                       Jint.Native.JsValue> callBackFunction)
+        private async void SendInput(string i, int keepDown, Func<JsValue, JsValue[], JsValue> callBackFunction)
         {
-            await Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i))));
+            if (!testMode)
+                await Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i))));
             callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
         }
 
@@ -222,14 +212,15 @@ namespace KeySndr.Base.Domain
         private void SendStringSync(string s, int ms)
         {
             var sequences = CreateSequenceList(s, ms);
-            Sender.Send(sequences.ToArray()).Wait(ms * sequences.Count);
+            if (!testMode)
+                Sender.Send(sequences.ToArray()).Wait(ms * sequences.Count);
         }
 
-        private async void SendString(string s, int ms, Func<Jint.Native.JsValue, Jint.Native.JsValue[],
-                       Jint.Native.JsValue> callBackFunction)
+        private async void SendString(string s, int ms, Func<JsValue, JsValue[], JsValue> callBackFunction)
         {
             var sequences = CreateSequenceList(s, ms);
-            await Sender.Send(sequences.ToArray());
+            if (!testMode)
+                await Sender.Send(sequences.ToArray());
             callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
         }
 
