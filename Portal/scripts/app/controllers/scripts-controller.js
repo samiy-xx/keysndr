@@ -1,11 +1,13 @@
 ﻿(function () {
     'use strict';
-    app.requires.push('ui.codemirror');
+    app.requires.push('ui.ace');
     app.controller('scriptsController', ["$scope", "apiService", ScriptsController]);
 
     function ScriptsController(scope, service) {
         scope.scripts = [];
         scope.currentScript = null;
+        scope.currentSourceName = null;
+
         scope.codeModel = "code here";
         scope.editorOptions = {
             lineWrapping: true,
@@ -121,9 +123,37 @@
                 }
             });
         }
-        scope.setSourceForEdit = function(index) {
-           // sourceFileName = scope.currentScript.sourceFileNames[index];
+        scope.aceLoaded = function(editor) {
+            
+        }
 
+        scope.aceChanged = function(e) {
+            
+        }
+
+        scope.saveSource = function() {
+            service.saveScriptSource(scope.currentScript, scope.currentSourceName, scope.codeModel).then(function(response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.setErrorMessage("Failed to get scripts", scope.errorMessage, 5000);
+                    return;
+                }
+                scope.displaySuccessMessage("Script source saved", "Ok", 5000);
+            });
+        }
+
+        scope.setSourceForEdit = function(index) {
+            var sourceFileName = scope.currentScript.sourceFileNames[index];
+            scope.currentSourceName = sourceFileName;
+            service.loadScriptSource(scope.currentScript, sourceFileName).then(function (response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.setErrorMessage("Failed to get scripts", scope.errorMessage, 5000);
+                    return;
+                }
+
+                scope.codeModel = result.content;
+            });
         }
         
         scope.getAllScripts();

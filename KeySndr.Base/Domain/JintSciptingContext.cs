@@ -173,40 +173,82 @@ namespace KeySndr.Base.Domain
 
         private void MoveMouse(int x, int y)
         {
-            if (!testMode)
-                Sender.Send(new MouseSequenceItem(x, y, 1, -1, 0)).Wait(100);
+            try
+            {
+                if (!testMode)
+                    Sender.Send(new MouseSequenceItem(x, y, 1, -1, 0)).Wait(100);
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
         }
 
         private void MoveMouseRelative(int x, int y)
         {
-            if (!testMode)
-                Sender.Send(new MouseSequenceItem(x, y, 2, -1, 0)).Wait(100);
+            try
+            {
+                if (!testMode)
+                    Sender.Send(new MouseSequenceItem(x, y, 2, -1, 0)).Wait(100);
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
         }
 
         private void ClickMouseSync(int b, int keepDown)
         {
-            if (!testMode)
-                Sender.Send(new MouseSequenceItem(0, 0, 0, -b, keepDown)).Wait(keepDown);
+            try
+            {
+                if (!testMode)
+                    Sender.Send(new MouseSequenceItem(0, 0, 0, -b, keepDown)).Wait(keepDown);
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
         }
 
         private async void ClickMouse(int b, int keepDown, Func<JsValue, JsValue[], JsValue> callBackFunction)
         {
-            if (!testMode)
-                await Sender.Send(new MouseSequenceItem(0, 0, 0, -b, keepDown));
-            callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
+            try
+            {
+                if (!testMode)
+                    await Sender.Send(new MouseSequenceItem(0, 0, 0, -b, keepDown));
+                callBackFunction(JsValue.Undefined, new[] {JsValue.Undefined});
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
         }
 
         private void SendInputSync(string i, int keepDown)
         {
-            if (!testMode)
-                Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i)))).Wait(keepDown);
+            try
+            {
+                if (!testMode)
+                    Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i)))).Wait(keepDown);
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
         }
 
         private async void SendInput(string i, int keepDown, Func<JsValue, JsValue[], JsValue> callBackFunction)
         {
-            if (!testMode)
-                await Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i))));
-            callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
+            try
+            {
+                if (!testMode)
+                    await Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i))));
+                callBackFunction(JsValue.Undefined, new[] {JsValue.Undefined});
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
         }
 
         private List<SequenceItem> CreateSequenceList(string s, int ms)
@@ -220,17 +262,31 @@ namespace KeySndr.Base.Domain
 
         private void SendStringSync(string s, int ms)
         {
-            var sequences = CreateSequenceList(s, ms);
-            if (!testMode)
-                Sender.Send(sequences.ToArray()).Wait(ms * sequences.Count);
+            try
+            {
+                var sequences = CreateSequenceList(s, ms);
+                if (!testMode)
+                    Sender.Send(sequences.ToArray()).Wait(ms*sequences.Count);
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
         }
 
         private async void SendString(string s, int ms, Func<JsValue, JsValue[], JsValue> callBackFunction)
         {
-            var sequences = CreateSequenceList(s, ms);
-            if (!testMode)
-                await Sender.Send(sequences.ToArray());
-            callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
+            try
+            {
+                var sequences = CreateSequenceList(s, ms);
+                if (!testMode)
+                    await Sender.Send(sequences.ToArray());
+                callBackFunction(JsValue.Undefined, new[] {JsValue.Undefined});
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
         }
 
         private void DebugLog(string t)

@@ -97,7 +97,7 @@ namespace KeySndr.Base.Controllers
         public async Task<ApiResult<Object>> Execute(InputActionExecutionContainer actionContainer)
         {
             var cmd = new ExecuteInputAction(actionContainer);
-            cmd.Execute();
+            await cmd.Execute();
             return cmd.Result;
         }
 

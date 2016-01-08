@@ -29,6 +29,7 @@ namespace KeySndr.Base.Providers
         public abstract void UpdateScript(InputScript n, InputScript o);
         public abstract void RemoveInputConfiguration(InputConfiguration c);
         public abstract void RemoveScript(InputScript s);
+        public abstract void SaveScriptSource(InputScript script, string fileName, string source);
         public abstract IEnumerable<InputConfiguration> LoadInputConfigurations();
         public abstract IEnumerable<InputScript> LoadInputScripts();
 

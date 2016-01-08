@@ -65,6 +65,21 @@
             return $http.get(rootUrl + "scripts/getallscripts");
         },
         
+        loadScriptSource: function(script, source) {
+            return $http.post(rootUrl + "scripts/loadsource", {
+                script: script,
+                sourceFileName: source
+            });
+        },
+
+        saveScriptSource: function(script, sourceName, source) {
+            return $http.post(rootUrl + "scripts/savesource", {
+                script: script,
+                sourceFileName: sourceName,
+                source: source
+            });
+        },
+
         getAllScriptObjects: function() {
             return $http.get(rootUrl + "scripts/getallscriptobjects");
         },
@@ -90,12 +105,6 @@
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             });
-    /*return $http({
-                method: "POST",
-                data: fd,
-                url: rootUrl + "import/upload",
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}  
-            });*/
-}
+        }
     }
 }]);

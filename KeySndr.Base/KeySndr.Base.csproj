@@ -123,11 +123,13 @@
     <Compile Include="Commands\GetViewConfigurations.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ImportZipPackage.cs" />
+    <Compile Include="Commands\LoadSource.cs" />
     <Compile Include="Commands\ReloadSystem.cs" />
     <Compile Include="Commands\RemoveInputConfiguration.cs" />
     <Compile Include="Commands\RemoveInputScript.cs" />
     <Compile Include="Commands\SaveInputConfiguration.cs" />
     <Compile Include="Commands\SaveInputScript.cs" />
+    <Compile Include="Commands\SaveSource.cs" />
     <Compile Include="Commands\StoreAppConfig.cs" />
     <Compile Include="Commands\ValidateInputScript.cs" />
     <Compile Include="Commands\ZipPackageForExport.cs" />
@@ -143,7 +145,9 @@
     <Compile Include="Domain\InputScript.cs" />
     <Compile Include="Domain\ISciptContext.cs" />
     <Compile Include="Domain\JintSciptingContext.cs" />
+    <Compile Include="Domain\SaveSourceRequest.cs" />
     <Compile Include="Domain\SourceFile.cs" />
+    <Compile Include="Domain\GetSourceRequest.cs" />
     <Compile Include="Exceptions\DataFolderDoesNotExistException.cs" />
     <Compile Include="Exceptions\ScriptException.cs" />
     <Compile Include="FileSystemUtils.cs" />
@@ -193,6 +197,10 @@
       <Link>Portal\fonts\glyphicons-halflings-regular.woff2</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="..\Portal\scripts\ace\LICENSE">
+      <Link>Portal\scripts\ace\LICENSE</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\Portal\scripts\angular.min.js.map">
       <Link>Portal\scripts\angular.min.js.map</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -230,6 +238,802 @@
       <Link>Portal\mappings.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="..\Portal\scripts\ace\ace.js">
+      <Link>Portal\scripts\ace\ace.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-beautify.js">
+      <Link>Portal\scripts\ace\ext-beautify.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-chromevox.js">
+      <Link>Portal\scripts\ace\ext-chromevox.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-elastic_tabstops_lite.js">
+      <Link>Portal\scripts\ace\ext-elastic_tabstops_lite.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-emmet.js">
+      <Link>Portal\scripts\ace\ext-emmet.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-error_marker.js">
+      <Link>Portal\scripts\ace\ext-error_marker.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-keybinding_menu.js">
+      <Link>Portal\scripts\ace\ext-keybinding_menu.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-language_tools.js">
+      <Link>Portal\scripts\ace\ext-language_tools.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-linking.js">
+      <Link>Portal\scripts\ace\ext-linking.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-modelist.js">
+      <Link>Portal\scripts\ace\ext-modelist.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-old_ie.js">
+      <Link>Portal\scripts\ace\ext-old_ie.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-searchbox.js">
+      <Link>Portal\scripts\ace\ext-searchbox.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-settings_menu.js">
+      <Link>Portal\scripts\ace\ext-settings_menu.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-spellcheck.js">
+      <Link>Portal\scripts\ace\ext-spellcheck.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-split.js">
+      <Link>Portal\scripts\ace\ext-split.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-static_highlight.js">
+      <Link>Portal\scripts\ace\ext-static_highlight.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-statusbar.js">
+      <Link>Portal\scripts\ace\ext-statusbar.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-textarea.js">
+      <Link>Portal\scripts\ace\ext-textarea.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-themelist.js">
+      <Link>Portal\scripts\ace\ext-themelist.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\ext-whitespace.js">
+      <Link>Portal\scripts\ace\ext-whitespace.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\keybinding-emacs.js">
+      <Link>Portal\scripts\ace\keybinding-emacs.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\keybinding-vim.js">
+      <Link>Portal\scripts\ace\keybinding-vim.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-abap.js">
+      <Link>Portal\scripts\ace\mode-abap.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-abc.js">
+      <Link>Portal\scripts\ace\mode-abc.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-actionscript.js">
+      <Link>Portal\scripts\ace\mode-actionscript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-ada.js">
+      <Link>Portal\scripts\ace\mode-ada.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-apache_conf.js">
+      <Link>Portal\scripts\ace\mode-apache_conf.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-applescript.js">
+      <Link>Portal\scripts\ace\mode-applescript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-asciidoc.js">
+      <Link>Portal\scripts\ace\mode-asciidoc.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-assembly_x86.js">
+      <Link>Portal\scripts\ace\mode-assembly_x86.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-autohotkey.js">
+      <Link>Portal\scripts\ace\mode-autohotkey.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-batchfile.js">
+      <Link>Portal\scripts\ace\mode-batchfile.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-c9search.js">
+      <Link>Portal\scripts\ace\mode-c9search.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-cirru.js">
+      <Link>Portal\scripts\ace\mode-cirru.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-clojure.js">
+      <Link>Portal\scripts\ace\mode-clojure.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-cobol.js">
+      <Link>Portal\scripts\ace\mode-cobol.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-coffee.js">
+      <Link>Portal\scripts\ace\mode-coffee.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-coldfusion.js">
+      <Link>Portal\scripts\ace\mode-coldfusion.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-csharp.js">
+      <Link>Portal\scripts\ace\mode-csharp.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-css.js">
+      <Link>Portal\scripts\ace\mode-css.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-curly.js">
+      <Link>Portal\scripts\ace\mode-curly.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-c_cpp.js">
+      <Link>Portal\scripts\ace\mode-c_cpp.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-d.js">
+      <Link>Portal\scripts\ace\mode-d.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-dart.js">
+      <Link>Portal\scripts\ace\mode-dart.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-diff.js">
+      <Link>Portal\scripts\ace\mode-diff.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-django.js">
+      <Link>Portal\scripts\ace\mode-django.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-dockerfile.js">
+      <Link>Portal\scripts\ace\mode-dockerfile.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-dot.js">
+      <Link>Portal\scripts\ace\mode-dot.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-eiffel.js">
+      <Link>Portal\scripts\ace\mode-eiffel.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-ejs.js">
+      <Link>Portal\scripts\ace\mode-ejs.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-elixir.js">
+      <Link>Portal\scripts\ace\mode-elixir.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-elm.js">
+      <Link>Portal\scripts\ace\mode-elm.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-erlang.js">
+      <Link>Portal\scripts\ace\mode-erlang.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-forth.js">
+      <Link>Portal\scripts\ace\mode-forth.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-ftl.js">
+      <Link>Portal\scripts\ace\mode-ftl.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-gcode.js">
+      <Link>Portal\scripts\ace\mode-gcode.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-gherkin.js">
+      <Link>Portal\scripts\ace\mode-gherkin.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-gitignore.js">
+      <Link>Portal\scripts\ace\mode-gitignore.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-glsl.js">
+      <Link>Portal\scripts\ace\mode-glsl.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-golang.js">
+      <Link>Portal\scripts\ace\mode-golang.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-groovy.js">
+      <Link>Portal\scripts\ace\mode-groovy.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-haml.js">
+      <Link>Portal\scripts\ace\mode-haml.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-handlebars.js">
+      <Link>Portal\scripts\ace\mode-handlebars.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-haskell.js">
+      <Link>Portal\scripts\ace\mode-haskell.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-haxe.js">
+      <Link>Portal\scripts\ace\mode-haxe.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-html.js">
+      <Link>Portal\scripts\ace\mode-html.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-html_elixir.js">
+      <Link>Portal\scripts\ace\mode-html_elixir.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-html_ruby.js">
+      <Link>Portal\scripts\ace\mode-html_ruby.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-ini.js">
+      <Link>Portal\scripts\ace\mode-ini.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-io.js">
+      <Link>Portal\scripts\ace\mode-io.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-jack.js">
+      <Link>Portal\scripts\ace\mode-jack.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-jade.js">
+      <Link>Portal\scripts\ace\mode-jade.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-java.js">
+      <Link>Portal\scripts\ace\mode-java.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-javascript.js">
+      <Link>Portal\scripts\ace\mode-javascript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-json.js">
+      <Link>Portal\scripts\ace\mode-json.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-jsoniq.js">
+      <Link>Portal\scripts\ace\mode-jsoniq.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-jsp.js">
+      <Link>Portal\scripts\ace\mode-jsp.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-jsx.js">
+      <Link>Portal\scripts\ace\mode-jsx.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-julia.js">
+      <Link>Portal\scripts\ace\mode-julia.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-latex.js">
+      <Link>Portal\scripts\ace\mode-latex.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-lean.js">
+      <Link>Portal\scripts\ace\mode-lean.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-less.js">
+      <Link>Portal\scripts\ace\mode-less.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-liquid.js">
+      <Link>Portal\scripts\ace\mode-liquid.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-lisp.js">
+      <Link>Portal\scripts\ace\mode-lisp.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-livescript.js">
+      <Link>Portal\scripts\ace\mode-livescript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-live_script.js">
+      <Link>Portal\scripts\ace\mode-live_script.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-logiql.js">
+      <Link>Portal\scripts\ace\mode-logiql.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-lsl.js">
+      <Link>Portal\scripts\ace\mode-lsl.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-lua.js">
+      <Link>Portal\scripts\ace\mode-lua.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-luapage.js">
+      <Link>Portal\scripts\ace\mode-luapage.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-lucene.js">
+      <Link>Portal\scripts\ace\mode-lucene.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-makefile.js">
+      <Link>Portal\scripts\ace\mode-makefile.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-markdown.js">
+      <Link>Portal\scripts\ace\mode-markdown.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-mask.js">
+      <Link>Portal\scripts\ace\mode-mask.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-matlab.js">
+      <Link>Portal\scripts\ace\mode-matlab.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-maze.js">
+      <Link>Portal\scripts\ace\mode-maze.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-mel.js">
+      <Link>Portal\scripts\ace\mode-mel.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-mipsassembler.js">
+      <Link>Portal\scripts\ace\mode-mipsassembler.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-mips_assembler.js">
+      <Link>Portal\scripts\ace\mode-mips_assembler.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-mushcode.js">
+      <Link>Portal\scripts\ace\mode-mushcode.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-mysql.js">
+      <Link>Portal\scripts\ace\mode-mysql.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-nix.js">
+      <Link>Portal\scripts\ace\mode-nix.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-objectivec.js">
+      <Link>Portal\scripts\ace\mode-objectivec.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-ocaml.js">
+      <Link>Portal\scripts\ace\mode-ocaml.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-pascal.js">
+      <Link>Portal\scripts\ace\mode-pascal.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-perl.js">
+      <Link>Portal\scripts\ace\mode-perl.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-pgsql.js">
+      <Link>Portal\scripts\ace\mode-pgsql.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-php.js">
+      <Link>Portal\scripts\ace\mode-php.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-plain_text.js">
+      <Link>Portal\scripts\ace\mode-plain_text.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-powershell.js">
+      <Link>Portal\scripts\ace\mode-powershell.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-praat.js">
+      <Link>Portal\scripts\ace\mode-praat.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-prolog.js">
+      <Link>Portal\scripts\ace\mode-prolog.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-properties.js">
+      <Link>Portal\scripts\ace\mode-properties.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-protobuf.js">
+      <Link>Portal\scripts\ace\mode-protobuf.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-python.js">
+      <Link>Portal\scripts\ace\mode-python.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-r.js">
+      <Link>Portal\scripts\ace\mode-r.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-rdoc.js">
+      <Link>Portal\scripts\ace\mode-rdoc.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-rhtml.js">
+      <Link>Portal\scripts\ace\mode-rhtml.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-ruby.js">
+      <Link>Portal\scripts\ace\mode-ruby.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-rust.js">
+      <Link>Portal\scripts\ace\mode-rust.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-sass.js">
+      <Link>Portal\scripts\ace\mode-sass.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-scad.js">
+      <Link>Portal\scripts\ace\mode-scad.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-scala.js">
+      <Link>Portal\scripts\ace\mode-scala.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-scheme.js">
+      <Link>Portal\scripts\ace\mode-scheme.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-scss.js">
+      <Link>Portal\scripts\ace\mode-scss.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-sh.js">
+      <Link>Portal\scripts\ace\mode-sh.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-sjs.js">
+      <Link>Portal\scripts\ace\mode-sjs.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-smarty.js">
+      <Link>Portal\scripts\ace\mode-smarty.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-snippets.js">
+      <Link>Portal\scripts\ace\mode-snippets.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-soy_template.js">
+      <Link>Portal\scripts\ace\mode-soy_template.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-space.js">
+      <Link>Portal\scripts\ace\mode-space.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-sql.js">
+      <Link>Portal\scripts\ace\mode-sql.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-sqlserver.js">
+      <Link>Portal\scripts\ace\mode-sqlserver.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-stylus.js">
+      <Link>Portal\scripts\ace\mode-stylus.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-svg.js">
+      <Link>Portal\scripts\ace\mode-svg.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-swift.js">
+      <Link>Portal\scripts\ace\mode-swift.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-swig.js">
+      <Link>Portal\scripts\ace\mode-swig.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-tcl.js">
+      <Link>Portal\scripts\ace\mode-tcl.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-tex.js">
+      <Link>Portal\scripts\ace\mode-tex.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-text.js">
+      <Link>Portal\scripts\ace\mode-text.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-textile.js">
+      <Link>Portal\scripts\ace\mode-textile.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-toml.js">
+      <Link>Portal\scripts\ace\mode-toml.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-twig.js">
+      <Link>Portal\scripts\ace\mode-twig.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-typescript.js">
+      <Link>Portal\scripts\ace\mode-typescript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-vala.js">
+      <Link>Portal\scripts\ace\mode-vala.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-vbscript.js">
+      <Link>Portal\scripts\ace\mode-vbscript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-velocity.js">
+      <Link>Portal\scripts\ace\mode-velocity.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-verilog.js">
+      <Link>Portal\scripts\ace\mode-verilog.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-vhdl.js">
+      <Link>Portal\scripts\ace\mode-vhdl.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-xml.js">
+      <Link>Portal\scripts\ace\mode-xml.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-xquery.js">
+      <Link>Portal\scripts\ace\mode-xquery.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\mode-yaml.js">
+      <Link>Portal\scripts\ace\mode-yaml.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\snippets\html.js">
+      <Link>Portal\scripts\ace\snippets\html.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\snippets\javascript.js">
+      <Link>Portal\scripts\ace\snippets\javascript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\snippets\json.js">
+      <Link>Portal\scripts\ace\snippets\json.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\snippets\xml.js">
+      <Link>Portal\scripts\ace\snippets\xml.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-ambiance.js">
+      <Link>Portal\scripts\ace\theme-ambiance.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-chaos.js">
+      <Link>Portal\scripts\ace\theme-chaos.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-chrome.js">
+      <Link>Portal\scripts\ace\theme-chrome.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-clouds.js">
+      <Link>Portal\scripts\ace\theme-clouds.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-clouds_midnight.js">
+      <Link>Portal\scripts\ace\theme-clouds_midnight.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-cobalt.js">
+      <Link>Portal\scripts\ace\theme-cobalt.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-crimson_editor.js">
+      <Link>Portal\scripts\ace\theme-crimson_editor.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-dawn.js">
+      <Link>Portal\scripts\ace\theme-dawn.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-dreamweaver.js">
+      <Link>Portal\scripts\ace\theme-dreamweaver.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-eclipse.js">
+      <Link>Portal\scripts\ace\theme-eclipse.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-github.js">
+      <Link>Portal\scripts\ace\theme-github.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-idle_fingers.js">
+      <Link>Portal\scripts\ace\theme-idle_fingers.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-iplastic.js">
+      <Link>Portal\scripts\ace\theme-iplastic.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-katzenmilch.js">
+      <Link>Portal\scripts\ace\theme-katzenmilch.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-kr_theme.js">
+      <Link>Portal\scripts\ace\theme-kr_theme.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-kuroir.js">
+      <Link>Portal\scripts\ace\theme-kuroir.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-merbivore.js">
+      <Link>Portal\scripts\ace\theme-merbivore.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-merbivore_soft.js">
+      <Link>Portal\scripts\ace\theme-merbivore_soft.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-monokai.js">
+      <Link>Portal\scripts\ace\theme-monokai.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-mono_industrial.js">
+      <Link>Portal\scripts\ace\theme-mono_industrial.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-pastel_on_dark.js">
+      <Link>Portal\scripts\ace\theme-pastel_on_dark.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-solarized_dark.js">
+      <Link>Portal\scripts\ace\theme-solarized_dark.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-solarized_light.js">
+      <Link>Portal\scripts\ace\theme-solarized_light.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-sqlserver.js">
+      <Link>Portal\scripts\ace\theme-sqlserver.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-terminal.js">
+      <Link>Portal\scripts\ace\theme-terminal.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-textmate.js">
+      <Link>Portal\scripts\ace\theme-textmate.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-tomorrow.js">
+      <Link>Portal\scripts\ace\theme-tomorrow.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-tomorrow_night.js">
+      <Link>Portal\scripts\ace\theme-tomorrow_night.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-tomorrow_night_blue.js">
+      <Link>Portal\scripts\ace\theme-tomorrow_night_blue.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-tomorrow_night_bright.js">
+      <Link>Portal\scripts\ace\theme-tomorrow_night_bright.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-tomorrow_night_eighties.js">
+      <Link>Portal\scripts\ace\theme-tomorrow_night_eighties.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-twilight.js">
+      <Link>Portal\scripts\ace\theme-twilight.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-vibrant_ink.js">
+      <Link>Portal\scripts\ace\theme-vibrant_ink.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\theme-xcode.js">
+      <Link>Portal\scripts\ace\theme-xcode.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-coffee.js">
+      <Link>Portal\scripts\ace\worker-coffee.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-css.js">
+      <Link>Portal\scripts\ace\worker-css.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-html.js">
+      <Link>Portal\scripts\ace\worker-html.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-javascript.js">
+      <Link>Portal\scripts\ace\worker-javascript.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-json.js">
+      <Link>Portal\scripts\ace\worker-json.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-lua.js">
+      <Link>Portal\scripts\ace\worker-lua.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-php.js">
+      <Link>Portal\scripts\ace\worker-php.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-xml.js">
+      <Link>Portal\scripts\ace\worker-xml.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\scripts\ace\worker-xquery.js">
+      <Link>Portal\scripts\ace\worker-xquery.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\angular-1.3.7.js">
       <Link>Portal\scripts\angular-1.3.7.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -266,176 +1070,12 @@
       <Link>Portal\scripts\app\directives\on-read-file.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\keymap\emacs.js">
-      <Link>Portal\scripts\codemirror-2.37\keymap\emacs.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\keymap\vim.js">
-      <Link>Portal\scripts\codemirror-2.37\keymap\vim.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\codemirror.css">
-      <Link>Portal\scripts\codemirror-2.37\lib\codemirror.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\codemirror.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\codemirror.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\closetag.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\closetag.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\continuecomment.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\continuecomment.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\continuelist.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\continuelist.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\dialog.css">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\dialog.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\dialog.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\dialog.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\foldcode.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\foldcode.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\formatting.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\formatting.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\javascript-hint.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\javascript-hint.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\loadmode.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\loadmode.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\match-highlighter.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\match-highlighter.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\multiplex.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\multiplex.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\overlay.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\overlay.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\pig-hint.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\pig-hint.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\runmode-standalone.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\runmode-standalone.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\runmode.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\runmode.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\search.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\search.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\searchcursor.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\searchcursor.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\simple-hint.css">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\simple-hint.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\simple-hint.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\simple-hint.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\lib\util\xml-hint.js">
-      <Link>Portal\scripts\codemirror-2.37\lib\util\xml-hint.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\mode\javascript\javascript.js">
-      <Link>Portal\scripts\codemirror-2.37\mode\javascript\javascript.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\ambiance-mobile.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\ambiance-mobile.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\ambiance.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\ambiance.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\blackboard.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\blackboard.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\cobalt.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\cobalt.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\eclipse.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\eclipse.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\elegant.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\elegant.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\erlang-dark.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\erlang-dark.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\lesser-dark.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\lesser-dark.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\monokai.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\monokai.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\neat.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\neat.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\night.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\night.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\rubyblue.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\rubyblue.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\twilight.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\twilight.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\vibrant-ink.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\vibrant-ink.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\codemirror-2.37\theme\xq-dark.css">
-      <Link>Portal\scripts\codemirror-2.37\theme\xq-dark.css</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Portal\scripts\jquery-ui.js">
       <Link>Portal\scripts\jquery-ui.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Portal\scripts\ui-codemirror-0.3.0\ui-codemirror.js">
-      <Link>Portal\scripts\ui-codemirror-0.3.0\ui-codemirror.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Portal\scripts\ui-codemirror-0.3.0\ui-codemirror.min.js">
-      <Link>Portal\scripts\ui-codemirror-0.3.0\ui-codemirror.min.js</Link>
+    <Content Include="..\Portal\scripts\ui-ace.js">
+      <Link>Portal\scripts\ui-ace.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Portal\views\partials\error-message-row.html">

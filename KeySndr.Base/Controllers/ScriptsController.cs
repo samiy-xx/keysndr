@@ -82,6 +82,24 @@ namespace KeySndr.Base.Controllers
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpPost]
+        public ApiResult<string> LoadSource(GetSourceRequest request)
+        {
+            var cmd = new LoadSource(scriptProvider, storageProvider, request);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpPost]
+        public async Task<ApiResult<Object>> SaveSource(SaveSourceRequest request)
+        {
+            var cmd = new SaveSource(scriptProvider, storageProvider, request);
+            await cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
         public async Task<bool> ExecuteScript(string scriptName)
         {

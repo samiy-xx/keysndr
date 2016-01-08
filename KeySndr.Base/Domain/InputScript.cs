@@ -21,6 +21,9 @@ namespace KeySndr.Base.Domain
         [JsonProperty("fileName")]
         public string FileName { get; set; }
 
+        [JsonProperty("inputs")]
+        public KeyValuePair<string, object> Inputs { get; set; }
+         
         public List<SourceFile> SourceFiles { get; set; }
         public bool HasSourceFiles => SourceFiles.Count > 0;
         public bool IsValid { get; set; }
@@ -34,6 +37,7 @@ namespace KeySndr.Base.Domain
             SourceFiles = new List<SourceFile>();
             SourceFileNames = new List<string>();
             Errors = new List<string>();
+            Inputs = new KeyValuePair<string, object>();
         }
 
         public async Task RunTest()

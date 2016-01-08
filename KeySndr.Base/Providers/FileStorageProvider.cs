@@ -78,7 +78,7 @@ namespace KeySndr.Base.Providers
 
         public void UpdateScript(InputScript n, InputScript o)
         {
-            if (!HasFileNameChanged(n.FileName, o.FileName))
+            if (HasFileNameChanged(n.FileName, o.FileName))
             {
                 SaveScript(n);
                 return;
@@ -86,6 +86,13 @@ namespace KeySndr.Base.Providers
             
             UpdateScriptDirectory(n, o);
             UpdateScriptFile(n, o);
+        }
+
+        public void SaveScriptSource(InputScript script, string fileName, string source)
+        {
+            var scriptsPath = AppConfigProvider.AppConfig.ScriptsFolder;
+            var sourcePath = Path.Combine(scriptsPath, script.Name, fileName);
+            FileSystemUtils.SaveStringToDisk(source, sourcePath);
         }
 
         private bool HasFileNameChanged(string n, string o)
