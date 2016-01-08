@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 /*
@@ -104,6 +105,25 @@ namespace KeySndr.Base
 
         [DllImport("user32.dll")]
         public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetDC(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        static extern Int32 ReleaseDC(IntPtr hwnd, IntPtr hdc);
+
+        [DllImport("gdi32.dll")]
+        static extern uint GetPixel(IntPtr hdc, int nXPos, int nYPos);
+
+        static public Color GetPixelColor(int x, int y)
+        {
+            var hdc = GetDC(IntPtr.Zero);
+            var pixel = GetPixel(hdc, x, y);
+            ReleaseDC(IntPtr.Zero, hdc);
+            return Color.FromArgb((int)(pixel & 0x000000FF),
+                         (int)(pixel & 0x0000FF00) >> 8,
+                         (int)(pixel & 0x00FF0000) >> 16);
+        }
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool ReadProcessMemory(

@@ -121,13 +121,13 @@ namespace KeySndr.Base.Domain
 
         private void Expose()
         {
-            engine.SetValue("defaultKeyDownMs", 250);
             engine.SetValue("executionCallback", new Action<bool>(ExecutionCallback));
             engine.SetValue("getKeyName", new Func<int, string>(GetKeyName));
             engine.SetValue("getKeyValue", new Func<string, int>(GetKeyValue));
             engine.SetValue("log", new Action<string>(DebugLog));
             engine.SetValue("pause", new Action<int>(Pause));
 
+            engine.SetValue("getPixelColor", new Func<int, int, List<byte>>(GetPixelColor));
             engine.SetValue("moveMouse", new Action<int, int>(MoveMouse));
             engine.SetValue("moveMouseRelative", new Action<int, int>(MoveMouseRelative));
 
@@ -155,6 +155,15 @@ namespace KeySndr.Base.Domain
             f.Error = e.Message;
             f.IsValid = false;
             f.ParseOk = false;
+        }
+
+        private List<byte> GetPixelColor(int x, int y)
+        {
+            var c = WindowsApi.GetPixelColor(x, y);
+            return new List<byte>
+            {
+                c.R, c.G, c.B, c.A
+            };
         }
 
         private void Pause(int ms)
