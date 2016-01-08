@@ -136,7 +136,10 @@ namespace KeySndr.Base.Domain
 
             engine.SetValue("sendInput", new Action<string, int, Func<JsValue, JsValue[], JsValue>>(SendInput));
             engine.SetValue("sendInputSync", new Action<string, int>(SendInputSync));
-           
+            engine.SetValue("sendInputMod", new Action<string, string[], int, Func<JsValue, JsValue[], JsValue>>(SendInputMod));
+            engine.SetValue("sendInputModSync", new Action<string, string[], int>(SendInputModSync));
+
+
             engine.SetValue("sendString", new Action<string, int, Func<JsValue, JsValue[], JsValue>>(SendString));
             engine.SetValue("sendStringSync", new Action<string, int>(SendStringSync));
         }
@@ -244,6 +247,47 @@ namespace KeySndr.Base.Domain
                 if (!testMode)
                     await Sender.Send(new SequenceItem(keepDown, new SequenceKeyValuePair(i, GetKeyValue(i))));
                 callBackFunction(JsValue.Undefined, new[] {JsValue.Undefined});
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
+        }
+
+        private void SendInputModSync(string input, string[] modifiers, int keepDown)
+        {
+            try
+            {
+                if (!testMode)
+                {
+                    var sequence = new SequenceItem(keepDown, new SequenceKeyValuePair(input, GetKeyValue(input)));
+                    foreach (var mod in modifiers)
+                    {
+                        sequence.Modifiers.Add(new SequenceKeyValuePair(mod, GetKeyValue(mod)));
+                    }
+                    Sender.Send(sequence).Wait(keepDown);
+                }
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
+        }
+
+        private async void SendInputMod(string input, string[] modifiers, int keepDown, Func<JsValue, JsValue[], JsValue> callBackFunction)
+        {
+            try
+            {
+                if (!testMode)
+                {
+                    var sequence = new SequenceItem(keepDown, new SequenceKeyValuePair(input, GetKeyValue(input)));
+                    foreach (var mod in modifiers)
+                    {
+                        sequence.Modifiers.Add(new SequenceKeyValuePair(mod, GetKeyValue(mod)));
+                    }
+                    await Sender.Send(sequence);
+                }
+                callBackFunction(JsValue.Undefined, new[] { JsValue.Undefined });
             }
             catch (Exception e)
             {
