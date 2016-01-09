@@ -1,5 +1,4 @@
-﻿using System;
-using KeySndr.Base.Providers;
+﻿using KeySndr.Base.Providers;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
@@ -20,25 +19,24 @@ namespace KeySndr.Base.Commands
 
         public void Execute()
         {
-            try
+            var c = inputConfigProvider.FindConfigForName(configName);
+            if (c != null)
             {
                 Result = new ApiResult<InputConfiguration>
                 {
-                    Content = inputConfigProvider.FindConfigForName(configName),
+                    Content = c,
                     Success = true,
                     Message = "Ok"
                 };
-                
+                return;
             }
-            catch (Exception e)
+
+            Result = new ApiResult<InputConfiguration>
             {
-                Result = new ApiResult<InputConfiguration>
-                {
                     Success = false,
                     Message = "Failed to get input configuration " + configName,
-                    ErrorMessage = e.Message
-                };
-            }
+                    ErrorMessage = "Failed to get input configuration " + configName
+            };
         }
     }
 }

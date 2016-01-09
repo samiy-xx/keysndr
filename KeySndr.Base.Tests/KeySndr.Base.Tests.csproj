@@ -55,6 +55,7 @@
     <Compile Include="CommandTests\GetAllScriptObjects_Tests.cs" />
     <Compile Include="CommandTests\GetAllScripts_Tests.cs" />
     <Compile Include="CommandTests\GetAppSettings_Tests.cs" />
+    <Compile Include="CommandTests\GetInputConfiguration_Tests.cs" />
     <Compile Include="CommandTests\SaveInputConfiguration_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

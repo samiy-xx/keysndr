@@ -50,7 +50,7 @@ namespace KeySndr.Base.Providers
         {
             lock (configs)
             {
-                return configs.FirstOrDefault(c => c.Name == name);
+                return configs.FirstOrDefault(c => c.Name.Equals(name));
             }
         }
 
