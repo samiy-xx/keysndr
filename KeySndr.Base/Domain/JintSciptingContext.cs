@@ -127,6 +127,7 @@ namespace KeySndr.Base.Domain
             engine.SetValue("log", new Action<string>(DebugLog));
             engine.SetValue("pause", new Action<int>(Pause));
 
+            engine.SetValue("getWindowRectangle", new Func<int[]>(GetWindowRectangle));
             engine.SetValue("getPixelColor", new Func<int, int, List<byte>>(GetPixelColor));
             engine.SetValue("moveMouse", new Action<int, int>(MoveMouse));
             engine.SetValue("moveMouseRelative", new Action<int, int>(MoveMouseRelative));
@@ -167,6 +168,12 @@ namespace KeySndr.Base.Domain
             {
                 c.R, c.G, c.B, c.A
             };
+        }
+
+        private int[] GetWindowRectangle()
+        {
+            var p = Sender.GetCurrentProcessTarget();
+            return WindowsApi.GetWindowRectangle(p);
         }
 
         private void Pause(int ms)

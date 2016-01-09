@@ -14,7 +14,7 @@ namespace KeySndr.Base
     {
         private static readonly ILoggingProvider Log = ObjectFactory.GetProvider<ILoggingProvider>();
         private const int DefaultDelayAfter = 50;
-
+        private static IntPtr currentIntPtr = IntPtr.Zero;
         public static async Task Send(InputActionExecutionContainer container)
         {   
             await Send(container.InputAction);
@@ -30,6 +30,16 @@ namespace KeySndr.Base
                 await SendMouseSequences(action);
             if (action.HasScriptSequences)
                 await SendScripts(action);
+        }
+
+        public static void SetCurrentProcessTarget(IntPtr p)
+        {
+            currentIntPtr = p;
+        }
+
+        public static IntPtr GetCurrentProcessTarget()
+        {
+            return currentIntPtr;
         }
 
         public async static Task Send(MouseSequenceItem item)
@@ -89,9 +99,9 @@ namespace KeySndr.Base
                     {
                         ctx.Run();
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-
+                        ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
                     }
                 }
             });

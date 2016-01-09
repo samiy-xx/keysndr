@@ -115,15 +115,9 @@ namespace KeySndr.Base
         [DllImport("gdi32.dll")]
         static extern uint GetPixel(IntPtr hdc, int nXPos, int nYPos);
 
-        static public Color GetPixelColor(int x, int y)
-        {
-            var hdc = GetDC(IntPtr.Zero);
-            var pixel = GetPixel(hdc, x, y);
-            ReleaseDC(IntPtr.Zero, hdc);
-            return Color.FromArgb((int)(pixel & 0x000000FF),
-                         (int)(pixel & 0x0000FF00) >> 8,
-                         (int)(pixel & 0x00FF0000) >> 16);
-        }
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool ReadProcessMemory(
@@ -136,6 +130,23 @@ namespace KeySndr.Base
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr GetDesktopWindow();
+
+        public static Color GetPixelColor(int x, int y)
+        {
+            var hdc = GetDC(IntPtr.Zero);
+            var pixel = GetPixel(hdc, x, y);
+            ReleaseDC(IntPtr.Zero, hdc);
+            return Color.FromArgb((int)(pixel & 0x000000FF),
+                         (int)(pixel & 0x0000FF00) >> 8,
+                         (int)(pixel & 0x00FF0000) >> 16);
+        }
+
+        public static int[] GetWindowRectangle(IntPtr hWnd)
+        {
+            RECT rct = new RECT();
+            GetWindowRect(hWnd, ref rct);
+            return new int[4] {rct.Left, rct.Top, rct.Right, rct.Bottom};
+        }
 
         public static void SwitchWindow(IntPtr windowHandle)
         {
@@ -255,6 +266,15 @@ namespace KeySndr.Base
         public const uint MOUSEEVENTF_WHEEL = 0x0800;
         public const uint MOUSEEVENTF_VIRTUALDESK = 0x4000;
         public const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
     }
 
     [StructLayout(LayoutKind.Sequential)]

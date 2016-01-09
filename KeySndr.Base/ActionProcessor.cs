@@ -30,6 +30,7 @@ namespace KeySndr.Base
                 if (ptr != IntPtr.Zero)
                 {
                     WindowsApi.SetFocus(ptr);
+                    Sender.SetCurrentProcessTarget(ptr);
                     hasProcess = true;
                 }
             }
@@ -39,8 +40,9 @@ namespace KeySndr.Base
                 var ptr = WindowsApi.GetDesktopWindow();
                 if (ptr != IntPtr.Zero)
                 {
-                    WindowsApi.SetFocus(ptr);
                     WindowsApi.SetForegroundWindow(ptr);
+                    WindowsApi.SetFocus(ptr);
+                    Sender.SetCurrentProcessTarget(ptr);
                     hasProcess = true;
                 }
             }
@@ -50,6 +52,8 @@ namespace KeySndr.Base
             var process = WinUtils.GetProcessByName(container.ProcessName);
             if (process == null)
                 return;
+            
+            Sender.SetCurrentProcessTarget(process.MainWindowHandle);
             WindowsApi.SetForegroundWindow(process.MainWindowHandle);
             WindowsApi.SetFocus(process.MainWindowHandle);
             hasProcess = true;

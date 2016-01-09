@@ -80,7 +80,7 @@
             if (!scope.canMoveSource)
                 return;
 
-            var o = scope.currentScript.sourceFiles[index];
+            var o = scope.currentScript.sourceFileNames[index];
             scope.currentScript.sourceFileNames.removeAt(index);
             scope.currentScript.sourceFileNames.insertAt(nextIndex, o);
         }

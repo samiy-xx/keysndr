@@ -54,7 +54,8 @@ namespace KeySndr.Base.Domain
                 }
                 catch (Exception e)
                 {
-
+                    ObjectFactory.GetProvider<ILoggingProvider>().Debug("RunTest for " + Name + " failed");
+                    ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
                 }
             });
             ctx.SetTestMode(false);
