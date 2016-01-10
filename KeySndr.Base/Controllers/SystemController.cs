@@ -39,5 +39,14 @@ namespace KeySndr.Base.Controllers
             cmd.Execute();
             return cmd.Result;
         }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpGet]
+        public ApiResult<string> AssemblyVersion()
+        {
+            var cmd = new GetAssemblyVersion();
+            cmd.Execute();
+            return cmd.Result;
+        }
     }
 }

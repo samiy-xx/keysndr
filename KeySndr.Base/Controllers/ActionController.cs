@@ -40,6 +40,15 @@ namespace KeySndr.Base.Controllers
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
+        public ApiResult<IEnumerable<ConfigurationListItem>> GetAllConfigurationItems()
+        {
+            var cmd = new GetAllInputConfigurationItems(inputConfigProvider);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpGet]
         public ApiResult<IEnumerable<string>> GetLegacyConfigurations()
         {
             var cmd = new GetLegacyInputConfigurations(inputConfigProvider);

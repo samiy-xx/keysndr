@@ -113,10 +113,12 @@
     <Compile Include="Commands\GenerateInputAction.cs" />
     <Compile Include="Commands\GenerateInputConfiguration.cs" />
     <Compile Include="Commands\GenerateScript.cs" />
+    <Compile Include="Commands\GetAllInputConfigurationItems.cs" />
     <Compile Include="Commands\GetAllInputConfigurations.cs" />
     <Compile Include="Commands\GetAllScriptObjects.cs" />
     <Compile Include="Commands\GetAllScripts.cs" />
     <Compile Include="Commands\GetAppSettings.cs" />
+    <Compile Include="Commands\GetAssemblyVersion.cs" />
     <Compile Include="Commands\GetInputConfiguration.cs" />
     <Compile Include="Commands\GetLegacyConfigurations.cs" />
     <Compile Include="Commands\GetProcessNames.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Domain\AppConfig.cs" />
+    <Compile Include="Domain\AssemblyInfo.cs" />
     <Compile Include="Domain\InputScript.cs" />
     <Compile Include="Domain\ISciptContext.cs" />
     <Compile Include="Domain\JintSciptingContext.cs" />

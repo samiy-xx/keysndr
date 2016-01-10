@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +9,10 @@ namespace KeySndr.Common.Providers
     public class WebConnectionProvider : IWebConnectionProvider
     {
         private const string AllConfigurations = "api/action/getallconfigurations";
+        private const string AllConfigurationItems = "api/action/getallconfigurationitems";
         private const string AllScripts = "api/scripts/getallscripts";
         private const string Configuration = "api/action/getconfiguration";
+        private const string AssemblyVersion = "api/system/assemblyversion";
         private const string Save = "api/action/save";
         private const string Execute = "api/action/execute";
 
@@ -37,6 +38,13 @@ namespace KeySndr.Common.Providers
             return JsonSerializer.Deserialize<ApiResult<IEnumerable<string>>>(content);
         }
 
+        public async Task<ApiResult<IEnumerable<ConfigurationListItem>>> RequestConfigurationItems()
+        {
+            var result = await httpClient.GetAsync(AllConfigurationItems);
+            var content = await result.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<ApiResult<IEnumerable<ConfigurationListItem>>>(content);
+        }
+
         public async Task<ApiResult<IEnumerable<string>>> RequestScripts()
         {
             var result = await httpClient.GetAsync(AllScripts);
@@ -49,6 +57,13 @@ namespace KeySndr.Common.Providers
             var result = await httpClient.GetAsync(Configuration + "?name=" + name);
             var content = await result.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<ApiResult<InputConfiguration>>(content);
+        }
+
+        public async Task<ApiResult<string>> RequestAssemblyVersion()
+        {
+            var result = await httpClient.GetAsync(AssemblyVersion);
+            var content = await result.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<ApiResult<string>>(content);
         }
 
         public async Task<ApiResult<Object>>  SaveConfiguration(InputConfiguration configuration)

@@ -40,6 +40,7 @@
     <Compile Include="ApiResult.cs" />
     <Compile Include="AppPreferences.cs" />
     <Compile Include="BinarySerializer.cs" />
+    <Compile Include="ConfigurationListItem.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="InputAction.cs" />
     <Compile Include="InputActionExecutionContainer.cs" />

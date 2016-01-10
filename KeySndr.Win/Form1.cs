@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using KeySndr.Base;
+using KeySndr.Base.Domain;
 using KeySndr.Base.Providers;
 using KeySndr.Win.Events;
 using KeySndr.Win.Providers;

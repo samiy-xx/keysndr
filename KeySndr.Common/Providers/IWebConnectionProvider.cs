@@ -8,8 +8,10 @@ namespace KeySndr.Common.Providers
     {
         void SetBaseAddress(string ip, int port);
         Task<ApiResult<IEnumerable<string>>> RequestConfigurations();
+        Task<ApiResult<IEnumerable<ConfigurationListItem>>> RequestConfigurationItems();
         Task<ApiResult<IEnumerable<string>>> RequestScripts();
         Task<ApiResult<InputConfiguration>> RequestConfiguration(string name);
+        Task<ApiResult<string>> RequestAssemblyVersion();
         Task<ApiResult<Object>> ExecuteAction(InputAction action);
         Task<ApiResult<Object>> SaveConfiguration(InputConfiguration configuration);
     }

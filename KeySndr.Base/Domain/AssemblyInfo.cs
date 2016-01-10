@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KeySndr.Win
+namespace KeySndr.Base.Domain
 {
     public class AssembyInfo
     {
