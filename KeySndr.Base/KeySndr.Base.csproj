@@ -159,6 +159,7 @@
     <Compile Include="IntKeysConverter.cs" />
     <Compile Include="JsUtils\JsTimer.cs" />
     <Compile Include="KeySndr.cs" />
+    <Compile Include="Middleware\RedirectUrl.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -233,6 +234,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="..\Portal\css\portal.css">
+      <Link>Portal\css\portal.css</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\css\scripts.css">
       <Link>Portal\css\scripts.css</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -241,6 +246,10 @@
       <Link>Portal\mappings.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="..\Portal\portal.html">
+      <Link>Portal\portal.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\ace\ace.js">
       <Link>Portal\scripts\ace\ace.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
