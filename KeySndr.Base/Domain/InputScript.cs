@@ -22,7 +22,7 @@ namespace KeySndr.Base.Domain
         public string FileName { get; set; }
 
         [JsonProperty("inputs")]
-        public KeyValuePair<string, object> Inputs { get; set; }
+        public List<ScriptInputParameter> Inputs { get; set; }
          
         public List<SourceFile> SourceFiles { get; set; }
         public bool HasSourceFiles => SourceFiles.Count > 0;
@@ -37,7 +37,7 @@ namespace KeySndr.Base.Domain
             SourceFiles = new List<SourceFile>();
             SourceFileNames = new List<string>();
             Errors = new List<string>();
-            Inputs = new KeyValuePair<string, object>();
+            Inputs = new List<ScriptInputParameter>();
         }
 
         public async Task RunTest()
@@ -50,7 +50,6 @@ namespace KeySndr.Base.Domain
                 try
                 {
                     ctx.Execute();
-                    //ctx.Run();
                 }
                 catch (Exception e)
                 {

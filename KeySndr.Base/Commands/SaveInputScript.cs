@@ -29,6 +29,7 @@ namespace KeySndr.Base.Commands
                 SaveToStorage();
                 ReloadSources();
                 AddOrUpdateScriptProvider();
+
                 await RunTests();
                 
                 Result = new ApiResult<object>

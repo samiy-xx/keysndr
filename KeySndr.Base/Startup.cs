@@ -26,10 +26,6 @@ namespace KeySndr.Base
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new {id = RouteParameter.Optional}
                 );
-            config.Routes.MapHttpRoute(
-                "DefaultRedirect", // Route name
-                string.Empty, // URL with parameters
-                new { controller = "Home", action = "Redirect" });
             config.EnableCors();
             config.Formatters.FormUrlEncodedFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/zip"));
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
@@ -40,11 +36,7 @@ namespace KeySndr.Base
         {
             var appConfig = ObjectFactory.GetProvider<IAppConfigProvider>().AppConfig;
             var fileSystem = new PhysicalFileSystem(appConfig.WebRoot);
-            /*appBuilder.UseDefaultFiles(new DefaultFilesOptions
-            {
-                DefaultFileNames = new[] { "index.html" },
-                FileSystem = fileSystem
-            });*/
+            
             appBuilder.Use(typeof(RedirectUrl));
             appBuilder.UseDirectoryBrowser(new DirectoryBrowserOptions
             {

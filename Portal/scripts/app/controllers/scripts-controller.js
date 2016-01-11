@@ -25,6 +25,14 @@
             window.location.href = "index.html";
         }
 
+        scope.addInput = function() {
+            scope.currentScript.inputs.push({ "key": "", "value": "" });
+        }
+
+        scope.removeInput = function(index) {
+            scope.currentScript.inputs.splice(index, 1);
+        }
+
         scope.addScript = function() {
             service.getNewScript().then(function(response) {
                 var result = response.data;

@@ -159,7 +159,7 @@
             this.buttonOpenAdmin.Name = "buttonOpenAdmin";
             this.buttonOpenAdmin.Size = new System.Drawing.Size(188, 23);
             this.buttonOpenAdmin.TabIndex = 4;
-            this.buttonOpenAdmin.Text = "Open admin interface";
+            this.buttonOpenAdmin.Text = "Management Portal";
             this.buttonOpenAdmin.UseVisualStyleBackColor = true;
             this.buttonOpenAdmin.Click += new System.EventHandler(this.buttonOpenAdmin_Click);
             // 
@@ -169,7 +169,7 @@
             this.buttonReload.Name = "buttonReload";
             this.buttonReload.Size = new System.Drawing.Size(188, 24);
             this.buttonReload.TabIndex = 4;
-            this.buttonReload.Text = "Reload";
+            this.buttonReload.Text = "Reload All";
             this.buttonReload.UseVisualStyleBackColor = true;
             this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
             // 

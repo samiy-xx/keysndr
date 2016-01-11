@@ -195,9 +195,19 @@ namespace KeySndr.Base.Providers
 
         private InputScript LoadInputScript(string fileName)
         {
-            return string.IsNullOrEmpty(AppConfigProvider.AppConfig.ScriptsFolder)
-                ? null 
-                : FileSystemUtils.LoadObjectFromDisk<InputScript>(Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, fileName));
+            InputScript script = null;
+            try
+            {
+                script = string.IsNullOrEmpty(AppConfigProvider.AppConfig.ScriptsFolder)
+                    ? null
+                    : FileSystemUtils.LoadObjectFromDisk<InputScript>(
+                        Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, fileName));
+            }
+            catch (Exception e)
+            {
+                ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
+            }
+            return script;
         }
 
         private InputConfiguration LoadInputConfiguration(string fileName)

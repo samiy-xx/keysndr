@@ -146,6 +146,33 @@
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-default" data-ng-click="addSourceFile()"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Add Source</button>
                             </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-default" data-ng-click="addInput()"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Add Input</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default" data-ng-repeat="source in currentScript.inputs track by $index">
+                    <div class="panel-heading">
+                        <div class="btn-group pull-right">
+                            <a href="#"
+                               title="Remove"
+                               class="btn btn-danger btn-xs"
+                               data-ng-click="removeInput($index)">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <h4 class="panel-title">Input - {{ currentScript.inputs[$index].key }}</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon_1_{{ $index }}">Key&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <input type="text" class="form-control"  ng-model="currentScript.inputs[$index].key" aria-describedby="basic-addon_1_{{ $index }}">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon_2_{{ $index }}">Value&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <input type="text" class="form-control"  ng-model="currentScript.inputs[$index].value" aria-describedby="basic-addon_2_{{ $index }}">
                         </div>
                     </div>
                 </div>

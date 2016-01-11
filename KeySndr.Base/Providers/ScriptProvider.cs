@@ -41,7 +41,15 @@ namespace KeySndr.Base.Providers
                 var index = scripts.IndexOf(script);
                 if (index > -1)
                 {
+                    var ctx = GetContext(scripts[index]);
+                    if (ctx != null)
+                    {
+                        RemoveContext(ctx);
+                        ctx.Dispose();
+                    }
+                    
                     scripts[index] = script;
+                    Create(script);
                 }
                 else
                 {
@@ -89,6 +97,14 @@ namespace KeySndr.Base.Providers
             {
                 return contexts.FirstOrDefault(s => s.Script.Equals(script));
             }
+        }
+
+        private void RemoveContext(IScriptContext ctx)
+        {
+            lock (contexts)
+            {
+                contexts.Remove(ctx);
+            }    
         }
 
         public void Clear()

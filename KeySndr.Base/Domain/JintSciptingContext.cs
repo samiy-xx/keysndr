@@ -34,13 +34,14 @@ namespace KeySndr.Base.Domain
                 .AllowClr(typeof(InputAction).Assembly)
                 .AllowClr(typeof(JintScriptingContext).Assembly)
             );
-            Expose();
+            
         }
 
         public JintScriptingContext(InputScript script)
             : this()
         {
             Script = script;
+            Expose();
         }
 
         public void SetTestMode(bool b)
@@ -121,6 +122,7 @@ namespace KeySndr.Base.Domain
 
         private void Expose()
         {
+            engine.SetValue("scriptParameters", Script.Inputs.ToArray());
             engine.SetValue("executionCallback", new Action<bool>(ExecutionCallback));
             engine.SetValue("getKeyName", new Func<int, string>(GetKeyName));
             engine.SetValue("getKeyValue", new Func<string, int>(GetKeyValue));
