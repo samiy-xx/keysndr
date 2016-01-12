@@ -9,10 +9,17 @@ namespace KeySndr.Base.Providers
     {
         private readonly List<InputConfiguration> configs;
         public IEnumerable<InputConfiguration> Configs => configs;
+        private IStorageProvider storageProvider;
 
         public InputConfigProvider()
+            : this(ObjectFactory.GetProvider<IStorageProvider>())
+        {
+        }
+
+        public InputConfigProvider(IStorageProvider p)
         {
             configs = new List<InputConfiguration>();
+            storageProvider = p;
         }
 
         public void Add(InputConfiguration config)
@@ -64,7 +71,6 @@ namespace KeySndr.Base.Providers
 
         public async Task Prepare()
         {
-            var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
             Clear();
 
             await Task.Run(() =>
