@@ -28,6 +28,7 @@ namespace KeySndr.Base.Commands
             try
             {
                 SaveToStorage();
+                CreateViewFolderIfNeeded();
                 inputConfigProvider.AddOrUpdate(configuration);
                 
                 Result = new ApiResult<object>
@@ -56,6 +57,12 @@ namespace KeySndr.Base.Commands
                 storageProvider.UpdateInputConfiguration(configuration, existing);
             else
                 storageProvider.SaveInputConfiguration(configuration);
+        }
+
+        private void CreateViewFolderIfNeeded()
+        {
+            if (configuration.HasView)
+                storageProvider.CreateViewFolder(configuration.View);
         }
     }
 }

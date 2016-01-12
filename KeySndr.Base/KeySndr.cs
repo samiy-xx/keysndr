@@ -98,16 +98,14 @@ namespace KeySndr.Base
             }
             ObjectFactory.AddProvider(new AppConfigProvider());
             ObjectFactory.AddProvider(new ScriptProvider());
-            ObjectFactory.AddProvider(new InputConfigProvider());
+            
             ObjectFactory.AddProvider(new SystemProvider());
         }
 
         private void RegisterProvidersAfterAppConfig()
         {
-            //if (appConfig.FirstTimeRunning || !appConfig.UseObjectStorage)
-                ObjectFactory.AddProvider(new FileStorageProvider());
-            //else 
-            //    ObjectFactory.AddProvider(new DbStorageProvider());    
+            ObjectFactory.AddProvider(new FileStorageProvider());
+            ObjectFactory.AddProvider(new InputConfigProvider());
         }
 
         private void LoadAppConfig()

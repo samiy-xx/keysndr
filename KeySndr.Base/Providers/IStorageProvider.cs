@@ -16,6 +16,7 @@ namespace KeySndr.Base.Providers
         void RemoveScript(InputScript s);
         void LoadAllSourceFiles(InputScript s);
         void SaveScriptSource(InputScript script, string fileName, string source);
+        void CreateViewFolder(string viewFolderName);
         IEnumerable<InputConfiguration> LoadInputConfigurations();
         IEnumerable<InputScript> LoadInputScripts();
     }

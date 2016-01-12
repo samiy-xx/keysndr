@@ -34,7 +34,13 @@ namespace KeySndr.Base.Providers
             if (!FileSystemUtils.DirectoryExists(path))
                 throw new Exception("Directory does not exist");
             FileSystemUtils.SaveObjectToDisk(c, Path.Combine(path, c.FileName));
-            CreateViewFolder(c);
+        }
+
+        public void CreateViewFolder(string viewFolderName)
+        {
+            var path = Path.Combine(AppConfigProvider.AppConfig.ViewsRoot, viewFolderName);
+            if (!FileSystemUtils.DirectoryExists(path))
+                FileSystemUtils.CreateDirectory(path);
         }
 
         public virtual void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o)
@@ -57,14 +63,7 @@ namespace KeySndr.Base.Providers
             FileSystemUtils.SaveObjectToDisk(n, newConfigPath);
         }
 
-        private void CreateViewFolder(InputConfiguration c)
-        {
-            if (!c.HasView)
-                return;
-            var path = Path.Combine(AppConfigProvider.AppConfig.ViewsRoot, c.View);
-            if (!FileSystemUtils.DirectoryExists(path))
-                FileSystemUtils.CreateDirectory(path);
-        }
+        
 
         public void SaveScript(InputScript s)
         {

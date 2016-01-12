@@ -30,6 +30,7 @@ namespace KeySndr.Base.Providers
         public abstract void RemoveInputConfiguration(InputConfiguration c);
         public abstract void RemoveScript(InputScript s);
         public abstract void SaveScriptSource(InputScript script, string fileName, string source);
+        public abstract void CreateViewFolder(string viewFolderName);
         public abstract IEnumerable<InputConfiguration> LoadInputConfigurations();
         public abstract IEnumerable<InputScript> LoadInputScripts();
 
