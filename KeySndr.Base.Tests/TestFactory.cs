@@ -38,5 +38,40 @@ namespace KeySndr.Base.Tests
                 View = ""
             };
         }
+
+        public static InputScript CreateTestInputScript()
+        {
+            return new InputScript
+            {
+                FileName = "s.script",
+                Id = Guid.NewGuid(),
+                Inputs = new List<ScriptInputParameter>
+                {
+                    new ScriptInputParameter
+                    {
+                        Key = "TheKey",
+                        Value = "TheValue"
+                    }
+                },
+                IsValid = true,
+                Name = "s",
+                SourceFiles = new List<SourceFile>
+                {
+                    new SourceFile
+                    {
+                        CanExecute = false,
+                        Contents = "Content",
+                        Error = string.Empty,
+                        FileName = "script.js",
+                        IsValid = false,
+                        ParseOk = false
+                    }
+                },
+                SourceFileNames = new List<string>
+                {
+                    "script.js"
+                }
+            };
+        }
     }
 }

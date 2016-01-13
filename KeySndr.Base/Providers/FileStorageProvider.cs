@@ -63,6 +63,28 @@ namespace KeySndr.Base.Providers
             CreatePlaceholderSourceFiles(s);
         }
 
+        protected void CreateSourceFilesDirectoryIfNotExists(InputScript s)
+        {
+            if (!HasSourceFilesDirectory(s))
+                CreateSourceFilesDirectory(s);
+        }
+
+        protected void CreateSourceFilesDirectory(InputScript s)
+        {
+            var path = Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, s.Name);
+            FileSystemUtils.CreateDirectory(path);
+        }
+
+        private void CreatePlaceholderSourceFiles(InputScript s)
+        {
+            foreach (var sourceName in s.SourceFileNames)
+            {
+                var path = Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, s.Name, sourceName);
+                if (!FileSystemUtils.FileExists(path))
+                    FileSystemUtils.SaveStringToDisk("// Code away!!", path);
+            }
+        }
+
         public void UpdateScript(InputScript n, InputScript o)
         {
             if (HasFileNameChanged(n.FileName, o.FileName))
@@ -106,15 +128,7 @@ namespace KeySndr.Base.Providers
             FileSystemUtils.SaveObjectToDisk(n, newScriptPath);
         }
 
-        private void CreatePlaceholderSourceFiles(InputScript s)
-        {
-            foreach (var sourceName in s.SourceFileNames)
-            {
-                var path = Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, s.Name, sourceName);
-                if (!FileSystemUtils.FileExists(path))
-                    FileSystemUtils.SaveStringToDisk("// Code away!!", path);
-            }
-        }
+        
 
         public void RemoveInputConfiguration(InputConfiguration i)
         {
@@ -228,11 +242,7 @@ namespace KeySndr.Base.Providers
             };
         }
 
-        protected void CreateSourceFilesDirectoryIfNotExists(InputScript s)
-        {
-            if (!HasSourceFilesDirectory(s))
-                CreateSourceFilesDirectory(s);
-        }
+        
 
         protected bool SourceFileExists(InputScript s, string f)
         {
@@ -246,11 +256,7 @@ namespace KeySndr.Base.Providers
             return FileSystemUtils.DirectoryExists(path);
         }
 
-        protected void CreateSourceFilesDirectory(InputScript s)
-        {
-            var path = Path.Combine(AppConfigProvider.AppConfig.ScriptsFolder, s.Name);
-            FileSystemUtils.CreateDirectory(path);
-        }
+        
 
         protected string GetPathToSourceFile(InputScript s, string f)
         {

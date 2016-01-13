@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using KeySndr.Base.Domain;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 using Moq;
@@ -95,21 +97,39 @@ namespace KeySndr.Base.Tests.ProviderTests
             fileSystemUtilsMock.Verify(f => f.MoveFile(It.Is<string>(s => s.EndsWith(oldConfig.FileName)), It.Is<string>(s => s.EndsWith(newConfig.FileName))), Times.Never);
             fileSystemUtilsMock.Verify(f => f.SaveObjectToDisk(It.Is<InputConfiguration>(i => i.Id == newConfig.Id), It.Is<string>(v => v.EndsWith(newConfig.FileName))));
         }
-        /*[Test]
-        public void SaveInputConfiguration_CreatesDirectoryForViewIfNotExist()
+
+        [Test]
+        [ExpectedException(typeof(Exception))]
+        public void SaveScript_ThrowsIfScriptsFolderDoesNotExist()
         {
-            var c = TestFactory.CreateTestInputConfiguration();
-            c.View = "view";
-            var configPath = Path.Combine(appConfigProvider.AppConfig.ConfigFolder);
-            var viewFolder = Path.Combine(appConfigProvider.AppConfig.ViewsRoot, c.View);
-            fileSystemUtilsMock.Setup(f => f.DirectoryExists(It.Is<string>(s => s == configPath))).Returns(true);
-            fileSystemUtilsMock.Setup(f => f.DirectoryExists(It.Is<string>(s => s == viewFolder))).Returns(false);
-            provider.SaveInputConfiguration(c);
-            
-            fileSystemUtilsMock.Verify(f => f.DirectoryExists(It.IsAny<string>()), Times.Exactly(2));
-            fileSystemUtilsMock.Verify(f => f.SaveObjectToDisk(It.IsAny<object>(), It.IsAny<string>()), Times.Once);
-            fileSystemUtilsMock.Verify(f => f.CreateDirectory(It.IsAny<string>()), Times.Once);
-        }*/
+            var s = new InputScript();
+            fileSystemUtilsMock.Setup(f => f.DirectoryExists(It.IsAny<string>())).Returns(false);
+            provider.SaveScript(s);
+        }
+
+        [Test]
+        public void SaveScript_SavesScriptToDisk()
+        {
+            var script = TestFactory.CreateTestInputScript();
+            var scriptsFolderPath = appConfigProvider.AppConfig.ScriptsFolder;
+            var scriptFilePath = Path.Combine(appConfigProvider.AppConfig.ScriptsFolder, script.Name);
+            var scriptSourceFilePath = Path.Combine(appConfigProvider.AppConfig.ScriptsFolder, script.Name,
+                script.SourceFiles[0].FileName);
+            fileSystemUtilsMock.Setup(
+                s => s.DirectoryExists(It.Is<string>(v => v == appConfigProvider.AppConfig.ScriptsFolder)))
+                .Returns(true);
+            fileSystemUtilsMock.Setup(
+                s => s.DirectoryExists(It.Is<string>(v => v == scriptFilePath)))
+                .Returns(false);
+
+            provider.SaveScript(script);
+            fileSystemUtilsMock.Verify(v => v.DirectoryExists(It.Is<string>(s => s == scriptsFolderPath)), Times.Once);
+            fileSystemUtilsMock.Verify(v => v.DirectoryExists(It.Is<string>(s => s == scriptFilePath)), Times.Once);
+            fileSystemUtilsMock.Verify(v => v.SaveObjectToDisk(It.Is<InputScript>(s => Equals(s, script)), It.IsAny<string>()), Times.Once);
+            fileSystemUtilsMock.Verify(v => v.CreateDirectory(It.Is<string>(s => s == scriptFilePath)));
+            fileSystemUtilsMock.Verify(v => v.SaveStringToDisk(It.IsAny<string>(), It.Is<string>(s => s == scriptSourceFilePath)), Times.Once);
+        }
+        
     }
 
 
