@@ -58,8 +58,10 @@
     <Compile Include="CommandTests\GetInputConfiguration_Tests.cs" />
     <Compile Include="CommandTests\SaveInputConfiguration_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProviderTests\AppConfigProvider_Tests.cs" />
     <Compile Include="ProviderTests\FileStorageProvider_Tests.cs" />
     <Compile Include="ProviderTests\InputConfigProvider_Tests.cs" />
+    <Compile Include="ProviderTests\SystemProvider_Tests.cs" />
     <Compile Include="TestFactory.cs" />
   </ItemGroup>
   <ItemGroup>

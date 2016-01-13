@@ -17,7 +17,6 @@ namespace KeySndr.Base.Tests.CommandTests
         private IInputConfigProvider inputConfigProvider;
         private IAppConfigProvider appConfigProvider;
         private IStorageProvider storageProvider;
-        private IFileSystemUtils fileSystemUtils;
 
         private Mock<IInputConfigProvider> inputConfigProviderMock;
         private Mock<IAppConfigProvider> appConfigProviderMock;
@@ -25,7 +24,6 @@ namespace KeySndr.Base.Tests.CommandTests
         private Mock<IFileSystemUtils> fileSystemUtilsMock;
 
         private SaveInputConfiguration cmd;
-
         private InputConfiguration newConfiguration;
         private InputConfiguration oldConfiguration;
 
@@ -34,10 +32,8 @@ namespace KeySndr.Base.Tests.CommandTests
         {
             fileSystemUtilsMock = new Mock<IFileSystemUtils>();
             fileSystemUtilsMock.Setup(f => f.DirectoryExists(It.IsAny<string>())).Returns(true);
-            fileSystemUtils = fileSystemUtilsMock.Object;
 
             inputConfigProviderMock = new Mock<IInputConfigProvider>();
-            
             inputConfigProvider = inputConfigProviderMock.Object;
 
             appConfigProviderMock = new Mock<IAppConfigProvider>();
@@ -93,8 +89,6 @@ namespace KeySndr.Base.Tests.CommandTests
             newConfiguration.View = "view";
             cmd = new SaveInputConfiguration(storageProvider, appConfigProvider, inputConfigProvider, newConfiguration);
             cmd.Execute();
-            var result = cmd.Result;
-
             storageProviderMock.Verify(v => v.CreateViewFolder(It.Is<string>(s => s == newConfiguration.View)));
         }
     }
