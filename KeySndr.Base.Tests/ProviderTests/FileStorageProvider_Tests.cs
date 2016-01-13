@@ -1,5 +1,6 @@
 ﻿using System;
 using KeySndr.Base.Providers;
+using KeySndr.Common;
 using Moq;
 using NUnit.Framework;
 
@@ -55,6 +56,45 @@ namespace KeySndr.Base.Tests.ProviderTests
             provider.SaveInputConfiguration(c);
         }
 
+        [Test]
+        public void CreateViewFolder_CreatesFolder()
+        {
+            const string path = "path";
+            fileSystemUtilsMock.Setup(f => f.DirectoryExists(It.IsAny<string>())).Returns(false);
+            provider.CreateViewFolder(path);
+            fileSystemUtilsMock.Verify(f => f.DirectoryExists(It.IsAny<string>()), Times.Once);
+            fileSystemUtilsMock.Verify(f => f.CreateDirectory(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public void UpdateInputConfiguration_MovesFilesIfTheyDontExistAndSaves()
+        {
+            var newConfig = TestFactory.CreateTestInputConfiguration();
+            newConfig.FileName = "Path1";
+            var oldConfig = TestFactory.CreateTestInputConfiguration();
+            oldConfig.FileName = "Path2";
+
+            fileSystemUtilsMock.Setup(f => f.FileExists(It.Is<string>(s => s.EndsWith(newConfig.FileName)))).Returns(false);
+            fileSystemUtilsMock.Setup(f => f.FileExists(It.Is<string>(s => s.EndsWith(oldConfig.FileName)))).Returns(true);
+            provider.UpdateInputConfiguration(newConfig, oldConfig);
+            fileSystemUtilsMock.Verify(f => f.MoveFile(It.Is<string>(s => s.EndsWith(oldConfig.FileName)), It.Is<string>(s => s.EndsWith(newConfig.FileName))), Times.Once);
+            fileSystemUtilsMock.Verify(f => f.SaveObjectToDisk(It.Is<InputConfiguration>(i => i.Id == newConfig.Id), It.Is<string>(v => v.EndsWith(newConfig.FileName))));
+        }
+
+        [Test]
+        public void UpdateInputConfiguration_DoesNotMovesFilesIfTheyDontExistAndSaves()
+        {
+            var newConfig = TestFactory.CreateTestInputConfiguration();
+            newConfig.FileName = "Path1";
+            var oldConfig = TestFactory.CreateTestInputConfiguration();
+            oldConfig.FileName = "Path2";
+
+            fileSystemUtilsMock.Setup(f => f.FileExists(It.Is<string>(s => s.EndsWith(newConfig.FileName)))).Returns(false);
+            fileSystemUtilsMock.Setup(f => f.FileExists(It.Is<string>(s => s.EndsWith(oldConfig.FileName)))).Returns(false);
+            provider.UpdateInputConfiguration(newConfig, oldConfig);
+            fileSystemUtilsMock.Verify(f => f.MoveFile(It.Is<string>(s => s.EndsWith(oldConfig.FileName)), It.Is<string>(s => s.EndsWith(newConfig.FileName))), Times.Never);
+            fileSystemUtilsMock.Verify(f => f.SaveObjectToDisk(It.Is<InputConfiguration>(i => i.Id == newConfig.Id), It.Is<string>(v => v.EndsWith(newConfig.FileName))));
+        }
         /*[Test]
         public void SaveInputConfiguration_CreatesDirectoryForViewIfNotExist()
         {

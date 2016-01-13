@@ -39,6 +39,10 @@ namespace KeySndr.Base.Commands
 
             try
             {
+                if (config.HasView)
+                {
+                    // TODO: Remove view folder and files
+                }
                 storageProvider.RemoveInputConfiguration(config);
                 inputConfigProvider.Remove(config);
                 Result = new ApiResult<Object>

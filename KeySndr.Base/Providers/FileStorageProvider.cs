@@ -43,17 +43,7 @@ namespace KeySndr.Base.Providers
                 FileSystemUtils.CreateDirectory(path);
         }
 
-        public virtual void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o)
-        {
-            if (!HasFileNameChanged(n.FileName, o.FileName))
-            {
-                SaveInputConfiguration(n);
-                return;
-            }
-            UpdateInputConfigurationFile(n, o);
-        }
-
-        protected virtual void UpdateInputConfigurationFile(InputConfiguration n, InputConfiguration o)
+        public void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o)
         {
             var path = AppConfigProvider.AppConfig.ConfigFolder;
             var oldConfigPath = Path.Combine(path, o.FileName);
@@ -62,8 +52,6 @@ namespace KeySndr.Base.Providers
                 FileSystemUtils.MoveFile(oldConfigPath, newConfigPath);
             FileSystemUtils.SaveObjectToDisk(n, newConfigPath);
         }
-
-        
 
         public void SaveScript(InputScript s)
         {
