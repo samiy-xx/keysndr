@@ -58,11 +58,11 @@ namespace KeySndr.Base.Providers
             };
         }
 
-        protected void CreateSourceFilesDirectoryIfNotExists(InputScript s)
+        /*protected void CreateSourceFilesDirectoryIfNotExists(InputScript s)
         {
             if (!HasSourceFilesDirectory(s))
                 CreateSourceFilesDirectory(s);
-        }
+        }*/
         
         protected bool SourceFileExists(InputScript s, string f)
         {

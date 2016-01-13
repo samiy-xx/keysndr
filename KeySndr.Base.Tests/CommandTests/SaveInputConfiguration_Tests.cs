@@ -52,7 +52,7 @@ namespace KeySndr.Base.Tests.CommandTests
             {
                 FileName = "test.json"
             };
-            oldConfiguration = newConfiguration;
+            oldConfiguration = TestFactory.Copy(newConfiguration);
             oldConfiguration.FileName = "test2.json";
         }
 
@@ -74,8 +74,7 @@ namespace KeySndr.Base.Tests.CommandTests
         [Test]
         public void UpdatingExistingConfiguration()
         {
-            //inputConfigProviderMock.Setup(i => i.Configs).Returns(new List<InputConfiguration> {oldConfiguration});
-            inputConfigProvider.AddOrUpdate(oldConfiguration);
+            inputConfigProviderMock.Setup(i => i.Configs).Returns(new List<InputConfiguration> {oldConfiguration});
             cmd = new SaveInputConfiguration(storageProvider, appConfigProvider, inputConfigProvider, newConfiguration);
             cmd.Execute();
             var result = cmd.Result;
@@ -83,8 +82,20 @@ namespace KeySndr.Base.Tests.CommandTests
             Assert.IsTrue(result.Success);
             inputConfigProviderMock.Verify(i => i.Configs, Times.Once);
             inputConfigProviderMock.Verify(i => i.AddOrUpdate(It.IsAny<InputConfiguration>()), Times.AtLeastOnce);
-            storageProviderMock.Verify(s => s.SaveInputConfiguration(It.IsAny<InputConfiguration>()), Times.Once);
+            storageProviderMock.Verify(s => s.SaveInputConfiguration(It.IsAny<InputConfiguration>()), Times.Never);
             storageProviderMock.Verify(s => s.UpdateInputConfiguration(It.IsAny<InputConfiguration>(), It.IsAny<InputConfiguration>()), Times.Once);
+        }
+
+        [Test]
+        public void CreatesViewFolder()
+        {
+            inputConfigProviderMock.Setup(i => i.Configs).Returns(new List<InputConfiguration>());
+            newConfiguration.View = "view";
+            cmd = new SaveInputConfiguration(storageProvider, appConfigProvider, inputConfigProvider, newConfiguration);
+            cmd.Execute();
+            var result = cmd.Result;
+
+            storageProviderMock.Verify(v => v.CreateViewFolder(It.Is<string>(s => s == newConfiguration.View)));
         }
     }
 }

@@ -97,18 +97,6 @@ namespace KeySndr.Base.Providers
             UpdateScriptFile(n, o);
         }
 
-        public void SaveScriptSource(InputScript script, string fileName, string source)
-        {
-            var scriptsPath = AppConfigProvider.AppConfig.ScriptsFolder;
-            var sourcePath = Path.Combine(scriptsPath, script.Name, fileName);
-            FileSystemUtils.SaveStringToDisk(source, sourcePath);
-        }
-
-        private bool HasFileNameChanged(string n, string o)
-        {
-            return !n.Equals(o);
-        }
-
         private void UpdateScriptDirectory(InputScript n, InputScript o)
         {
             var path = AppConfigProvider.AppConfig.ScriptsFolder;
@@ -127,6 +115,22 @@ namespace KeySndr.Base.Providers
                 FileSystemUtils.MoveFile(oldScriptPath, newScriptPath);
             FileSystemUtils.SaveObjectToDisk(n, newScriptPath);
         }
+
+        public void SaveScriptSource(InputScript script, string fileName, string source)
+        {
+            var scriptsPath = AppConfigProvider.AppConfig.ScriptsFolder;
+            var sourcePath = Path.Combine(scriptsPath, script.Name, fileName);
+            FileSystemUtils.SaveStringToDisk(source, sourcePath);
+        }
+
+        private bool HasFileNameChanged(string n, string o)
+        {
+            return !n.Equals(o);
+        }
+
+        
+
+        
 
         
 

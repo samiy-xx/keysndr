@@ -39,6 +39,20 @@ namespace KeySndr.Base.Tests
             };
         }
 
+        public static InputConfiguration Copy(InputConfiguration c)
+        {
+            return new InputConfiguration
+            {
+                Actions = c.Actions,
+                FileName = c.FileName,
+                Id = c.Id,
+                Name = c.Name,
+                ProcessName = c.ProcessName,
+                UseDesktopWindow = c.UseDesktopWindow,
+                UseForegroundWindow = c.UseForegroundWindow,
+                View = c.View
+            };
+        }
         public static InputScript CreateTestInputScript()
         {
             return new InputScript

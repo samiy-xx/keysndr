@@ -9,11 +9,12 @@ namespace KeySndr.Base.Providers
     {
         private readonly List<InputConfiguration> configs;
         public IEnumerable<InputConfiguration> Configs => configs;
-        private IStorageProvider storageProvider;
+        private readonly IStorageProvider storageProvider;
 
         public InputConfigProvider()
-            : this(ObjectFactory.GetProvider<IStorageProvider>())
         {
+            configs = new List<InputConfiguration>();
+            storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
         }
 
         public InputConfigProvider(IStorageProvider p)
