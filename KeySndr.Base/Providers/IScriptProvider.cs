@@ -10,6 +10,7 @@ namespace KeySndr.Base.Providers
         void AddScript(InputScript script, bool createContext);
         void AddOrUpdate(InputScript script, bool createContext);
         void RemoveScript(InputScript script);
+        IScriptContext Create(InputScript script);
         IEnumerable<InputScript> Scripts { get; }
         IEnumerable<IScriptContext> Contexts { get; }
         IScriptContext GetContext(InputScript script);

@@ -61,6 +61,7 @@
     <Compile Include="ProviderTests\AppConfigProvider_Tests.cs" />
     <Compile Include="ProviderTests\FileStorageProvider_Tests.cs" />
     <Compile Include="ProviderTests\InputConfigProvider_Tests.cs" />
+    <Compile Include="ProviderTests\ScriptProvider_Tests.cs" />
     <Compile Include="ProviderTests\SystemProvider_Tests.cs" />
     <Compile Include="TestFactory.cs" />
   </ItemGroup>

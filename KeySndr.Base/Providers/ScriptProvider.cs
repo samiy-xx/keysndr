@@ -67,6 +67,9 @@ namespace KeySndr.Base.Providers
                 if (scripts.Contains(script))
                     scripts.Remove(script);
             }
+            var ctx = GetContext(script);
+            if (ctx != null)
+                RemoveContext(ctx);
         }
 
         public IScriptContext Create(InputScript script)
