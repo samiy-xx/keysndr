@@ -17,7 +17,6 @@ namespace KeySndr.Base.Middleware
                 context.Response.StatusCode = 301;
                 context.Response.Headers.Set("Location", PortalRedirect);
             }
-            
             await Next.Invoke(context);
         }
     }

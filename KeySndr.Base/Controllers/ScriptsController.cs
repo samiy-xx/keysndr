@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using KeySndr.Base.Commands;
 using KeySndr.Base.Domain;
+using KeySndr.Base.Dto;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 

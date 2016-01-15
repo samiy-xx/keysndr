@@ -41,6 +41,7 @@ namespace KeySndr.Base.Domain
             : this()
         {
             Script = script;
+            Script.Context = this;
             Expose();
         }
 

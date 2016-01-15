@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KeySndr.Base.Domain;
 using Newtonsoft.Json;
 
-namespace KeySndr.Base.Domain
+namespace KeySndr.Base.Dto
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class SaveSourceRequest

@@ -2,7 +2,7 @@
 
 namespace KeySndr.Base.Domain
 {
-    public class AssembyInfo
+    public class AssemblyInfo
     {
         public static Version GetAssemblyVersion(Type a)
         {

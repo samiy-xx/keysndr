@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KeySndr.Base.Domain;
 using KeySndr.Base.Providers;
+using Moq;
 using NUnit.Framework;
 
 namespace KeySndr.Base.Tests.ProviderTests
@@ -12,11 +14,16 @@ namespace KeySndr.Base.Tests.ProviderTests
     public class ScriptProvider_Tests
     {
         private IScriptProvider provider;
+        private Mock<IStorageProvider> storageProviderMock;
+        private IStorageProvider storageProvider;
 
         [SetUp]
         public void Setup()
         {
-            provider = new ScriptProvider();    
+            storageProviderMock = new Mock<IStorageProvider>();
+            storageProviderMock.Setup(s => s.LoadInputScripts()).Returns(SetTestScripts);
+            storageProvider = storageProviderMock.Object;
+            provider = new ScriptProvider(storageProvider);    
         }
 
         [Test]
@@ -116,13 +123,32 @@ namespace KeySndr.Base.Tests.ProviderTests
         }
 
         [Test]
-        public void RemoveContext_RemovesContext()
+        public void Clear_ClearsLists()
         {
             var s1 = TestFactory.CreateTestInputScript();
             var s2 = TestFactory.CreateTestInputScript();
             provider.AddScript(s1, true);
             provider.AddScript(s2, true);
-            //provider.Re;
+           
+            provider.Clear();
+            Assert.AreEqual(0, provider.Contexts.Count());
+            Assert.AreEqual(0, provider.Scripts.Count());
         }
+
+        [Test]
+        public void Prepare_LoadsScriptsAndRunsThem()
+        {
+            provider.Prepare().Wait(11000);
+            Assert.AreEqual(2, provider.Scripts.Count());
+        }
+
+        private IEnumerable<InputScript> SetTestScripts()
+        {
+            return new List<InputScript>
+            {
+                TestFactory.CreateTestInputScript(),
+                TestFactory.CreateTestInputScript()
+            };
+        } 
     }
 }

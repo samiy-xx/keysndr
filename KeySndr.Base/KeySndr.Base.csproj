@@ -148,10 +148,10 @@
     <Compile Include="Domain\InputScript.cs" />
     <Compile Include="Domain\ISciptContext.cs" />
     <Compile Include="Domain\JintSciptingContext.cs" />
-    <Compile Include="Domain\SaveSourceRequest.cs" />
-    <Compile Include="Domain\ScriptInputParameter.cs" />
+    <Compile Include="Dto\SaveSourceRequest.cs" />
+    <Compile Include="Dto\ScriptInputParameter.cs" />
     <Compile Include="Domain\SourceFile.cs" />
-    <Compile Include="Domain\GetSourceRequest.cs" />
+    <Compile Include="Dto\GetSourceRequest.cs" />
     <Compile Include="Exceptions\DataFolderDoesNotExistException.cs" />
     <Compile Include="Exceptions\ScriptException.cs" />
     <Compile Include="FileSystemUtils.cs" />

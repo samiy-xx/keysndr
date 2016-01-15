@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using KeySndr.Base.Domain;
+using Newtonsoft.Json;
 
-namespace KeySndr.Base.Domain
+namespace KeySndr.Base.Dto
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class GetSourceRequest

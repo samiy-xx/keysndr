@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KeySndr.Base.Domain;
+using KeySndr.Base.Dto;
 using KeySndr.Common;
 
 namespace KeySndr.Base.Tests
@@ -74,7 +75,7 @@ namespace KeySndr.Base.Tests
                     new SourceFile
                     {
                         CanExecute = false,
-                        Contents = "Content",
+                        Contents = "function execute() {}",
                         Error = string.Empty,
                         FileName = "script.js",
                         IsValid = false,

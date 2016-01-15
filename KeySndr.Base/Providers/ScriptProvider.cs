@@ -10,7 +10,7 @@ namespace KeySndr.Base.Providers
     {
         private readonly List<InputScript> scripts;
         private readonly List<IScriptContext> contexts;
-
+        private readonly IStorageProvider storageProvider;
         public IEnumerable<InputScript> Scripts => scripts;
         public IEnumerable<IScriptContext> Contexts => contexts;
 
@@ -18,6 +18,14 @@ namespace KeySndr.Base.Providers
         {
             scripts = new List<InputScript>();
             contexts = new List<IScriptContext>();
+            storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
+        }
+
+        public ScriptProvider(IStorageProvider p)
+        {
+            scripts = new List<InputScript>();
+            contexts = new List<IScriptContext>();
+            storageProvider = p;
         }
 
         public void AddScript(InputScript script, bool createContext = false)
@@ -124,7 +132,6 @@ namespace KeySndr.Base.Providers
 
         public async Task Prepare()
         {
-            var storageProvider = ObjectFactory.GetProvider<IStorageProvider>();
             Clear();
 
             await Task.Run(async () =>

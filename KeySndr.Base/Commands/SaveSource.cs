@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using KeySndr.Base.Domain;
+using KeySndr.Base.Dto;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 

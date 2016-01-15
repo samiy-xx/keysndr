@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using KeySndr.Base.Dto;
 using KeySndr.Base.Providers;
 using Newtonsoft.Json;
 
@@ -28,8 +29,7 @@ namespace KeySndr.Base.Domain
         public bool HasSourceFiles => SourceFiles.Count > 0;
         public bool IsValid { get; set; }
         public List<string> Errors { get; private set; }
-
-        public IScriptContext Context => ObjectFactory.GetProvider<IScriptProvider>().GetContext(this);
+        public IScriptContext Context { get; set; }
 
         public InputScript()
         {

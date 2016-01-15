@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace KeySndr.Base.Domain
+namespace KeySndr.Base.Dto
 {
     public class ScriptInputParameter
     {

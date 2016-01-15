@@ -29,8 +29,8 @@ namespace KeySndr.Win
 
         private void WriteWelcome()
         {
-            AddEntry("KeySndr Win version " + AssembyInfo.GetAssemblyVersion(typeof(Form1)).ToString());
-            AddEntry("KeySndr Base version " + AssembyInfo.GetAssemblyVersion(typeof(KeySndrApp)).ToString());
+            AddEntry("KeySndr Win version " + AssemblyInfo.GetAssemblyVersion(typeof(Form1)).ToString());
+            AddEntry("KeySndr Base version " + AssemblyInfo.GetAssemblyVersion(typeof(KeySndrApp)).ToString());
 
             var appConfigProvider = ObjectFactory.GetProvider<IAppConfigProvider>();
             var appConfig = appConfigProvider.AppConfig;
@@ -39,8 +39,8 @@ namespace KeySndr.Win
 
         private void SetupInterface()
         {
-            Text += $" {AssembyInfo.GetAssemblyVersion(typeof (Form1))}";
-            Text += $" (Base lib {AssembyInfo.GetAssemblyVersion(typeof (KeySndrApp))})";
+            Text += $" {AssemblyInfo.GetAssemblyVersion(typeof (Form1))}";
+            Text += $" (Base lib {AssemblyInfo.GetAssemblyVersion(typeof (KeySndrApp))})";
         }
 
         private void SetupLogging()

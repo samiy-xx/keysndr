@@ -11,7 +11,7 @@ namespace KeySndr.Base.Commands
         {
             Result = new ApiResult<string>
             {
-                Content = AssembyInfo.GetAssemblyVersion(typeof(KeySndrApp)).ToString(),
+                Content = AssemblyInfo.GetAssemblyVersion(typeof(KeySndrApp)).ToString(),
                 Message = "OK",
                 Success = true
             };

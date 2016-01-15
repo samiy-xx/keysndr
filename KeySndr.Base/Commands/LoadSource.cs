@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using KeySndr.Base.Domain;
+using KeySndr.Base.Dto;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
 
