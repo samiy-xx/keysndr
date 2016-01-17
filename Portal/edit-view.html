@@ -103,14 +103,7 @@
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
                                 </button>
                             </div>
-                            <div class="btn-group" role="group">
-                                <button
-                                    type="button"
-                                    class="btn btn-default"
-                                    data-ng-click="exportConfiguration()">
-                                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
-                                </button>
-                            </div>
+                            
                             <div class="btn-group" role="group">
                                 <button
                                     type="button"
@@ -131,21 +124,22 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" id="heading_first_{{ $index }}">
                                     <div class="btn-group pull-right">
+
+                                        <a href="#"
+                                           title="Edit"
+                                           class="btn btn-primary btn-xs"
+                                           data-ng-click="setForEdit(action)">
+                                            <span class="glyphicon glyphicon-paste" aria-hidden="true">&nbsp;Edit</span>
+                                        </a>
                                         <a href="#"
                                            title="Remove"
                                            class="btn btn-danger btn-xs"
                                            data-ng-click="deleteAction($index)">
                                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         </a>
-                                        <a href="#"
-                                           title="Edit"
-                                           class="btn btn-primary btn-xs"
-                                           data-ng-click="setForEdit(action)">
-                                            <span class="glyphicon glyphicon-paste" aria-hidden="true"></span>
-                                        </a>
                                     </div>
                                     <a role="button" data-toggle="collapse" data-parent="#accordion_first" data-target="#collapse_first_{{ $index }}" aria-expanded="true" aria-controls="collapse_first_{{ $index }}">
-                                        <h4 class="panel-title">Action {{ action.name }}</h4>
+                                        <h4 class="panel-title">{{ action.name }}&nbsp;</h4>
                                     </a>
                                 </div>
                                 <div id="collapse_first_{{ $index }}" class="panel-collapse collapse" data-ng-class="$index == 0 ? 'in' : ''" role="tabpanel" aria-labelledby="heading_first_{{ $index }}">

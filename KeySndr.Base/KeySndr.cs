@@ -97,15 +97,14 @@ namespace KeySndr.Base
                 ObjectFactory.AddProvider(provider);
             }
             ObjectFactory.AddProvider(new AppConfigProvider());
-            ObjectFactory.AddProvider(new ScriptProvider());
-            
-            ObjectFactory.AddProvider(new SystemProvider());
         }
 
         private void RegisterProvidersAfterAppConfig()
         {
             ObjectFactory.AddProvider(new FileStorageProvider());
             ObjectFactory.AddProvider(new InputConfigProvider());
+            ObjectFactory.AddProvider(new ScriptProvider());
+            ObjectFactory.AddProvider(new SystemProvider());
         }
 
         private void LoadAppConfig()
@@ -113,6 +112,7 @@ namespace KeySndr.Base
             ObjectFactory.GetProvider<ILoggingProvider>().Debug("Loading App Config");
             var fs = new FileSystemUtils();
             var acp = ObjectFactory.GetProvider<IAppConfigProvider>();
+            
             var config = fs.LoadAppConfiguration();
             acp.AppConfig = config ?? new AppConfig();
             appConfig = acp.AppConfig;

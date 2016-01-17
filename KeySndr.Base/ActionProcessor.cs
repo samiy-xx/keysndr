@@ -7,24 +7,29 @@ namespace KeySndr.Base
     public class ActionProcessor : IActionProcessor
     {
         private bool hasProcess;
-        private readonly InputActionExecutionContainer container;
+        public InputActionExecutionContainer Container { get; set; }
 
-        public ActionProcessor(InputActionExecutionContainer c)
+        public ActionProcessor()
         {
             hasProcess = false;
-            container = c;
+        }
+
+        public ActionProcessor(InputActionExecutionContainer c)
+            : this()
+        {
+            Container = c;
         }
 
         public async Task Process()
         {
             if (!hasProcess)
                 SetTargetProcess();
-            await Sender.Send(container);
+            await Sender.Send(Container);
         }
 
         private void SetTargetProcess()
         {
-            if (container.UseForegroundWindow)
+            if (Container.UseForegroundWindow)
             {
                 var ptr = WindowsApi.GetForegroundWindow();
                 if (ptr != IntPtr.Zero)
@@ -35,7 +40,7 @@ namespace KeySndr.Base
                 }
             }
 
-            if (!hasProcess && container.UseDesktop)
+            if (!hasProcess && Container.UseDesktop)
             {
                 var ptr = WindowsApi.GetDesktopWindow();
                 if (ptr != IntPtr.Zero)
@@ -47,9 +52,9 @@ namespace KeySndr.Base
                 }
             }
 
-            if (hasProcess || string.IsNullOrEmpty(container.ProcessName))
+            if (hasProcess || string.IsNullOrEmpty(Container.ProcessName))
                 return;
-            var process = WinUtils.GetProcessByName(container.ProcessName);
+            var process = WinUtils.GetProcessByName(Container.ProcessName);
             if (process == null)
                 return;
             

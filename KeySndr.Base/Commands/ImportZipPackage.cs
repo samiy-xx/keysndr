@@ -75,10 +75,9 @@ namespace KeySndr.Base.Commands
                 zipEntry.Extract(stream);
                 stream.Seek(0, SeekOrigin.Begin);
                 var reader = new StreamReader(stream);
-                InputScript script;
                 if (zipEntry.FileName.EndsWith(".script"))
                 {
-                    script = JsonSerializer.Deserialize<InputScript>(reader.ReadToEnd());
+                    var script = JsonSerializer.Deserialize<InputScript>(reader.ReadToEnd());
                     listOut.Add(script);
                 }
             }

@@ -33,6 +33,9 @@ namespace KeySndr.Base.Domain
         [JsonProperty("firstTimeRunning")]
         public bool FirstTimeRunning { get; set; }
 
+        [JsonProperty("defaultKeyDownMs")]
+        public int DefaultKeyDownMs { get; set; }
+
         public IntPtr ProcessNumber { get; set; }
         public string ConfigFolder => $@"{DataFolder}\{KeySndrApp.ConfigurationsFolderName}";
         public string ScriptsFolder => $@"{DataFolder}\{KeySndrApp.ScriptsFolderName}";
@@ -50,6 +53,7 @@ namespace KeySndr.Base.Domain
             DataFolder = string.Empty;
             EnableKeyboardAndMouse = false;
             FirstTimeRunning = true;
+            DefaultKeyDownMs = 200;
         }
 
         public AppConfig CopyFrom(AppConfig c)
@@ -62,6 +66,7 @@ namespace KeySndr.Base.Domain
             DataFolder = c.DataFolder;
             EnableKeyboardAndMouse = c.EnableKeyboardAndMouse;
             FirstTimeRunning = c.FirstTimeRunning;
+            DefaultKeyDownMs = c.DefaultKeyDownMs;
             return this;
         }
     }

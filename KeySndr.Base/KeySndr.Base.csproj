@@ -184,6 +184,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="WindowsApi.cs" />
     <Compile Include="WinUtils.cs" />
+    <Compile Include="Zipper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Portal\fonts\glyphicons-halflings-regular.eot">

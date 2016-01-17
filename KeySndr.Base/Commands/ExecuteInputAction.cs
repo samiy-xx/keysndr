@@ -9,10 +9,19 @@ namespace KeySndr.Base.Commands
     {
         public ApiResult<Object> Result { get; private set; }
         private readonly InputActionExecutionContainer actionContainer;
+        private readonly IActionProcessor processor;
 
         public ExecuteInputAction(InputActionExecutionContainer c)
         {
             actionContainer = c;
+            processor = new ActionProcessor(actionContainer);
+        }
+
+        public ExecuteInputAction(IActionProcessor p, InputActionExecutionContainer c)
+        {
+            actionContainer = c;
+            processor = p;
+            p.Container = actionContainer;
         }
 
         public async Task Execute()
@@ -21,7 +30,7 @@ namespace KeySndr.Base.Commands
             {
                 try
                 {
-                    await new ActionProcessor(actionContainer).Process();
+                    await processor.Process();
                     Result = new ApiResult<object>
                     {
                         Content = "empty",

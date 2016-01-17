@@ -25,6 +25,20 @@ namespace KeySndr.Base.Tests
             };
         }
 
+        public static InputAction CreateTestInputAction()
+        {
+            return new InputAction
+            {
+                Color = "#ffffff",
+                IsEnabled = true,
+                IsTarget = false,
+                MouseSequences = new List<MouseSequenceItem>(),
+                Name = "action",
+                Sequences = new List<SequenceItem>(),
+                ScriptSequences = new List<ScriptSequenceItem>(),
+                TextColor = "#000000"
+            };
+        }
         public static InputConfiguration CreateTestInputConfiguration()
         {
             return new InputConfiguration

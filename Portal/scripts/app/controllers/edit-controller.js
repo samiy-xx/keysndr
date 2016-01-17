@@ -170,7 +170,7 @@
                 return;
 
             scope.currentAction.sequences.push({
-                "keepdown": 0,
+                "keepdown": scope.appSettings.defaultKeyDownMs,
                 "modifiers": [],
                 "winmodifiers": [],
                 "entry": {}

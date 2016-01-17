@@ -90,7 +90,7 @@ namespace KeySndr.Common
             var l = new List<InputAction>();
             for (var i = 0; i < max; i++)
             {
-                l.Add(new InputAction());
+                l.Add(new InputAction() {IsEnabled = true});
             }
             return l;
         }
