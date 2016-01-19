@@ -14,3 +14,7 @@
 .panel-body > div {
     margin: 5px;
 }
+.input-group-addon {
+    min-width:150px;
+    text-align:left;
+}

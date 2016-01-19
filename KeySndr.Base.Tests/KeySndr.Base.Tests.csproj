@@ -52,12 +52,14 @@
     <Compile Include="CommandTests\GenerateInputAction_Tests.cs" />
     <Compile Include="CommandTests\GenerateInputConfiguration_Tests.cs" />
     <Compile Include="CommandTests\GenerateScript_Tests.cs" />
+    <Compile Include="CommandTests\GetAllInputConfigurationItems_Tests.cs" />
     <Compile Include="CommandTests\GetAllInputConfigurations_Tests.cs" />
     <Compile Include="CommandTests\GetAllScriptObjects_Tests.cs" />
     <Compile Include="CommandTests\GetAllScripts_Tests.cs" />
     <Compile Include="CommandTests\GetAppSettings_Tests.cs" />
     <Compile Include="CommandTests\GetAssemblyVersion_Tests.cs" />
     <Compile Include="CommandTests\GetInputConfiguration_Tests.cs" />
+    <Compile Include="CommandTests\GetLegacyConfigurations_Tests.cs" />
     <Compile Include="CommandTests\GetProcessNames_Tests.cs" />
     <Compile Include="CommandTests\ImportZipPackage_Tests.cs" />
     <Compile Include="CommandTests\SaveInputConfiguration_Tests.cs" />
