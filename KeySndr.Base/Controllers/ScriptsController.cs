@@ -86,7 +86,7 @@ namespace KeySndr.Base.Controllers
         [HttpPost]
         public ApiResult<string> LoadSource(GetSourceRequest request)
         {
-            var cmd = new LoadSource(scriptProvider, storageProvider, request);
+            var cmd = new LoadSource(scriptProvider, request);
             cmd.Execute();
             return cmd.Result;
         }

@@ -9,13 +9,11 @@ namespace KeySndr.Base.Commands
     {
         public ApiResult<string> Result { get; private set; }
         private readonly IScriptProvider scriptProvider;
-        private readonly IStorageProvider storageProvider;
         private readonly GetSourceRequest request;
 
-        public LoadSource(IScriptProvider s, IStorageProvider t, GetSourceRequest script)
+        public LoadSource(IScriptProvider s, GetSourceRequest script)
         {
             scriptProvider = s;
-            storageProvider = t;
             request = script;
         }
 

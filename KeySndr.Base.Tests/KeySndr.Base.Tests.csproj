@@ -61,7 +61,9 @@
     <Compile Include="CommandTests\GetInputConfiguration_Tests.cs" />
     <Compile Include="CommandTests\GetLegacyConfigurations_Tests.cs" />
     <Compile Include="CommandTests\GetProcessNames_Tests.cs" />
+    <Compile Include="CommandTests\GetViewConfigurations_Tests.cs" />
     <Compile Include="CommandTests\ImportZipPackage_Tests.cs" />
+    <Compile Include="CommandTests\LoadSource_Tests.cs" />
     <Compile Include="CommandTests\SaveInputConfiguration_Tests.cs" />
     <Compile Include="DomainTests\AppConfig_Tests.cs" />
     <Compile Include="DomainTests\AssemblyInfo_Tests.cs" />
