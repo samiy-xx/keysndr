@@ -8,16 +8,14 @@ namespace KeySndr.Base.Commands
     {
         private readonly IInputConfigProvider inputConfigProvider;
         private readonly IStorageProvider storageProvider;
-        private readonly IAppConfigProvider appConfigProvider;
         private readonly string configName;
 
         public ApiResult<Object> Result { get; private set; }
 
-        public RemoveInputConfiguration(IInputConfigProvider p, IStorageProvider f, IAppConfigProvider a, string name)
+        public RemoveInputConfiguration(IInputConfigProvider p, IStorageProvider f, string name)
         {
             inputConfigProvider = p;
             storageProvider = f;
-            appConfigProvider = a;
             configName = name;
         }
 

@@ -96,7 +96,7 @@ namespace KeySndr.Base.Controllers
         [HttpDelete]
         public ApiResult<Object> RemoveConfiguration(string name)
         {
-            var cmd = new RemoveInputConfiguration(inputConfigProvider, storageProvider, appConfigProvider, name);
+            var cmd = new RemoveInputConfiguration(inputConfigProvider, storageProvider, name);
             cmd.Execute();
             return cmd.Result;
         }
