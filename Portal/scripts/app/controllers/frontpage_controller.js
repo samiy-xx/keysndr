@@ -5,6 +5,8 @@
     function FrontPageController(scope, service) {
         scope.availableViewConfigurations = null;
         scope.availableLegacyConfigurations = null;
+        scope.newGridRows = 1;
+        scope.newGridColumns = 1;
 
         scope.getLegacyConfigurations = function() {
             service.getLegacyConfigurations().then(function(response) {
@@ -40,7 +42,7 @@
         }
 
         scope.createGrid = function() {
-            window.location.href = "edit-grid.html";
+            window.location.href = "edit-grid.html?rows="+ scope.newGridRows + "&columns=" + scope.newGridColumns;
         }
 
         scope.editGrid = function (index) {

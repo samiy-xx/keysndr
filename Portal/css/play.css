@@ -63,9 +63,8 @@ td {
     text-align:center; 
     vertical-align:middle;
     overflow: hidden;
-    -moz-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+    -ms-text-overflow: clip;
+    text-overflow: clip;
     white-space: nowrap;
     word-break: break-all;
     word-wrap: break-word;

@@ -6,10 +6,6 @@ namespace KeySndr.Base.Commands
     {
         public ApiResult<InputAction> Result { get; private set; }
 
-        public GenerateInputAction()
-        {
-        }
-
         public void Execute()
         {
             Result = new ApiResult<InputAction>

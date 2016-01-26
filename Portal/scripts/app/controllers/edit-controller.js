@@ -219,7 +219,7 @@
             scope.currentAction = a;
         }
 
-        scope.init = function (count) {
+        scope.init = function (count, callback) {
             var s = $location.search();
             if (s !== null && s !== undefined && s.hasOwnProperty("name")) {
                 service.getConfiguration(s.name).then(function (response) {
@@ -234,6 +234,8 @@
                         scope.inputConfiguration.useForegroundWindow,
                         scope.inputConfiguration.processName.length > 0
                     );
+                    if (callback !== undefined)
+                        callback();
                 });
             } else {
                 service.getNewConfiguration(count).then(function (response) {
@@ -248,9 +250,12 @@
                         scope.inputConfiguration.useForegroundWindow,
                         scope.inputConfiguration.processName.length > 0
                     );
+                    if (callback !== undefined)
+                        callback();
                 });
             }
 
+            
             service.getAllScripts().then(function (response) {
                 var result = response.data;
                 if (!result.success) {

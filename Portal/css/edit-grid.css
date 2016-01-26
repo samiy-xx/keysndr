@@ -22,8 +22,8 @@ tr {
     
 }
 td {
-    width: 19%;
-    height: 15%;
+    /*width: 19%;
+    height: 15%;*/
     background: #666;
     padding: 10px;
     text-align:center; 

@@ -28,8 +28,10 @@
     <div data-ng-controller="editGridController" style="height: 100%; width: 100%;">
         <div ng-include src="'views/partials/success-message-row.html'"></div>
         <div ng-include src="'views/partials/error-message-row.html'"></div>
-    
-        <div class="row">
+
+        
+
+    <div class="row">
             <div class="col-md-6">
                 <div class="well">
                     <div class="input-group">
@@ -89,12 +91,21 @@
                                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
                             </button>
                         </div>
-                        
+
                         <div class="btn-group" role="group">
                             <button
                                 type="button"
-                                class="btn btn-warning"
-                                data-ng-click="exitConfig()">
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#myModal">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
+                            </button>
+                        </div>
+
+                        <div class="btn-group" role="group">
+                            <button type="button"
+                                    class="btn btn-warning"
+                                    data-ng-click="exitConfig()">
                                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Exit
                             </button>
                         </div>
@@ -105,11 +116,15 @@
         <div class="row" style="height: 80%">
             <div class="col-md-6" style="height: 100%">
                 <table class="grid-table">
-                    <tr data-ng-repeat="row in configuration" class="grid-row">
+                    <tr data-ng-repeat="row in configuration track by $index" class="grid-row">
                         <td class="grid-cell"
-                            data-ng-repeat="col in row"
+                            data-ng-repeat="col in row track by col.id"
                             data-ng-class="{clickable : true}"
-                            data-ng-style="{'background-color': col.color, 'color': col.textColor}"
+                            data-ng-style="{
+                                'background-color': col.color,
+                                'color': col.textColor,
+                                'width': 100/inputConfiguration.gridSettings.columns + '%',
+                                'height': 100/inputConfiguration.gridSettings.rows + '%'}"
                             data-ng-click="setForEdit(col)">
                             {{ col.name }}
                         </td>

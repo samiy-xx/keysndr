@@ -31,6 +31,9 @@ namespace KeySndr.Common
         [DataMember(Name = "useDesktopWindow")]
         public bool UseDesktopWindow { get; set; }
 
+        [DataMember(Name = "gridSettings")]
+        public GridSettings GridSettings { get; set; }
+
         public bool HasView => !string.IsNullOrEmpty(View);
 
         public InputConfiguration()
@@ -42,6 +45,7 @@ namespace KeySndr.Common
             ProcessName = string.Empty;
             UseForegroundWindow = false;
             UseDesktopWindow = false;
+            GridSettings = new GridSettings();
             Actions = new List<InputAction>();
         }
 
@@ -54,6 +58,7 @@ namespace KeySndr.Common
             UseForegroundWindow = false;
             UseDesktopWindow = false;
             Actions = actions;
+            GridSettings = new GridSettings();
             View = string.Empty;
         }
 

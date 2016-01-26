@@ -10,3 +10,15 @@
     padding-top: 10px;
 }
 
+input[type=range] {
+    background-color: #eee;
+}
+.input-group {
+    margin: 10px;
+}
+.input-group > span {
+    min-width: 100px;
+}
+.modal-body > h3 {
+    text-align: center;
+}

@@ -42,6 +42,7 @@
     <Compile Include="BinarySerializer.cs" />
     <Compile Include="ConfigurationListItem.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="GridSettings.cs" />
     <Compile Include="InputAction.cs" />
     <Compile Include="InputActionExecutionContainer.cs" />
     <Compile Include="InputConfiguration.cs" />

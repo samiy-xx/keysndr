@@ -8,6 +8,8 @@
         scope.useDesktopWindow = false;
         scope.useForegroundWindow = true;
         scope.processName = "";
+        scope.columns = 0;
+        scope.rows = 0;
 
         scope.execute = function (action) {
             if (action.sequences.length === 0
@@ -34,18 +36,6 @@
             });
         } 
 
-        function listToMatrix(list, elementsPerSubArray) {
-            var matrix = [], i, k;
-            for (i = 0, k = -1; i < list.length; i++) {
-                if (i % elementsPerSubArray === 0) {
-                    k++;
-                    matrix[k] = [];
-                }
-                matrix[k].push(list[i]);
-            }
-            return matrix;
-        }
-
         function init() {
             var s = location.search();
             if (s !== null && s !== undefined && s.hasOwnProperty("name")) {
@@ -57,10 +47,12 @@
                         return;
                     }
                     var actions = result.content.actions;
+                    scope.columns = result.content.gridSettings.columns;
+                    scope.rows = result.content.gridSettings.rows;
                     scope.processName = result.content.processName;
                     scope.useDesktopWindow = result.content.useDesktopWindow;
                     scope.useForegroundWindow = result.content.useForegroundWindow;
-                    scope.configuration = listToMatrix(actions, 5);
+                    scope.configuration = listToMatrix(scope.rows, scope.columns, actions);
                 });
             }
         }

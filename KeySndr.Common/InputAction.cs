@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace KeySndr.Common
@@ -8,6 +9,9 @@ namespace KeySndr.Common
     {
         private const string BackGroundColor = "#000000";
         private const string ForeGroundColor = "#FFFFFF";
+
+        [DataMember(Name = "id")]
+        public Guid Id { get; set; }
 
         [DataMember(Name = "sequences")]
         public List<SequenceItem> Sequences { get; set; }
@@ -37,6 +41,7 @@ namespace KeySndr.Common
 
         public InputAction()
         {
+            Id = Guid.NewGuid();
             Name = string.Empty;
             IsEnabled = false;
             Color = BackGroundColor;
@@ -49,6 +54,7 @@ namespace KeySndr.Common
 
         public InputAction(string name, List<SequenceItem> sequences)
         {
+            Id = Guid.NewGuid();
             Name = name;
             IsEnabled = true;
             Color = string.Empty;
@@ -59,6 +65,7 @@ namespace KeySndr.Common
 
         public InputAction(string name, List<SequenceItem> sequences, List<ScriptSequenceItem> scripts)
         {
+            Id = Guid.NewGuid();
             Name = name;
             IsEnabled = true;
             Color = string.Empty;
@@ -69,6 +76,7 @@ namespace KeySndr.Common
 
         public InputAction(string name, List<SequenceItem> sequences, List<ScriptSequenceItem> scripts, List<MouseSequenceItem> mouseSequences)
         {
+            Id = Guid.NewGuid();
             Name = name;
             IsEnabled = true;
             Color = string.Empty;
@@ -98,6 +106,24 @@ namespace KeySndr.Common
         public override string ToString()
         {
             return "Input action: " + Name;
+        }
+
+        protected bool Equals(InputAction other)
+        {
+            return Id.Equals(other.Id);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((InputAction) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }
