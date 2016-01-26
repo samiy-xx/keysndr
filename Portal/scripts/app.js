@@ -1,7 +1,7 @@
 ﻿var app = angular.module("keysndr", []);
 
 //For testing
-var node_or_local_filesystem_url_override = true;
+var node_or_local_filesystem_url_override = false;
 var override_url = "http://192.168.0.112:45889/";
 
 app.config(['$locationProvider',
@@ -39,39 +39,6 @@ function listToMatrix(r, c, arr) {
         m.push(arr.slice(i, i + cols));
     }
     return m;
-}
-function listToMatrix4(rows, cols, arr) {
-    var matrix = [];
-    if (rows * cols === arr.length) {
-        for(var i = 0; i < arr.length; i+= cols) {
-            matrix.push(arr.slice(i, cols + i));
-        }
-    }
-    
-    return matrix;
-}
-function listToMatrix3(numrows, numcols, initial){
-    var arr = [];
-    for (var i = 0; i < numrows; ++i){
-        var columns = [];
-        for (var j = 0; j < numcols; ++j){
-            columns[j] = initial[i*j];
-        }
-        arr[i] = columns;
-    }
-    return arr;
-}
-
-function listToMatri2x(list, elementsPerSubArray) {
-    var matrix = [], i, k;
-    for (i = 0, k = -1; i < list.length; i++) {
-        if (i % elementsPerSubArray === 0) {
-            k++;
-            matrix[k] = [];
-        }
-        matrix[k].push(list[i]);
-    }
-    return matrix;
 }
 
 // Prototypes
