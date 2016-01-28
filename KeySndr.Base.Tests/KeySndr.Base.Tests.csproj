@@ -64,8 +64,15 @@
     <Compile Include="CommandTests\GetViewConfigurations_Tests.cs" />
     <Compile Include="CommandTests\ImportZipPackage_Tests.cs" />
     <Compile Include="CommandTests\LoadSource_Tests.cs" />
+    <Compile Include="CommandTests\ReloadSystem_Tests.cs" />
     <Compile Include="CommandTests\RemoveInputConfiguration_Tests.cs" />
+    <Compile Include="CommandTests\RemoveInputScript_Tests.cs" />
     <Compile Include="CommandTests\SaveInputConfiguration_Tests.cs" />
+    <Compile Include="CommandTests\SaveInputScript_Tests.cs" />
+    <Compile Include="CommandTests\SaveSource_Tests.cs" />
+    <Compile Include="CommandTests\StoreAppConfig_Tests.cs" />
+    <Compile Include="CommandTests\ValidateInputScript_Tests.cs" />
+    <Compile Include="CommandTests\ZipPackageForExport_Tests.cs" />
     <Compile Include="DomainTests\AppConfig_Tests.cs" />
     <Compile Include="DomainTests\AssemblyInfo_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -158,6 +158,7 @@
     <Compile Include="IActionProcessor.cs" />
     <Compile Include="IFileSystemUtils.cs" />
     <Compile Include="IntKeysConverter.cs" />
+    <Compile Include="IZipper.cs" />
     <Compile Include="JsUtils\JsTimer.cs" />
     <Compile Include="KeySndr.cs" />
     <Compile Include="Middleware\RedirectUrl.cs" />

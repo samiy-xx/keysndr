@@ -7,7 +7,7 @@ using KeySndr.Common;
 
 namespace KeySndr.Base
 {
-    public class Zipper
+    public class Zipper : IZipper
     {
         private readonly IScriptProvider scriptProvider;
         private readonly IAppConfigProvider appConfigProvider;

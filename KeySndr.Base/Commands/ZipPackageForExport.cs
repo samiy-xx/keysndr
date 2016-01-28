@@ -9,6 +9,8 @@ namespace KeySndr.Base.Commands
         private readonly IScriptProvider scriptProvider;
         private readonly IAppConfigProvider appConfigProvider;
         private readonly string configName;
+        private readonly IZipper zipper;
+
         public MemoryStream Result { get; set; }
 
         public ZipPackageForExport(IInputConfigProvider i, IScriptProvider s, IAppConfigProvider a, string config)
@@ -17,6 +19,16 @@ namespace KeySndr.Base.Commands
             inputConfigProvider = i;
             scriptProvider = s;
             configName = config;
+            zipper = new Zipper(scriptProvider, appConfigProvider);
+        }
+
+        public ZipPackageForExport(IInputConfigProvider i, IScriptProvider s, IAppConfigProvider a, IZipper z, string config)
+        {
+            appConfigProvider = a;
+            inputConfigProvider = i;
+            scriptProvider = s;
+            configName = config;
+            zipper = z;
         }
 
         public void Execute()
@@ -24,8 +36,7 @@ namespace KeySndr.Base.Commands
             var inputConfig = inputConfigProvider.FindConfigForName(configName);
             if (inputConfig == null)
                 return;
-
-            var zipper = new Zipper(scriptProvider, appConfigProvider);
+            
             Result = zipper.Zip(inputConfig);
         }
     }
