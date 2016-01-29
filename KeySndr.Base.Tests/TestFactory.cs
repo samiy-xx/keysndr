@@ -68,6 +68,21 @@ namespace KeySndr.Base.Tests
                 View = c.View
             };
         }
+
+        public static InputScript Copy(InputScript s)
+        {
+            return new InputScript
+            {
+                Context = s.Context,
+                FileName = s.FileName,
+                Id = s.Id,
+                Inputs = s.Inputs,
+                IsValid = s.IsValid,
+                Name = s.Name,
+                SourceFileNames = s.SourceFileNames,
+                SourceFiles = s.SourceFiles
+            };
+        }
         public static InputScript CreateTestInputScript()
         {
             return new InputScript

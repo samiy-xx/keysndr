@@ -42,6 +42,9 @@ namespace KeySndr.Base.Domain
 
         public async Task RunTest()
         {
+            if (Context == null)
+                return;
+
             var ctx = Context;
             ctx.SetTestMode(true);
 

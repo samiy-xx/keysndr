@@ -87,12 +87,6 @@ namespace KeySndr.Base.Providers
 
         public void UpdateScript(InputScript n, InputScript o)
         {
-            if (HasFileNameChanged(n.FileName, o.FileName))
-            {
-                SaveScript(n);
-                return;
-            }
-            
             UpdateScriptDirectory(n, o);
             UpdateScriptFile(n, o);
         }
