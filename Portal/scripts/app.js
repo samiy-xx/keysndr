@@ -1,7 +1,7 @@
 ﻿var app = angular.module("keysndr", []);
 
 //For testing
-var node_or_local_filesystem_url_override = true;
+var node_or_local_filesystem_url_override = false;
 var override_url = "http://192.168.0.112:45889/";
 
 app.config(['$locationProvider',

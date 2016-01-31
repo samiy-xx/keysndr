@@ -43,52 +43,31 @@ namespace KeySndr.Common
         public bool HasMouseSequences => MouseSequences.Count > 0;
 
         public InputAction()
+            : this(string.Empty, new List<SequenceItem>(), new List<ScriptSequenceItem>(), new List<MouseSequenceItem>())
         {
-            Id = Guid.NewGuid();
-            Name = string.Empty;
-            IsEnabled = false;
-            Color = BackGroundColor;
-            TextColor = ForeGroundColor;
-            MediaItem = new MediaItem();
-            Sequences = new List<SequenceItem>();
-            ScriptSequences = new List<ScriptSequenceItem>();
-            MouseSequences = new List<MouseSequenceItem>();
-            IsTarget = false;
         }
 
         public InputAction(string name, List<SequenceItem> sequences)
+            : this(name, sequences, new List<ScriptSequenceItem>(), new List<MouseSequenceItem>())
         {
-            Id = Guid.NewGuid();
-            Name = name;
-            IsEnabled = true;
-            Color = string.Empty;
-            Sequences = sequences;
-            MediaItem = new MediaItem();
-            ScriptSequences = new List<ScriptSequenceItem>();
-            MouseSequences = new List<MouseSequenceItem>();
         }
 
         public InputAction(string name, List<SequenceItem> sequences, List<ScriptSequenceItem> scripts)
+            : this(name, sequences, scripts, new List<MouseSequenceItem>())
         {
-            Id = Guid.NewGuid();
-            Name = name;
-            IsEnabled = true;
-            Color = string.Empty;
-            Sequences = sequences;
-            ScriptSequences = scripts;
-            MediaItem = new MediaItem();
-            MouseSequences = new List<MouseSequenceItem>();
         }
 
         public InputAction(string name, List<SequenceItem> sequences, List<ScriptSequenceItem> scripts, List<MouseSequenceItem> mouseSequences)
         {
             Id = Guid.NewGuid();
+            MediaItem = new MediaItem();
             Name = name;
             IsEnabled = true;
+            IsTarget = false;
             Color = string.Empty;
+            TextColor = string.Empty;
             Sequences = sequences;
             ScriptSequences = scripts;
-            MediaItem = new MediaItem();
             MouseSequences = mouseSequences;
         }
 
