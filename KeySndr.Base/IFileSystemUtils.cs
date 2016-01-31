@@ -17,6 +17,7 @@ namespace KeySndr.Base
         IEnumerable<string> GetAllConfigurationFiles(string path);
         IEnumerable<string> GetDirectoryFileNames(string path, bool fileNameWithoutPath = false);
         IEnumerable<string> GetDirectoryFileNames(string path, string extension, bool fileNameWithoutPath = false);
+        IEnumerable<string> GetDirectoryFileNames(string path, string[] extensions, bool fileNameWithoutPath = false);
         IEnumerable<FileInfo> GetDirectoryFiles(string path);
         AppConfig LoadAppConfiguration();
         InputConfiguration LoadInputConfiguration(string path);

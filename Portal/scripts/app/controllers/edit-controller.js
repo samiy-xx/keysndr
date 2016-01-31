@@ -20,7 +20,8 @@
         scope.$watch("inputConfiguration.name", function (n, o) {
             if (scope.inputConfiguration === null)
                 return;
-            scope.inputConfiguration.fileName = n.replace(/\s+/g, '') + ".json";
+            scope.inputConfiguration.trimmedName = n.replace(/\s+/g, '');
+            scope.inputConfiguration.fileName = scope.inputConfiguration.trimmedName + ".json";
         });
 
         scope.exitConfig = function() {

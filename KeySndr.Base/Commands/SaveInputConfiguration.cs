@@ -29,6 +29,7 @@ namespace KeySndr.Base.Commands
             {
                 SaveToStorage();
                 CreateViewFolderIfNeeded();
+                CreateMediaFolder();
                 inputConfigProvider.AddOrUpdate(configuration);
                 
                 Result = new ApiResult<object>
@@ -63,6 +64,11 @@ namespace KeySndr.Base.Commands
         {
             if (configuration.HasView)
                 storageProvider.CreateViewFolder(configuration.View);
+        }
+
+        private void CreateMediaFolder()
+        {
+            storageProvider.CreateMediaFolder(configuration.Name);
         }
     }
 }

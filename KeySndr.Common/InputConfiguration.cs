@@ -34,6 +34,7 @@ namespace KeySndr.Common
         [DataMember(Name = "gridSettings")]
         public GridSettings GridSettings { get; set; }
 
+
         public bool HasView => !string.IsNullOrEmpty(View);
 
         public InputConfiguration()

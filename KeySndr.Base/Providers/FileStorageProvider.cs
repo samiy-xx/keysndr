@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using KeySndr.Base.Domain;
 using KeySndr.Common;
+using KeySndr.Common.Extensions;
 
 namespace KeySndr.Base.Providers
 {
@@ -43,6 +45,23 @@ namespace KeySndr.Base.Providers
                 FileSystemUtils.CreateDirectory(path);
         }
 
+        public void CreateMediaFolder(string mediaFolderName)
+        {
+            var path = Path.Combine(AppConfigProvider.AppConfig.MediaRoot, mediaFolderName);
+            if (!FileSystemUtils.DirectoryExists(path))
+                FileSystemUtils.CreateDirectory(path);
+        }
+
+        public IEnumerable<string> LoadMediaFileNames(InputConfiguration c)
+        {
+            var path = Path.Combine(AppConfigProvider.AppConfig.MediaRoot, c.Name.RemoveWhitespace());
+            if (!FileSystemUtils.DirectoryExists(path))
+                return new List<string>();
+            
+            var fileNames = FileSystemUtils.GetDirectoryFileNames(path, new []{"png", "jpg", "jpeg", "gif"}, true);
+            return fileNames;
+        }
+        
         public void UpdateInputConfiguration(InputConfiguration n, InputConfiguration o)
         {
             var path = AppConfigProvider.AppConfig.ConfigFolder;

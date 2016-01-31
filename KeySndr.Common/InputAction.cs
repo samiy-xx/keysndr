@@ -34,6 +34,9 @@ namespace KeySndr.Common
         [DataMember(Name = "textColor")]
         public string TextColor { get; set; }
 
+        [DataMember(Name = "mediaItem")]
+        public MediaItem MediaItem { get; set; }
+
         public bool IsTarget { get; set; }
         public bool HasKeySequences => Sequences.Count > 0;
         public bool HasScriptSequences => ScriptSequences.Count > 0;
@@ -46,6 +49,7 @@ namespace KeySndr.Common
             IsEnabled = false;
             Color = BackGroundColor;
             TextColor = ForeGroundColor;
+            MediaItem = new MediaItem();
             Sequences = new List<SequenceItem>();
             ScriptSequences = new List<ScriptSequenceItem>();
             MouseSequences = new List<MouseSequenceItem>();
@@ -59,6 +63,7 @@ namespace KeySndr.Common
             IsEnabled = true;
             Color = string.Empty;
             Sequences = sequences;
+            MediaItem = new MediaItem();
             ScriptSequences = new List<ScriptSequenceItem>();
             MouseSequences = new List<MouseSequenceItem>();
         }
@@ -71,6 +76,7 @@ namespace KeySndr.Common
             Color = string.Empty;
             Sequences = sequences;
             ScriptSequences = scripts;
+            MediaItem = new MediaItem();
             MouseSequences = new List<MouseSequenceItem>();
         }
 
@@ -82,6 +88,7 @@ namespace KeySndr.Common
             Color = string.Empty;
             Sequences = sequences;
             ScriptSequences = scripts;
+            MediaItem = new MediaItem();
             MouseSequences = mouseSequences;
         }
 

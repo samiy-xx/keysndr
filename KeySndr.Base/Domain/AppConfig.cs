@@ -40,6 +40,7 @@ namespace KeySndr.Base.Domain
         public string ConfigFolder => $@"{DataFolder}\{KeySndrApp.ConfigurationsFolderName}";
         public string ScriptsFolder => $@"{DataFolder}\{KeySndrApp.ScriptsFolderName}";
         public string WebRoot => $@"{DataFolder}\{KeySndrApp.WebFolderName}";
+        public string MediaRoot => $@"{DataFolder}\{KeySndrApp.WebFolderName}\{KeySndrApp.MediaFolderName}";
         public string ViewsRoot => $@"{DataFolder}\{KeySndrApp.WebFolderName}\{KeySndrApp.ViewsFolderName}";
         public AppConfig()
         {

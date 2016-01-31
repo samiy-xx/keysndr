@@ -35,11 +35,18 @@
             <table class="grid-table">
                 <tr data-ng-repeat="row in configuration" class="grid-row">
                     <td
-                        class="grid-cell"
+                        class="grid-cell noselect"
                         blink-element="1000"
                         data-ng-repeat="col in row"
                         data-ng-class="{clickable : col.name.length > 0}"
-                        data-ng-style="{'background-color': col.color, 'color': col.textColor}"
+                        data-ng-style="{
+                            'background-color': col.color,
+                            'color': col.textColor,
+                            'background-size': 'contain',
+                            'background-repeat': 'no-repeat',
+                            'background-position': 'center center',
+                            'background-image': col.mediaItem.fileName.length !== null && col.mediaItem.fileName.length > 0 ? 'url(/media/'+ inputConfiguration.trimmedName + '/'+ col.mediaItem.fileName +')': '',
+                        }"
                         data-ng-click="execute(col)">
                         {{ col.name }}
                     </td>

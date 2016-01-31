@@ -17,6 +17,8 @@ namespace KeySndr.Base.Providers
         void LoadAllSourceFiles(InputScript s);
         void SaveScriptSource(InputScript script, string fileName, string source);
         void CreateViewFolder(string viewFolderName);
+        void CreateMediaFolder(string mediaFolderName);
+        IEnumerable<string> LoadMediaFileNames(InputConfiguration c);
         IEnumerable<InputConfiguration> LoadInputConfigurations();
         IEnumerable<InputScript> LoadInputScripts();
     }

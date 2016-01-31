@@ -4,6 +4,7 @@
     app.controller('playGridController', ["$scope", "apiService", "$location", PlayGridController]);
 
     function PlayGridController(scope, service, location) {
+        scope.inputConfiguration = null;
         scope.configuration = null;
         scope.useDesktopWindow = false;
         scope.useForegroundWindow = true;
@@ -46,6 +47,8 @@
                         scope.errorMessage = "Failed to get actions. Is the server running?";
                         return;
                     }
+                    scope.inputConfiguration = result.content;
+                    scope.inputConfiguration.trimmedName = scope.inputConfiguration.trimmedName = scope.inputConfiguration.name.replace(/\s+/g, '');
                     var actions = result.content.actions;
                     scope.columns = result.content.gridSettings.columns;
                     scope.rows = result.content.gridSettings.rows;

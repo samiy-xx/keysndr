@@ -121,6 +121,7 @@
     <Compile Include="Commands\GetAssemblyVersion.cs" />
     <Compile Include="Commands\GetInputConfiguration.cs" />
     <Compile Include="Commands\GetLegacyConfigurations.cs" />
+    <Compile Include="Commands\GetMediaFileNames.cs" />
     <Compile Include="Commands\GetProcessNames.cs" />
     <Compile Include="Commands\GetViewConfigurations.cs" />
     <Compile Include="Commands\ICommand.cs" />

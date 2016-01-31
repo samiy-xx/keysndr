@@ -121,6 +121,8 @@
                             data-ng-repeat="col in row track by col.id"
                             data-ng-class="{clickable : true}"
                             data-ng-style="{
+                                'background-image': col.mediaItem.fileName.length !== null && col.mediaItem.fileName.length > 0 ? 'url(/media/'+ inputConfiguration.trimmedName + '/'+ col.mediaItem.fileName +')': '',
+                                'background-size': 'cover',
                                 'background-color': col.color,
                                 'color': col.textColor,
                                 'width': 100/inputConfiguration.gridSettings.columns + '%',
@@ -147,16 +149,22 @@
                     </div>
                     <div class="panel-body">
                         <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon_3">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span class="input-group-addon" id="basic-addon_3">Name</span>
                             <input type="text" class="form-control" placeholder="Action Name" ng-model="currentAction.name" aria-describedby="basic-addon_3">
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon_4">Color&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span class="input-group-addon" id="basic-addon_4">Color</span>
                             <input type="color" class="form-control" name="actionColor" data-ng-model="currentAction.color" aria-describedby="basic-addon_4" />
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon_5">Text Color</span>
-                            <input type="color" class="form-control" name="textColor" data-ng-model="currentAction.textColor" aria-describedby="basic-addon_5" />
+                            <input type="color" class="form-control" name="textColor" data-ng-model="currentAction.textColor" aria-describedby="basic-addon_5"/>
+                        </div>
+                        <div class="input-group" ng-show="mediaFileNames.length > 0">
+                            <span class="input-group-addon" id="basic-addon_7">Image</span>
+                            <select name="sequenceKey" class="form-control input-lg" ng-model="currentAction.mediaItem.fileName" ng-options="o as o for o in mediaFileNames" aria-describedby="basic-addon-7">
+                                <option value="" disabled>Choose File</option>
+                            </select>
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon_6">Enabled</span>

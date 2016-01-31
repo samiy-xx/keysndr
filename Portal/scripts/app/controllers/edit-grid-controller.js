@@ -4,6 +4,18 @@
 
     function EditGridController(scope, service, $location) {
         scope.configuration = null;
+        scope.mediaFileNames = [];
+
+        scope.loadMediaFilenames = function() {
+            service.loadMediaFilenames(scope.inputConfiguration).then(function (response) {
+                var result = response.data;
+                if (!result.success) {
+                    scope.displayErrorMessage("Failed to load media files", result.errorMessage, 5000);
+                    return;
+                }
+                scope.mediaFileNames = result.content;
+            });
+        }
 
         scope.deleteCurrentAction = function() {
             service.getNewInputAction().then(function(response) {
@@ -34,6 +46,9 @@
                 scope.inputConfiguration.actions);
         });
         
+        scope.loaded = function() {
+            scope.loadMediaFilenames();
+        }
         scope.initGrid = function() {
             var c = 30;
             var s = $location.search();
@@ -41,10 +56,14 @@
                 scope.init(s.rows * s.columns, function () {
                     scope.inputConfiguration.gridSettings.columns = s.columns;
                     scope.inputConfiguration.gridSettings.rows = s.rows;
+                    scope.loaded();
                 });
             } else {
-                scope.init(c);
+                scope.init(c, function() {
+                    scope.loaded();
+                });  
             }
+            
         }
         scope.initGrid();
         

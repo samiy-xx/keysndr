@@ -33,6 +33,10 @@
             return $http.post(rootUrl + "action/execute", container);
         },
 
+        loadMediaFilenames: function(config) {
+            return $http.post(rootUrl + "action/loadmediafilenames", config);
+        },
+
         removeConfiguration: function(name) {
             return $http.delete(rootUrl + "action/removeconfiguration?name=" + name);
         },

@@ -75,6 +75,9 @@ namespace KeySndr.Base
 
             if (!Directory.Exists(AppConfig.ViewsRoot))
                 Directory.CreateDirectory(AppConfig.ViewsRoot);
+
+            if (!Directory.Exists(AppConfig.MediaRoot))
+                Directory.CreateDirectory(AppConfig.MediaRoot);
         }
 
         public T LoadObjectFromDisk<T>(string path)
@@ -123,6 +126,12 @@ namespace KeySndr.Base
         {
             return GetDirectoryFileNames(path, fileNameWithoutPath)
                 .Where(f => f.EndsWith(extension));
+        }
+
+        public IEnumerable<string> GetDirectoryFileNames(string path, string[] extensions, bool fileNameWithoutPath = false)
+        {
+            return GetDirectoryFileNames(path, fileNameWithoutPath)
+                .Where(f => extensions.Any(f.EndsWith));
         }
 
         public IEnumerable<string> GetAllConfigurationFiles(string path)

@@ -31,6 +31,8 @@ namespace KeySndr.Base.Providers
         public abstract void RemoveScript(InputScript s);
         public abstract void SaveScriptSource(InputScript script, string fileName, string source);
         public abstract void CreateViewFolder(string viewFolderName);
+        public abstract void CreateMediaFolder(string mediaFolderName);
+        public abstract IEnumerable<string> LoadMediaFileNames(InputConfiguration c);
         public abstract IEnumerable<InputConfiguration> LoadInputConfigurations();
         public abstract IEnumerable<InputScript> LoadInputScripts();
 

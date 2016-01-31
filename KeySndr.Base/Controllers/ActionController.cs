@@ -30,6 +30,15 @@ namespace KeySndr.Base.Controllers
         }
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [HttpPost]
+        public ApiResult<IEnumerable<string>> LoadMediaFileNames(InputConfiguration c)
+        {
+            var cmd = new GetMediaFileNames(storageProvider, c);
+            cmd.Execute();
+            return cmd.Result;
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
         public ApiResult<IEnumerable<string>> GetAllConfigurations()
         {

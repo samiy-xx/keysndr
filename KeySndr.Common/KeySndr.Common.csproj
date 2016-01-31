@@ -42,12 +42,14 @@
     <Compile Include="BinarySerializer.cs" />
     <Compile Include="ConfigurationListItem.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="GridSettings.cs" />
     <Compile Include="InputAction.cs" />
     <Compile Include="InputActionExecutionContainer.cs" />
     <Compile Include="InputConfiguration.cs" />
     <Compile Include="InputMap.cs" />
     <Compile Include="JsonSerializer.cs" />
+    <Compile Include="MediaItem.cs" />
     <Compile Include="MouseSequenceItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IProvider.cs" />
