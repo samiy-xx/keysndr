@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
     app.requires.push('akoenig.deckgrid');
-    app.controller('playGridController', ["$scope", "apiService", "$location", PlayGridController]);
+    app.controller('playGridController', ["$scope", "apiService", "serverAddressService", "$location", PlayGridController]);
 
-    function PlayGridController(scope, service, location) {
+    function PlayGridController(scope, service, addressService, location) {
         scope.inputConfiguration = null;
         scope.configuration = null;
         scope.useDesktopWindow = false;
@@ -11,6 +11,21 @@
         scope.processName = "";
         scope.columns = 0;
         scope.rows = 0;
+
+        scope.cellStyle = function (action) {
+            var s = {};
+            s["background-color"] = action.color;
+            s["color"] = action.textColor;
+            s["width"] = 100 / scope.inputConfiguration.gridSettings.columns + '%';
+            s["height"] = 100 / scope.inputConfiguration.gridSettings.rows + '%';
+            if (action.mediaItem.fileName.length > 0) {
+                s["background-image"] = "url("+ addressService.serverHost + "media/" + scope.inputConfiguration.trimmedName + "/" + action.mediaItem.fileName + ")";
+                s["background-size"] = action.mediaItem.size;
+                s["background-repeat"] = action.mediaItem.repeat;
+                s["background-position"] = action.mediaItem.positionLeft + " " + action.mediaItem.positionTop;
+            }
+            return s;
+        }
 
         scope.execute = function (action) {
             if (action.sequences.length === 0

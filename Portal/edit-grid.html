@@ -30,7 +30,23 @@
         <div ng-include src="'views/partials/error-message-row.html'"></div>
 
         
-
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit source</h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="row">
             <div class="col-md-6">
                 <div class="well">
@@ -120,13 +136,8 @@
                         <td class="grid-cell"
                             data-ng-repeat="col in row track by col.id"
                             data-ng-class="{clickable : true}"
-                            data-ng-style="{
-                                'background-image': col.mediaItem.fileName.length !== null && col.mediaItem.fileName.length > 0 ? 'url(/media/'+ inputConfiguration.trimmedName + '/'+ col.mediaItem.fileName +')': '',
-                                'background-size': 'cover',
-                                'background-color': col.color,
-                                'color': col.textColor,
-                                'width': 100/inputConfiguration.gridSettings.columns + '%',
-                                'height': 100/inputConfiguration.gridSettings.rows + '%'}"
+                            data-ng-style="cellStyle(col)"
+                                
                             data-ng-click="setForEdit(col)">
                             {{ col.name }}
                         </td>

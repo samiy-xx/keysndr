@@ -1,8 +1,8 @@
 ﻿(function () {
     'use strict';
-    app.controller('editGridController', ["$scope", "apiService", "$location", EditGridController]);
+    app.controller('editGridController', ["$scope", "apiService", "serverAddressService", "$location", EditGridController]);
 
-    function EditGridController(scope, service, $location) {
+    function EditGridController(scope, service, addressService, $location) {
         scope.configuration = null;
         scope.mediaFileNames = [];
 
@@ -15,6 +15,21 @@
                 }
                 scope.mediaFileNames = result.content;
             });
+        }
+
+        scope.cellStyle = function(action) {
+            var s = {};
+            s["background-color"] = action.color;
+            s["color"] = action.textColor;
+            s["width"] = 100 / scope.inputConfiguration.gridSettings.columns + '%';
+            s["height"] = 100 / scope.inputConfiguration.gridSettings.rows + '%';
+            if (action.mediaItem.fileName.length > 0) {
+                s["background-image"] = "url(" + addressService.serverHost + "media/" + scope.inputConfiguration.trimmedName + "/" + action.mediaItem.fileName + ")";
+                s["background-size"] = action.mediaItem.size;
+                s["background-repeat"] = action.mediaItem.repeat;
+                s["background-position"] = action.mediaItem.positionLeft + " " + action.mediaItem.positionTop;
+            }
+            return s;
         }
 
         scope.deleteCurrentAction = function() {
@@ -49,6 +64,7 @@
         scope.loaded = function() {
             scope.loadMediaFilenames();
         }
+
         scope.initGrid = function() {
             var c = 30;
             var s = $location.search();
