@@ -17,6 +17,10 @@
             });
         }
 
+        scope.assignImageToCurrentAction = function (index) {
+            scope.currentAction.mediaItem.fileName = scope.mediaFileNames[index];
+        }
+
         scope.cellStyle = function(action) {
             var s = {};
             s["background-color"] = action.color;
@@ -30,6 +34,10 @@
                 s["background-position"] = action.mediaItem.positionLeft + " " + action.mediaItem.positionTop;
             }
             return s;
+        }
+
+        scope.mediaUrl = function(index) {
+            return addressService.serverHost + "media/" + scope.inputConfiguration.trimmedName + "/" + scope.mediaFileNames[index];
         }
 
         scope.deleteCurrentAction = function() {

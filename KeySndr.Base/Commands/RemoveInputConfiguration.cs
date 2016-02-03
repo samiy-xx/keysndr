@@ -39,7 +39,7 @@ namespace KeySndr.Base.Commands
             {
                 if (config.HasView)
                 {
-                    // TODO: Remove view folder and files
+                    // TODO: Remove view folder and files and media
                 }
                 storageProvider.RemoveInputConfiguration(config);
                 inputConfigProvider.Remove(config);

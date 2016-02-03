@@ -75,6 +75,7 @@
     <Compile Include="CommandTests\ZipPackageForExport_Tests.cs" />
     <Compile Include="DomainTests\AppConfig_Tests.cs" />
     <Compile Include="DomainTests\AssemblyInfo_Tests.cs" />
+    <Compile Include="KeySndr_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProviderTests\AppConfigProvider_Tests.cs" />
     <Compile Include="ProviderTests\FileStorageProvider_Tests.cs" />

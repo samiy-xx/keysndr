@@ -4,6 +4,7 @@ using Ionic.Zip;
 using Ionic.Zlib;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
+using KeySndr.Common.Extensions;
 
 namespace KeySndr.Base
 {
@@ -26,7 +27,7 @@ namespace KeySndr.Base
                 SetCompressionLevel(zip, 0);
                 CreateFolders(zip, inputConfig.HasView);
                 AddInputConfig(zip, inputConfig);
-
+                AddMediaFiles(zip, inputConfig);
                 foreach (var inputAction in inputConfig.Actions)
                 {
                     if (!inputAction.HasScriptSequences)
@@ -58,6 +59,7 @@ namespace KeySndr.Base
             zip.AddDirectoryByName(KeySndrApp.ConfigurationsFolderName);
             zip.AddDirectoryByName(KeySndrApp.ScriptsFolderName);
             zip.AddDirectoryByName(KeySndrApp.MappingsFolderName);
+            zip.AddDirectoryByName(KeySndrApp.MediaFolderName);
             if (hasView)
                 zip.AddDirectoryByName(KeySndrApp.ViewsFolderName);
         }
@@ -66,6 +68,13 @@ namespace KeySndr.Base
         {
             var json = JsonSerializer.Serialize(inputConfig);
             zip.AddEntry(KeySndrApp.ConfigurationsFolderName + "\\" + inputConfig.FileName, json);
+        }
+
+        private void AddMediaFiles(ZipFile zip, InputConfiguration inputConfig)
+        {
+            var path = Path.Combine(appConfigProvider.AppConfig.MediaRoot, inputConfig.Name.RemoveWhitespace());
+            if (new FileSystemUtils().DirectoryExists(path))
+                zip.AddDirectory(path, "Media\\" + inputConfig.Name.RemoveWhitespace());
         }
 
         private void AddScripts(ZipFile zip, InputAction inputAction)

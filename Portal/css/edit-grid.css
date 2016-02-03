@@ -29,7 +29,21 @@ td {
     text-align:center; 
     vertical-align:middle;
 }
-
+.image-picker {
+    width: 100%;
+    max-height: 500px;
+    overflow:auto;
+}
+.image-picker div {
+    display: inline-block;
+    width: 20%;
+}
+.image-picker img {
+    width: 100%;
+}
+.image-config {
+    margin-bottom: 5px;
+}
 .clickable {
     cursor: pointer;
 }

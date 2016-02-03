@@ -41,7 +41,7 @@ namespace KeySndr.Base.Commands
                 SaveConfigurations(configurations, zip);
                 SaveScripts(scripts);
                 SaveMaps(maps);
-
+               
                 await inputConfigProvider.Prepare();
                 await scriptProvider.Prepare();
             }
@@ -102,6 +102,8 @@ namespace KeySndr.Base.Commands
                 {
                     SaveView(zip, appConfigProvider.AppConfig.WebRoot);
                 }
+
+                SaveMedia(zip, appConfigProvider.AppConfig.WebRoot);
             }    
         }
 
@@ -125,6 +127,15 @@ namespace KeySndr.Base.Commands
         private void SaveView(ZipFile zip, string path)
         {
             var entries = zip.Entries.Where(e => e.FileName.StartsWith(KeySndrApp.ViewsFolderName + "/"));
+            foreach (var entry in entries)
+            {
+                entry.Extract(path, ExtractExistingFileAction.OverwriteSilently);
+            }
+        }
+
+        private void SaveMedia(ZipFile zip, string path)
+        {
+            var entries = zip.Entries.Where(e => e.FileName.StartsWith(KeySndrApp.MediaFolderName + "/"));
             foreach (var entry in entries)
             {
                 entry.Extract(path, ExtractExistingFileAction.OverwriteSilently);
