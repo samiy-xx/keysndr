@@ -2,6 +2,7 @@
 using System.Linq;
 using KeySndr.Base.Providers;
 using KeySndr.Common;
+using KeySndr.Common.Extensions;
 
 namespace KeySndr.Base.Commands
 {
@@ -68,7 +69,7 @@ namespace KeySndr.Base.Commands
 
         private void CreateMediaFolder()
         {
-            storageProvider.CreateMediaFolder(configuration.Name);
+            storageProvider.CreateMediaFolder(configuration.Name.RemoveWhitespace());
         }
     }
 }
