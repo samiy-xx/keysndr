@@ -1062,6 +1062,10 @@
       <Link>Portal\setup.html</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="..\Portal\scripts\app\controllers\grid-style-controller.js">
+      <Link>Portal\scripts\app\controllers\grid-style-controller.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Portal\scripts\app\controllers\mappings-controller.js">
       <Link>Portal\scripts\app\controllers\mappings-controller.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1093,6 +1097,10 @@
     <Content Include="..\Portal\scripts\ui-ace.js">
       <Link>Portal\scripts\ui-ace.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Portal\views\partials\config-modal.html">
+      <Link>Portal\views\partials\config-modal.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Portal\views\partials\error-message-row.html">
       <Link>Portal\views\partials\error-message-row.html</Link>

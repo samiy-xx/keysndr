@@ -46,7 +46,6 @@ table {
     width: 100%;
     height: 100%;
     background: #222;
-    border-spacing: 10px;
     border-collapse: separate;
     table-layout: fixed;
 }
@@ -54,22 +53,17 @@ tr {
     
 }
 td {
-    width: 20%;
-    height: 15%;
-    max-height: 0;
-    max-width: 0;
     background: #000000;
-    padding: 10px;
     text-align:center; 
     vertical-align:middle;
+    padding: 5px;
     overflow: hidden;
     -ms-text-overflow: clip;
     text-overflow: clip;
     white-space: nowrap;
     word-break: break-all;
     word-wrap: break-word;
-    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-    border: 1px solid rgba(81, 203, 238, 1);
+    
 }
 
 .clickable {

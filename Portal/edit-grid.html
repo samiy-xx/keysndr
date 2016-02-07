@@ -19,6 +19,7 @@
     <script src="scripts/app/controllers/main-controller.js"></script>
     <script src="scripts/app/controllers/edit-controller.js"></script>
     <script src="scripts/app/controllers/edit-grid-controller.js"></script>
+    <script src="scripts/app/controllers/grid-style-controller.js"></script>
     <script src="scripts/app/directives/key-listener.js"></script>
     <script src="scripts/app/services/api_service.js"></script>
 </head>
@@ -28,24 +29,8 @@
         <div data-ng-controller="editGridController" style="height: 100%; width: 100%;">
             <div ng-include src="'views/partials/success-message-row.html'"></div>
             <div ng-include src="'views/partials/error-message-row.html'"></div>
-
-            <!-- Modal for input Configuration-->
-            <div class="modal fade" id="configSettingsModal" tabindex="-1" role="dialog" aria-labelledby="configSettingsModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="configSettingsModalLabel">Edit Configuration Settings</h4>
-                        </div>
-                        <div class="modal-body">
-                            <h3>Nothing here yet!</h3>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div ng-include src="'views/partials/config-modal.html'"></div>
+            
             <!-- Modal for action image Configuration-->
             <div class="modal fade" id="imagePickerModal" tabindex="-1" role="dialog" aria-labelledby="imagePickerModalLabel">
                 <div class="modal-dialog" role="document">
@@ -207,8 +192,8 @@
                 </div>
             </div>
             <div class="row" style="height: 80%">
-                <div class="col-md-6" style="height: 100%">
-                    <table class="grid-table">
+                <div class="col-md-6" style="height: 100%" data-ng-controller="gridStyleController">
+                    <table class="grid-table" data-ng-style="tableStyle()">
                         <tr data-ng-repeat="row in configuration track by $index" class="grid-row">
                             <td class="grid-cell"
                                 data-ng-repeat="col in row track by col.id"

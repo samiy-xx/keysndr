@@ -16,35 +16,37 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/angular-deckgrid/angular-deckgrid.js"></script>
     <script src="scripts/app/controllers/play-grid-controller.js"></script>
+    <script src="scripts/app/controllers/grid-style-controller.js"></script>
     <script src="scripts/app/directives/blink-element.js"></script>
     <script src="scripts/app/services/api_service.js"></script>
 </head>
 <body ng-app="keysndr">
     <div class="container body-content">
         <div data-ng-controller="playGridController" style="height: 100%; width: 100%;">
-            <div class="row" ng-show="hasError">
-                <div class="col-md-10">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">Error</div>
-                        <div class="panel-body">
-                            {{ scope.errorMessage }}
+            <div style="height: 100%; width: 100%;" data-ng-controller="gridStyleController">
+                <div class="row" ng-show="hasError">
+                    <div class="col-md-10">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">Error</div>
+                            <div class="panel-body">
+                                {{ scope.errorMessage }}
+                            </div>
                         </div>
                     </div>
                 </div>
+                <table class="grid-table" data-ng-style="tableStyle(col)">
+                    <tr data-ng-repeat="row in configuration" class="grid-row">
+                        <td class="grid-cell noselect"
+                            blink-element="1000"
+                            data-ng-repeat="col in row"
+                            data-ng-class="{clickable : col.isEnabled}"
+                            data-ng-style="cellStyle(col)"
+                            data-ng-click="execute(col)">
+                            {{ col.name }}
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <table class="grid-table">
-                <tr data-ng-repeat="row in configuration" class="grid-row">
-                    <td
-                        class="grid-cell noselect"
-                        blink-element="1000"
-                        data-ng-repeat="col in row"
-                        data-ng-class="{clickable : col.name.length > 0}"
-                        data-ng-style="cellStyle(col)"
-                        data-ng-click="execute(col)">
-                        {{ col.name }}
-                    </td>
-                </tr>
-            </table>
         </div>
     </div>
 </body>

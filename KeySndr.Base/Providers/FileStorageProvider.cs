@@ -57,7 +57,7 @@ namespace KeySndr.Base.Providers
             if (!FileSystemUtils.DirectoryExists(path))
                 return new List<string>();
             
-            var fileNames = FileSystemUtils.GetDirectoryFileNames(path, new []{"png", "jpg", "jpeg", "gif"}, true);
+            var fileNames = FileSystemUtils.GetDirectoryFileNames(path, new []{"png", "jpg", "jpeg", "gif", "svg"}, true);
             return fileNames;
         }
         

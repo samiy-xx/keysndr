@@ -1,0 +1,220 @@
+﻿<!-- Modal for input Configuration-->
+<div class="modal fade" id="configSettingsModal" tabindex="-1" role="dialog" aria-labelledby="configSettingsModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="configSettingsModalLabel">Edit Configuration Settings</h4>
+            </div>
+            <div class="modal-body">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_general" data-toggle="tab">General</a></li>
+                        <li><a href="#tab_background" data-toggle="tab">Background</a></li>
+                        <li><a href="#tab_border" data-toggle="tab">Border</a></li>
+                        <li><a href="#tab_shadow" data-toggle="tab">Shadow</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_general">
+                            <div class="config-section well-sm">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-mode">Mode</span>
+                                    <select ng-model="inputConfiguration.gridSettings.mode" class="form-control input-sm" aria-describedby="config-modal-input-mode">
+                                        <option value="any">Any</option>
+                                        <option value="portrait">Portrait</option>
+                                        <option value="landscape">Landscape</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="config-section well-sm">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-spacing">Cell Spacing</span>
+                                    <input type="number" class="form-control" ng-model="inputConfiguration.gridSettings.cellSpacing" aria-describedby="config-modal-input-spacing">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_background">
+                            <div class="config-section well-sm">
+                                
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-background">Show Image</span>
+                                    <input type="checkbox" class="form-control" ng-model="inputConfiguration.gridSettings.showImageBackground" aria-describedby="config-modal-input-background">
+                                </div>
+                                <div class="row" ng-show="!inputConfiguration.gridSettings.showImageBackground">
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.color.red" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.color.green" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.color.blue" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="1" min="0" step="0.1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.color.alpha" />
+                                    </div>
+                                </div>
+                                <div class="image-config row" ng-show="mediaFileNames.length > 0 && inputConfiguration.gridSettings.showImageBackground">
+
+                                    <div class="col-md-6">
+                                        <p>Size</p>
+                                        <select ng-model="inputConfiguration.gridSettings.mediaItem.size" class="form-control input-sm">
+                                            <option value="auto">Auto</option>
+                                            <option value="contain">Contain</option>
+                                            <option value="cover">Cover</option>
+                                            <option value="initial">Initial</option>
+                                            <option value="inherit">Inherit</option>
+                                        </select>
+                                        <p>Repeat</p>
+                                        <select ng-model="inputConfiguration.gridSettings.mediaItem.repeat" class="form-control input-sm">
+                                            <option value="repeat">Repeat</option>
+                                            <option value="repeat-x">Repeat-x</option>
+                                            <option value="repeat-y">Repeat-y</option>
+                                            <option value="no-repeat">No Repeat</option>
+                                            <option value="initial">Initial</option>
+                                            <option value="inherit">Inherit</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Positioning left to right</p>
+                                        <select ng-model="inputConfiguration.gridSettings.mediaItem.positionLeft" class="form-control input-sm">
+                                            <option value="0%">0%</option>
+                                            <option value="10%">10%</option>
+                                            <option value="20%">20%</option>
+                                            <option value="30%">30%</option>
+                                            <option value="40%">40%</option>
+                                            <option value="50%">50%</option>
+                                            <option value="60%">60%</option>
+                                            <option value="70%">70%</option>
+                                            <option value="80%">80%</option>
+                                            <option value="90%">90%</option>
+                                            <option value="100%">100%</option>
+                                        </select>
+                                        <p>Positioning top to bottom</p>
+                                        <select ng-model="inputConfiguration.gridSettings.mediaItem.positionTop" class="form-control input-sm">
+                                            <option value="0%">0%</option>
+                                            <option value="10%">10%</option>
+                                            <option value="20%">20%</option>
+                                            <option value="30%">30%</option>
+                                            <option value="40%">40%</option>
+                                            <option value="50%">50%</option>
+                                            <option value="60%">60%</option>
+                                            <option value="70%">70%</option>
+                                            <option value="80%">80%</option>
+                                            <option value="90%">90%</option>
+                                            <option value="100%">100%</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="image-picker" ng-show="inputConfiguration.gridSettings.showImageBackground">
+                                    <div ng-repeat="fileName in mediaFileNames">
+                                        <img ng-src="{{mediaUrl($index)}}" class="img-thumbnail img-responsive img-rounded clickable" ng-click="assignImageToGrid($index)" />
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_border">
+                            <div class="config-section well-sm">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-border">Show Border</span>
+                                    <input type="checkbox" class="form-control" ng-model="inputConfiguration.gridSettings.showBorder" aria-describedby="config-modal-input-border">
+                                </div>
+                            </div>
+                            <div class="config-section well-sm" ng-show="inputConfiguration.gridSettings.showBorder">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-border-size">Border size</span>
+                                    <input type="number" class="form-control" ng-model="inputConfiguration.gridSettings.cellBorder.size" aria-describedby="config-modal-input-border-size">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-border-style">Border style</span>
+                                    <select ng-model="inputConfiguration.gridSettings.cellBorder.style" class="form-control input-sm" aria-describedby="config-modal-input-border-style">
+                                        <option value="none">None</option>
+                                        <option value="hidden">Hidden</option>
+                                        <option value="dotted">Dotted</option>
+                                        <option value="dashed">Dashed</option>
+                                        <option value="solid">Solid</option>
+                                        <option value="double">Double</option>
+                                        <option value="groove">groove</option>
+                                        <option value="ridge">Ridge</option>
+                                        <option value="inset">Inset</option>
+                                        <option value="outset">Outset</option>
+                                        <option value="initial">Initial</option>
+                                        <option value="inherit">Inherit</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.cellBorder.color.red" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.cellBorder.color.green" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.cellBorder.color.blue" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="1" min="0" step="0.1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.cellBorder.color.alpha" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_shadow">
+                            <div class="config-section well-sm">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-3">Show Shadow</span>
+                                    <input type="checkbox" class="form-control" ng-model="inputConfiguration.gridSettings.showShadow" aria-describedby="config-modal-input-3">
+                                </div>
+                            </div>
+                            <div class="config-section well-sm" ng-show="inputConfiguration.gridSettings.showShadow">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-shadow-inset">Inset</span>
+                                    <input type="checkbox" class="form-control" ng-model="inputConfiguration.gridSettings.cellShadow.inset" aria-describedby="config-modal-input-shadow-inset">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-shadow-horizontal">Horizontal</span>
+                                    <input type="number" max="255" min="1" step="1" class="form-control" ng-model="inputConfiguration.gridSettings.cellShadow.horizontal" aria-describedby="config-modal-input-shadow-horizontal">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-shadow-vertical">Vertical</span>
+                                    <input type="number" max="255" min="1" step="1" class="form-control" ng-model="inputConfiguration.gridSettings.cellShadow.vertical" aria-describedby="config-modal-input-shadow-vertical">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-shadow-blur">Blur</span>
+                                    <input type="number" max="255" min="1" step="1" class="form-control" ng-model="inputConfiguration.gridSettings.cellShadow.blur" aria-describedby="config-modal-input-shadow-blur">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="config-modal-input-shadow-spread">Spread</span>
+                                    <input type="number" max="255" min="1" step="1" class="form-control" ng-model="inputConfiguration.gridSettings.cellShadow.spread" aria-describedby="config-modal-input-shadow-spread">
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.cellShadow.color.red" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.cellShadow.color.green" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="255" min="1" step="1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.cellShadow.color.blue" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" max="1" min="0" step="0.1" class="form-control" value="1" data-ng-model="inputConfiguration.gridSettings.cellShadow.color.alpha" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -131,7 +131,7 @@ namespace KeySndr.Base
         public IEnumerable<string> GetDirectoryFileNames(string path, string[] extensions, bool fileNameWithoutPath = false)
         {
             return GetDirectoryFileNames(path, fileNameWithoutPath)
-                .Where(f => extensions.Any(f.EndsWith));
+                .Where(f => extensions.Select(r => r.ToLower()).Any(f.EndsWith));
         }
 
         public IEnumerable<string> GetAllConfigurationFiles(string path)

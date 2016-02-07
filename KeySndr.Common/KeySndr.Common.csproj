@@ -43,6 +43,9 @@
     <Compile Include="ConfigurationListItem.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="GridCellBorder.cs" />
+    <Compile Include="GridCellShadow.cs" />
+    <Compile Include="GridColor.cs" />
     <Compile Include="GridSettings.cs" />
     <Compile Include="InputAction.cs" />
     <Compile Include="InputActionExecutionContainer.cs" />
