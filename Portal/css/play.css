@@ -53,17 +53,11 @@ tr {
     
 }
 td {
-    background: #000000;
     text-align:center; 
     vertical-align:middle;
     padding: 5px;
-    overflow: hidden;
-    -ms-text-overflow: clip;
-    text-overflow: clip;
-    white-space: nowrap;
     word-break: break-all;
     word-wrap: break-word;
-    
 }
 
 .clickable {

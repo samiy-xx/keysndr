@@ -16,17 +16,16 @@ table {
     height: 100%;
     background:#303030;
     border-collapse: separate;
+    table-layout: fixed;
 }
-tr {
-    
-}
+
 td {
-    /*width: 19%;
-    height: 15%;*/
-    background: #666;
+
     padding: 10px;
     text-align:center; 
     vertical-align:middle;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 .config-section {
     margin-bottom: 5px;

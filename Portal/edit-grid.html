@@ -229,7 +229,11 @@
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon_5">Text Color</span>
-                                <input type="color" class="form-control" name="textColor" data-ng-model="currentAction.textColor" aria-describedby="basic-addon_5" />
+                                <input type="color" class="form-control" name="textColor" data-ng-model="currentAction.textColor" aria-describedby="basic-addon_5"/>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon_57">Opacity</span>
+                                <input type="number" min="0" max="1" step="0.1" class="form-control" name="textColor" data-ng-model="currentAction.opacity" aria-describedby="basic-addon_57" />
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon_7">Media</span>
@@ -249,7 +253,12 @@
                             </div>-->
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon_6">Enabled</span>
-                                <input type="checkbox" class="form-control" name="actionEnabled" data-ng-model="currentAction.isEnabled" aria-describedby="basic-addon_6" />
+                                <input type="checkbox" class="form-control" name="actionEnabled" data-ng-model="currentAction.isEnabled" aria-describedby="basic-addon_6"/>
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon_66">Visible</span>
+                                <input type="checkbox" class="form-control" name="actionEnabled" data-ng-model="currentAction.isVisible" aria-describedby="basic-addon_66" />
                             </div>
 
                             <div class="btn-group btn-group-justified" role="group" aria-label="...">

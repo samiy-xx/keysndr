@@ -28,11 +28,17 @@ namespace KeySndr.Common
         [DataMember(Name = "isEnabled")]
         public bool IsEnabled { get; set; }
 
+        [DataMember(Name = "isVisible")]
+        public bool IsVisible { get; set; }
+
         [DataMember(Name = "color")]
         public string Color { get; set; }
 
         [DataMember(Name = "textColor")]
         public string TextColor { get; set; }
+
+        [DataMember(Name = "opacity")]
+        public float Opacity { get; set; }
 
         [DataMember(Name = "mediaItem")]
         public MediaItem MediaItem { get; set; }
@@ -63,8 +69,10 @@ namespace KeySndr.Common
             MediaItem = new MediaItem();
             Name = name;
             IsEnabled = true;
+            IsVisible = true;
             IsTarget = false;
             Color = string.Empty;
+            Opacity = 1.0f;
             TextColor = string.Empty;
             Sequences = sequences;
             ScriptSequences = scripts;

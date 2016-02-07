@@ -16,6 +16,9 @@ namespace KeySndr.Common
         [DataMember(Name = "mode")]
         public string Mode { get; set; }
 
+        [DataMember(Name = "hideOverflowText")]
+        public bool HideOverflowText { get; set; }
+
         [DataMember(Name = "mediaItem")]
         public MediaItem MediaItem { get; set; }
 
@@ -49,6 +52,7 @@ namespace KeySndr.Common
             ShowBorder = true;
             ShowShadow = true;
             ShowImageBackground = false;
+            HideOverflowText = false;
             CellSpacing = 10;
             CellShadow = new GridCellShadow();
             CellBorder = new GridCellBorder();
