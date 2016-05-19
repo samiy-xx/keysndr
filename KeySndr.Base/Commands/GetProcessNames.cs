@@ -5,10 +5,10 @@ using KeySndr.Common;
 
 namespace KeySndr.Base.Commands
 {
-    public class GetProcessNames : ICommand<ApiResult<IEnumerable<string>>>
+    public class GetProcessNames : ICommand<ApiResult<IEnumerable<ProcessInformation>>>
     {
         private readonly ISystemProvider systemProvider;
-        public ApiResult<IEnumerable<string>> Result { get; private set; }
+        public ApiResult<IEnumerable<ProcessInformation>> Result { get; private set; }
 
         public GetProcessNames(ISystemProvider p)
         {
@@ -19,7 +19,7 @@ namespace KeySndr.Base.Commands
         {
             try
             {
-                Result = new ApiResult<IEnumerable<string>>
+                Result = new ApiResult<IEnumerable<ProcessInformation>>
                 {
                     Content = systemProvider.ProcessNames(),
                     Success = true,
@@ -28,9 +28,9 @@ namespace KeySndr.Base.Commands
             }
             catch (Exception e)
             {
-                Result = new ApiResult<IEnumerable<string>>
+                Result = new ApiResult<IEnumerable<ProcessInformation>>
                 {
-                    Content = new string[0],
+                    Content = new ProcessInformation[0],
                     Success = false,
                     Message = "Failed to get process names",
                     ErrorMessage = e.Message

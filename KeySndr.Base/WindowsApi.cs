@@ -220,6 +220,11 @@ namespace KeySndr.Base
             return IntPtr.Zero;
         }
 
+        public static IntPtr GetOwnProcessId()
+        {
+            return Process.GetCurrentProcess().MainWindowHandle;
+        }
+
         [DllImport("user32.dll")]
         public static extern IntPtr SetFocus(IntPtr hWnd);
 

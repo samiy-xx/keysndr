@@ -14,5 +14,6 @@ namespace KeySndr.Common.Providers
         Task<ApiResult<string>> RequestAssemblyVersion();
         Task<ApiResult<Object>> ExecuteAction(InputAction action);
         Task<ApiResult<Object>> SaveConfiguration(InputConfiguration configuration);
+        Task<string> GetStringContent(string url);
     }
 }

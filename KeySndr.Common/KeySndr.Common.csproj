@@ -54,6 +54,7 @@
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="MediaItem.cs" />
     <Compile Include="MouseSequenceItem.cs" />
+    <Compile Include="ProcessInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IProvider.cs" />
     <Compile Include="Providers\IWebConnectionProvider.cs" />

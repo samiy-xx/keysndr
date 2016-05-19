@@ -24,7 +24,7 @@ namespace KeySndr.Base.Controllers
 
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
-        public ApiResult<IEnumerable<string>> GetProcessNames()
+        public ApiResult<IEnumerable<ProcessInformation>> GetProcessNames()
         {
             var cmd = new GetProcessNames(systemProvider);
             cmd.Execute();

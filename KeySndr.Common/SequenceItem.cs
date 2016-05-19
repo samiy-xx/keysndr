@@ -18,40 +18,48 @@ namespace KeySndr.Common
         [DataMember(Name = "winmodifiers")]
         public List<SequenceKeyValuePair> WindowsModifiers { get; set; }
 
+        //[DataMember(Name = "method")]
+        //public string Method { get; set; }
+
         public SequenceItem()
-            : base()
+            : this(0, "keyboard", null, new List<SequenceKeyValuePair>(), new List<SequenceKeyValuePair>())
         {
-            Modifiers = new List<SequenceKeyValuePair>();
-            WindowsModifiers = new List<SequenceKeyValuePair>();
         }
 
         public SequenceItem(int keepDown, int code, string key)
-            : this()
+            : this(keepDown, "keyboard", new SequenceKeyValuePair(key, code), new List<SequenceKeyValuePair>(), new List<SequenceKeyValuePair>())
         {
-            KeepDown = keepDown;
-            Entry = new SequenceKeyValuePair(key, code);
+        }
+
+        public SequenceItem(int keepDown, string method, int code, string key)
+            : this(keepDown, method, new SequenceKeyValuePair(key, code), new List<SequenceKeyValuePair>(), new List<SequenceKeyValuePair>())
+        {
         }
 
         public SequenceItem(int keepDown, SequenceKeyValuePair entry)
-            : this()
+            : this(keepDown, "keyboard", entry, new List<SequenceKeyValuePair>(), new List<SequenceKeyValuePair>())
         {
-            KeepDown = keepDown;
-            Entry = entry;
+        }
+
+        public SequenceItem(int keepDown, string method, SequenceKeyValuePair entry)
+            : this(keepDown, method, entry, new List<SequenceKeyValuePair>(), new List<SequenceKeyValuePair>())
+        {
         }
 
         public SequenceItem(int keepDown, SequenceKeyValuePair entry, List<SequenceKeyValuePair> modifiers)
-            : base()
+            : this(keepDown, "keyboard", entry, modifiers, new List<SequenceKeyValuePair>())
         {
-            KeepDown = keepDown;
-            Entry = entry;
-            Modifiers = modifiers;
-            WindowsModifiers = new List<SequenceKeyValuePair>();
         }
 
-        public SequenceItem(int keepDown, SequenceKeyValuePair entry, List<SequenceKeyValuePair> modifiers, List<SequenceKeyValuePair> winModifiers)
-            : base()
+        public SequenceItem(int keepDown, string method, SequenceKeyValuePair entry, List<SequenceKeyValuePair> modifiers)
+            : this(keepDown, method, entry, modifiers, new List<SequenceKeyValuePair>())
+        {
+        }
+
+        public SequenceItem(int keepDown, string method, SequenceKeyValuePair entry, List<SequenceKeyValuePair> modifiers, List<SequenceKeyValuePair> winModifiers)
         {
             KeepDown = keepDown;
+            //Method = method;
             Entry = entry;
             Modifiers = modifiers;
             WindowsModifiers = winModifiers;
@@ -62,6 +70,12 @@ namespace KeySndr.Common
             KeepDown = i;
             return this;
         }
+
+        //public SequenceItem SetMethod(string m)
+        //{
+        //    Method = m;
+        //    return this;
+        //}
 
         public SequenceItem SetEntry(SequenceKeyValuePair kv)
         {

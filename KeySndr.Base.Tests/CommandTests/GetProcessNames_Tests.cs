@@ -2,6 +2,7 @@
 using System.Linq;
 using KeySndr.Base.Commands;
 using KeySndr.Base.Providers;
+using KeySndr.Common;
 using Moq;
 using NUnit.Framework;
 
@@ -18,7 +19,12 @@ namespace KeySndr.Base.Tests.CommandTests
         public void Setup()
         {
             systemProviderMock = new Mock<ISystemProvider>();
-            systemProviderMock.Setup(s => s.ProcessNames()).Returns(new List<string> {"a", "b"});
+            systemProviderMock.Setup(s => s.ProcessNames()).Returns(
+                new List<ProcessInformation>
+                {
+                    new ProcessInformation {HasWindow = false, ProcessName = "a"},
+                    new ProcessInformation {HasWindow = false, ProcessName = "b"}
+                });
             systemProvider = systemProviderMock.Object;
         }
 

@@ -71,7 +71,9 @@
                                     <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li data-ng-repeat="p in processNames track by $index"><a href="#" data-ng-click="setProcessName(p)">{{ p }}</a></li>
+                                    <li data-ng-repeat="p in processNames track by $index">
+                                        <span ng-show="p.hasWindow" class="glyphicon glyphicon-modal-window" aria-hidden="true"></span> <a href="#" data-ng-click="setProcessName(p.processName)">{{ p.processName }}</a>
+                                    </li>
                                 </ul>
                             </div>
                             <input
@@ -171,7 +173,12 @@
                             
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon_6">Enabled</span>
-                                <input type="checkbox" class="form-control pull-right" name="actionEnabled" data-ng-model="currentAction.isEnabled" aria-describedby="basic-addon_6"/>
+                                <select class="selectpicker form-control"
+                                        data-ng-model="currentAction.isEnabled"
+                                        aria-describedby="basic-addon_66"
+                                        ng-options="o.v as o.n for o in [{ n: 'No', v: false }, { n: 'Yes', v: true }]">
+                                    
+                                </select>
                             </div>
 
                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -254,7 +261,14 @@
                                             <span class="input-group-addon" id="basic-addon-3-{{ $index}}">Keyboard</span>
                                             <input type="text" class="form-control" placeholder="Focus here and type a key" aria-describedby="basic-addon-3-{{ $index}}">
                                         </div>
-
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon-4-{{ $index}}">Method</span>
+                                            <select class="selectpicker form-control"
+                                                    aria-describedby="basic-addon-4-{{ $index}}"
+                                                    data-ng-model="sequence.method"
+                                                    ng-options="o.v as o.n for o in [{ n: 'SendInput', v: 'sendinput' }, { n: 'Keyboard event', v: 'keybd_event' }]">
+                                            </select>
+                                        </div>
 
                                         <h3>Modifiers</h3>
                                         <div class="btn-group btn-group-justified" role="group" aria-label="...">

@@ -22,6 +22,15 @@ namespace KeySndr.Common
         [DataMember(Name = "mouseSequences")]
         public List<MouseSequenceItem> MouseSequences { get; set; }
 
+        [DataMember(Name = "overrideProcess")]
+        public bool OverrideProcess { get; set; }
+
+        [DataMember(Name = "processName")]
+        public string ProcessName { get; set; }
+
+        [DataMember(Name = "bringProcessToForeground")]
+        public bool BringProcessToForeground { get; set; }
+
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
@@ -77,6 +86,9 @@ namespace KeySndr.Common
             Sequences = sequences;
             ScriptSequences = scripts;
             MouseSequences = mouseSequences;
+            ProcessName = string.Empty;
+            OverrideProcess = false;
+            BringProcessToForeground = false;
         }
 
         public void Clear()

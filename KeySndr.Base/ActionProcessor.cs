@@ -6,12 +6,12 @@ namespace KeySndr.Base
 {
     public class ActionProcessor : IActionProcessor
     {
-        private bool hasProcess;
+        //private bool hasProcess;
         public InputActionExecutionContainer Container { get; set; }
 
         public ActionProcessor()
         {
-            hasProcess = false;
+            //hasProcess = false;
         }
 
         public ActionProcessor(InputActionExecutionContainer c)
@@ -22,12 +22,12 @@ namespace KeySndr.Base
 
         public async Task Process()
         {
-            if (!hasProcess)
-                SetTargetProcess();
+            //if (!hasProcess)
+            //    SetTargetProcess();
             await Sender.Send(Container);
         }
 
-        private void SetTargetProcess()
+        /*private void SetTargetProcess()
         {
             if (Container.UseForegroundWindow)
             {
@@ -62,6 +62,6 @@ namespace KeySndr.Base
             WindowsApi.SetForegroundWindow(process.MainWindowHandle);
             WindowsApi.SetFocus(process.MainWindowHandle);
             hasProcess = true;
-        }
+        }*/
     }
 }

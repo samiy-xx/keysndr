@@ -10,6 +10,7 @@
         scope.winModifiers = WinModifiers;
         scope.availableScripts = [];
         
+
         scope.processSelector = {
             'useDesktopWindow': false,
             'useForegroundWindow': false,
@@ -44,7 +45,9 @@
                 scope.displaySuccessMessage("Configuration saved", "OK", 5000);
             });
         }
-
+        scope.$watch("currentAction", function(n, o) {
+            console.log(n);
+        }, true);
         scope.wipeCurrentAction = function() {
             scope.currentAction = null;
         }
@@ -219,7 +222,7 @@
         scope.setCurrentAction = function(a) {
             scope.currentAction = a;
         }
-
+        scope.getProcessNames();
         scope.init = function (count, callback) {
             var s = $location.search();
             if (s !== null && s !== undefined && s.hasOwnProperty("name")) {
@@ -265,6 +268,7 @@
                 }
                 scope.availableScripts = result.content;
             });
+            
         } 
     }
 

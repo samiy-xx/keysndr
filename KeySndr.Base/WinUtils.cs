@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using KeySndr.Common;
 
 namespace KeySndr.Base
 {
@@ -25,12 +26,23 @@ namespace KeySndr.Base
             return IntPtr.Zero;
         }
 
-        public static IEnumerable<string> GetProcessNames()
+        public static IEnumerable<ProcessInformation> GetProcessNames()
         {
-            return
-                Process.GetProcesses()
-                    .Where(p => !string.IsNullOrEmpty(p.MainWindowTitle))
-                    .Select(p => p.ProcessName);
+            var processesWithWindow = GetProcessesWithWindow()
+                .OrderBy(p => p.ProcessName)
+                .Select(p => new ProcessInformation
+                {
+                    ProcessName = p.ProcessName,
+                    HasWindow = true
+                });
+            var processesWithoutWindow = GetProcessesWithoutWindow()
+                .OrderBy(p => p.ProcessName)
+                .Select(p => new ProcessInformation
+                {
+                    ProcessName = p.ProcessName,
+                    HasWindow = false
+                });
+            return processesWithWindow.Concat(processesWithoutWindow);
         } 
 
         public static IEnumerable<Process> GetProcessesWithWindow()
@@ -38,6 +50,12 @@ namespace KeySndr.Base
             return Process.GetProcesses()
                 .Where(p => !string.IsNullOrEmpty(p.MainWindowTitle));
         }
+
+        public static IEnumerable<Process> GetProcessesWithoutWindow()
+        {
+            return Process.GetProcesses()
+                .Where(p => string.IsNullOrEmpty(p.MainWindowTitle));
+        } 
 
         public static Process GetProcessByName(string name)
         {
