@@ -45,9 +45,7 @@
                 scope.displaySuccessMessage("Configuration saved", "OK", 5000);
             });
         }
-        scope.$watch("currentAction", function(n, o) {
-            console.log(n);
-        }, true);
+        
         scope.wipeCurrentAction = function() {
             scope.currentAction = null;
         }

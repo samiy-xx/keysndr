@@ -89,14 +89,7 @@
                 <div class="col-md-6">
                     <div class="well">
                         <div class="btn-group-justified" role="group" aria-label="...">
-                            <div class="btn-group" role="group">
-                                <button
-                                    type="button"
-                                    class="btn btn-default"
-                                    data-ng-click="addAction()">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Action
-                                </button>
-                            </div>
+                            
                             <div class="btn-group" role="group">
                                 <button
                                     type="button"
@@ -105,7 +98,13 @@
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
                                 </button>
                             </div>
-                            
+                            <div class="btn-group" role="group">
+                                <button type="button"
+                                        class="btn btn-default"
+                                        data-ng-click="addAction()">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Action
+                                </button>
+                            </div>
                             <div class="btn-group" role="group">
                                 <button
                                     type="button"
@@ -180,7 +179,27 @@
                                     
                                 </select>
                             </div>
-
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon_666">Override Process</span>
+                                <select class="selectpicker form-control"
+                                        data-ng-model="currentAction.overrideProcess"
+                                        aria-describedby="basic-addon_666"
+                                        ng-options="o.v as o.n for o in [{ n: 'No', v: false }, { n: 'Yes', v: true }]"></select>
+                            </div>
+                            <div class="input-group" ng-show="currentAction.overrideProcess">
+                                <span class="input-group-addon" id="basic-addon_6666">Bring to foreground</span>
+                                <select class="selectpicker form-control"
+                                        data-ng-model="currentAction.bringProcessToForeground"
+                                        aria-describedby="basic-addon_6666"
+                                        ng-options="o.v as o.n for o in [{ n: 'No', v: false }, { n: 'Yes', v: true }]"></select>
+                            </div>
+                            <div class="input-group" ng-show="currentAction.overrideProcess">
+                                <span class="input-group-addon" id="basic-addon_66666">Override Process</span>
+                                <select class="selectpicker form-control"
+                                        data-ng-model="currentAction.processName"
+                                        aria-describedby="basic-addon_66666"
+                                        ng-options="p.processName as p.processName for p in processNames"></select>
+                            </div>
                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-default" data-ng-click="addSequence()"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Add Sequence</button>

@@ -18,8 +18,8 @@ namespace KeySndr.Base
 
         public static async Task Send(InputActionExecutionContainer container)
         {   
-            SetTargetProcess(container);
-            await Send(container.InputAction);
+            
+            await Send(container, container.InputAction);
         }
 
         public static async Task Send(InputAction action)
@@ -32,6 +32,8 @@ namespace KeySndr.Base
             Log.Debug("Running action " + action.Name);
             if (action.OverrideProcess && !string.IsNullOrEmpty(action.ProcessName))
                 SetTargetProcess(action);
+            else if (container != null)
+                SetTargetProcess(container);
 
             if (action.HasKeySequences)
                 await SendKeyBoardSequences(action);
@@ -40,8 +42,8 @@ namespace KeySndr.Base
             if (action.HasScriptSequences)
                 await SendScripts(action);
 
-            if (container != null)
-                SetTargetProcess(container);
+            //if (container != null)
+            //    SetTargetProcess(container);
         }
 
         public static void SetCurrentProcessTarget(IntPtr p)
