@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Threading;
 using System.Windows.Forms;
 using Jint;
@@ -146,6 +147,7 @@ namespace KeySndr.Base.Domain
 
             engine.SetValue("sendString", new Action<string, int, Func<JsValue, JsValue[], JsValue>>(SendString));
             engine.SetValue("sendStringSync", new Action<string, int>(SendStringSync));
+            engine.SetValue("setTargetProcess", new Action<string, bool>(SetTargetProcess));
         }
 
         private void SetSourceValid(SourceFile f)
@@ -341,6 +343,11 @@ namespace KeySndr.Base.Domain
             {
                 ObjectFactory.GetProvider<ILoggingProvider>().Error(e.Message, e);
             }
+        }
+
+        private void SetTargetProcess(string name, bool foreground)
+        {
+            Sender.SetTargetProcess(name, foreground);
         }
 
         private void DebugLog(string t)

@@ -216,6 +216,18 @@ namespace KeySndr.Base
                 WindowsApi.SetForegroundWindow(process.MainWindowHandle);
             WindowsApi.SetFocus(process.MainWindowHandle);
         }
+
+        public static void SetTargetProcess(string name, bool f)
+        {
+            var process = WinUtils.GetProcessByName(name);
+            if (process == null)
+                return;
+
+            Sender.SetCurrentProcessTarget(process.MainWindowHandle);
+            if (f)
+                WindowsApi.SetForegroundWindow(process.MainWindowHandle);
+            WindowsApi.SetFocus(process.MainWindowHandle);
+        }
         /*private static void SetTargetProcess()
         {
             if (Container.UseForegroundWindow)
