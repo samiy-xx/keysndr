@@ -134,7 +134,8 @@ namespace KeySndr.Base
 
         public static void ExecuteKeyboardCommand(IEnumerable<Keys> keys, int keepDown)
         {
-            VirtualKeyboard.ShortcutKeys(keys.ToArray(), keepDown);
+            //VirtualKeyboard.ShortcutKeys(keys.ToArray(), keepDown);
+            Keyboard.ShortcutKeys(keys.ToArray(), keepDown);
         }
 
         public static void ExecuteVirtualKeyboardCommand(IEnumerable<Keys> keys, int keepDownm)
